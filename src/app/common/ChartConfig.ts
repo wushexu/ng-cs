@@ -18,22 +18,23 @@ export abstract class ChartConfig {
 
   chartTitle = '';
   chartSubTitle = '';
-  chartToolbox = {
-    show: false,
-    feature: {
-      // dataView: {show: true, readOnly: false},
-      // magicType: {show: true, type: ['line', 'bar']},
-      // restore: {show: true},
-      saveAsImage: {
-        show: true,
-        pixelRatio: 2,
-        backgroundColor: this.transparentBackground ?
-          'transparent' :
-          (this.chartDarkTheme ? this.darkBackgroundColor : this.lightBackgroundColor)
-      }
-    }
-  };
+  chartLegend: any = null;
 
+  get chartToolbox(): object {
+    return {
+      show: true,
+      feature: {
+        // dataView: {show: true, readOnly: false},
+        // magicType: {show: true, type: ['line', 'bar']},
+        // restore: {show: true},
+        saveAsImage: {
+          show: true,
+          pixelRatio: 2,
+          backgroundColor: this.chartDarkTheme ? this.darkBackgroundColor : this.lightBackgroundColor
+        }
+      }
+    };
+  }
 
   colorRollForward(): void {
     const colors = this.chartColors;
@@ -76,7 +77,7 @@ export abstract class ChartConfig {
     const option: EChartOption = {
       color: this.chartColors,
       title: {text: this.chartTitle, subtext: this.chartSubTitle},
-      legend: {},
+      legend: this.chartLegend,
       toolbox: this.chartToolbox
     };
     if (this.transparentBackground) {

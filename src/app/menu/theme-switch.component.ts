@@ -3,14 +3,12 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ThemeService, Theme} from '../service/theme.service';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-theme-switch',
+  templateUrl: './theme-switch.component.html',
+  styleUrls: ['./theme-switch.component.css']
 })
-export class MenuComponent {
+export class ThemeSwitchComponent {
   options: Array<Theme>;
-
-  // @Output() themeChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private themeService: ThemeService) {
     this.options = themeService.options;

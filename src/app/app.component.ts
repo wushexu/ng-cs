@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setThemeByKey('deeppurple-amber');
+    this.themeService.setDefaultTheme();
   }
 
 }

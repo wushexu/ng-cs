@@ -22,18 +22,18 @@ export class ThemeService {
   options: Theme[] = [
     {
       backgroundColor: '#fff',
-      buttonColor: '#ffc107',
-      headingColor: '#673ab7',
-      label: 'Deep Purple & Amber',
-      value: 'deeppurple-amber',
-      darkTheme: false
-    },
-    {
-      backgroundColor: '#fff',
       buttonColor: '#ff4081',
       headingColor: '#3f51b5',
       label: 'Indigo & Pink',
       value: 'indigo-pink',
+      darkTheme: false
+    },
+    {
+      backgroundColor: '#fff',
+      buttonColor: '#ffc107',
+      headingColor: '#673ab7',
+      label: 'Deep Purple & Amber',
+      value: 'deeppurple-amber',
       darkTheme: false
     },
     {
@@ -54,6 +54,7 @@ export class ThemeService {
     }
   ];
 
+  defaultTheme: Theme = this.options[0];
 
   constructor(
     private http: HttpClient,
@@ -70,6 +71,10 @@ export class ThemeService {
     if (theme) {
       this.setTheme(theme);
     }
+  }
+
+  setDefaultTheme(): void {
+    this.setTheme(this.defaultTheme);
   }
 
   setTheme(theme: Theme): void {

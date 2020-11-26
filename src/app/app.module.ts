@@ -14,7 +14,7 @@ import {NavComponent} from './nav/nav.component';
 import {WeekScheduleComponent} from './week-schedule/week-schedule.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {FhComponent} from './fh/fh.component';
-import {MenuComponent} from './menu/menu.component';
+import {ThemeSwitchComponent} from './menu/theme-switch.component';
 import {StyleManagerService} from './service/style-manager.service';
 import {ThemeService} from './service/theme.service';
 
@@ -25,7 +25,7 @@ import {ThemeService} from './service/theme.service';
     WeekScheduleComponent,
     MediaQueryStatusComponent,
     FhComponent,
-    MenuComponent
+    ThemeSwitchComponent
   ],
   imports: [
     BrowserModule,
