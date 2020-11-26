@@ -19,13 +19,15 @@ import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 import {WeekScheduleComponent} from './week-schedule/week-schedule.component';
 import { MediaQueryStatusComponent } from './common/media/media-query-status.component';
+import {FhComponent} from './fh/fh.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     WeekScheduleComponent,
-    MediaQueryStatusComponent
+    MediaQueryStatusComponent,
+    FhComponent
   ],
   imports: [
     BrowserModule,
