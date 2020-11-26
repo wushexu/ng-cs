@@ -1,1 +1,16 @@
-<app-nav></app-nav>
+<!--<app-nav></app-nav>-->
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="column" fxFlex="960px" fxFlex.lt-md="100%">
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="min-height:3em">
+      <div fxFlexAlign="start center">&nbsp;</div>
+      <div fxFlexAlign="end center" fxLayoutAlign="space-between center">
+        <!--menu |-->
+        <button type="button" mat-icon-button>
+          <mat-icon aria-label="Menu">menu</mat-icon>
+        </button>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+    <!--<app-media-query-status></app-media-query-status>-->
+  </div>
+</div>
