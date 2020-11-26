@@ -13,13 +13,18 @@ import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
+import { HttpClientModule } from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 import {WeekScheduleComponent} from './week-schedule/week-schedule.component';
-import { MediaQueryStatusComponent } from './common/media/media-query-status.component';
+import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {FhComponent} from './fh/fh.component';
+import { MenuComponent } from './menu/menu.component';
+import { StyleManagerService } from './service/style-manager.service';
+import { ThemeService } from './service/theme.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,8 @@ import {FhComponent} from './fh/fh.component';
     NavComponent,
     WeekScheduleComponent,
     MediaQueryStatusComponent,
-    FhComponent
+    FhComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +48,11 @@ import {FhComponent} from './fh/fh.component';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatMenuModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [StyleManagerService, ThemeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

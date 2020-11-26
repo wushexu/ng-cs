@@ -1,8 +1,11 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 
 import * as echarts from 'echarts';
 import {EChartOption} from 'echarts';
+import {Subscription} from 'rxjs';
+
 import {ChartConfig} from '../common/ChartConfig';
+import {Theme, ThemeService} from '../service/theme.service';
 
 
 @Component({
@@ -10,17 +13,50 @@ import {ChartConfig} from '../common/ChartConfig';
   templateUrl: './fh.component.html',
   styleUrls: ['./fh.component.css']
 })
-export class FhComponent extends ChartConfig implements AfterViewInit {
+export class FhComponent extends ChartConfig implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chart') chartDiv: ElementRef;
 
-  refreshChart(keepData: any): void {
-    throw new Error('Method not implemented.');
+  myChart: echarts.ECharts;
+
+  themeSubscription: Subscription;
+
+  constructor(private readonly themeService: ThemeService) {
+    super();
+  }
+
+  ngOnInit(): void {
+    const currentTheme = this.themeService.currentTheme;
+    if (currentTheme) {
+      this.chartDarkTheme = currentTheme.darkTheme;
+    }
+    this.themeSubscription = this.themeService.themeSubject
+      .subscribe((theme: Theme) => {
+        console.log(theme);
+        if (this.chartDarkTheme !== theme.darkTheme) {
+          this.chartDarkTheme = theme.darkTheme;
+          this.refreshChart();
+        }
+      });
   }
 
   ngAfterViewInit(): void {
+    this.refreshChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+
+  refreshChart(keepData = true): void {
+    if (this.myChart) {
+      // this.myChart.clear();
+      this.myChart.dispose();
+    }
 
     const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
-    const myChart: echarts.ECharts = echarts.init(holder);
+    this.myChart = echarts.init(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
 
     const xAxis: EChartOption.XAxis = this.chartTranspose ? {type: 'value'} : {type: 'category'};
     const yAxis: EChartOption.YAxis = this.chartTranspose ? {type: 'category'} : {type: 'value'};
@@ -94,7 +130,7 @@ export class FhComponent extends ChartConfig implements AfterViewInit {
       }
     );
 
-    myChart.setOption(option);
+    this.myChart.setOption(option);
   }
 
 }

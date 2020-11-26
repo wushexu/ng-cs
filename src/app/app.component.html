@@ -1,6 +1,13 @@
 <!--<app-nav></app-nav>-->
 <div fxLayout="row" fxLayoutAlign="center center">
   <div fxLayout="column" fxFlex="960px" fxFlex.lt-md="100%">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Dora</span>
+        <span class="spacer"></span>
+        <app-menu></app-menu>
+      </mat-toolbar-row>
+    </mat-toolbar>
     <div fxLayout="row" fxLayoutAlign="space-between center" style="min-height:3em">
       <div fxFlexAlign="start center">&nbsp;</div>
       <div fxFlexAlign="end center" fxLayoutAlign="space-between center">
@@ -12,6 +19,6 @@
     </div>
     <router-outlet></router-outlet>
     <!--<app-media-query-status></app-media-query-status>-->
-    <!--<app-fh></app-fh>-->
+    <app-fh></app-fh>
   </div>
 </div>
