@@ -2,10 +2,8 @@ import {Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild} from
 
 import * as echarts from 'echarts';
 import {EChartOption} from 'echarts';
-import {Subscription} from 'rxjs';
 
 import {ChartConfig} from '../common/ChartConfig';
-import {Theme, ThemeService} from '../service/style/theme.service';
 
 
 @Component({
@@ -18,25 +16,7 @@ export class FhComponent extends ChartConfig implements OnInit, AfterViewInit, O
 
   myChart: echarts.ECharts;
 
-  themeSubscription: Subscription;
-
-  constructor(private readonly themeService: ThemeService) {
-    super();
-  }
-
   ngOnInit(): void {
-    const currentTheme = this.themeService.currentTheme;
-    if (currentTheme) {
-      this.chartDarkTheme = currentTheme.darkTheme;
-    }
-    this.themeSubscription = this.themeService.themeSubject
-      .subscribe((theme: Theme) => {
-        console.log(theme);
-        if (this.chartDarkTheme !== theme.darkTheme) {
-          this.chartDarkTheme = theme.darkTheme;
-          this.refreshChart();
-        }
-      });
   }
 
   ngAfterViewInit(): void {
@@ -44,9 +24,6 @@ export class FhComponent extends ChartConfig implements OnInit, AfterViewInit, O
   }
 
   ngOnDestroy(): void {
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
-    }
   }
 
   refreshChart(keepData = true): void {

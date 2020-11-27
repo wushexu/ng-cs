@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 
-import {ThemeService} from './service/style/theme.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,11 +7,11 @@ import {ThemeService} from './service/style/theme.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private readonly themeService: ThemeService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.themeService.setDefaultTheme();
+    // this.themeService.setDefaultTheme();
   }
 
 }

@@ -14,9 +14,6 @@ import {NavComponent} from './nav/nav.component';
 import {TableMatComponent} from './week-schedule/table-mat.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {FhComponent} from './fh/fh.component';
-import {ThemeSwitchComponent} from './menu/theme-switch.component';
-import {StyleManagerService} from './service/style/style-manager.service';
-import {ThemeService} from './service/style/theme.service';
 import {ScheduleService} from './service/schedule.service';
 import { LessionScheduleComponent } from './schedule/lession-schedule/lession-schedule.component';
 import { DayScheduleComponent } from './schedule/day-schedule/day-schedule.component';
@@ -31,7 +28,6 @@ import { TermScheduleComponent } from './schedule/term-schedule/term-schedule.co
     TableMatComponent,
     MediaQueryStatusComponent,
     FhComponent,
-    ThemeSwitchComponent,
     LessionScheduleComponent,
     DayScheduleComponent,
     WeekScheduleComponent,
@@ -47,7 +43,7 @@ import { TermScheduleComponent } from './schedule/term-schedule/term-schedule.co
     LayoutModule,
     AppMaterialModule
   ],
-  providers: [StyleManagerService, ThemeService, ScheduleService],
+  providers: [ScheduleService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
