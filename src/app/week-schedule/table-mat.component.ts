@@ -5,11 +5,11 @@ import { MatTable } from '@angular/material/table';
 import { WeekScheduleDataSource, WeekScheduleItem } from './week-schedule-datasource';
 
 @Component({
-  selector: 'app-week-schedule',
+  selector: 'app-table-mat',
   templateUrl: './week-schedule.component.html',
   styleUrls: ['./week-schedule.component.css']
 })
-export class WeekScheduleComponent implements AfterViewInit, OnInit {
+export class TableMatComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<WeekScheduleItem>;

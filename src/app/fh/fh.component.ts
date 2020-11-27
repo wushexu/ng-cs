@@ -5,7 +5,7 @@ import {EChartOption} from 'echarts';
 import {Subscription} from 'rxjs';
 
 import {ChartConfig} from '../common/ChartConfig';
-import {Theme, ThemeService} from '../service/theme.service';
+import {Theme, ThemeService} from '../service/style/theme.service';
 
 
 @Component({
