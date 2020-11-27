@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {MatDialog} from '@angular/material/dialog';
-
 import {Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';

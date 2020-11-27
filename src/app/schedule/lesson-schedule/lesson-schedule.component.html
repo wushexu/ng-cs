@@ -1,0 +1,19 @@
+<div *ngIf="schedule">
+  <ul>
+<!--    <li>-->
+<!--      时间：{{schedule.timeStart}}-{{schedule.timeEnd}}-->
+<!--    </li>-->
+    <li>
+      班级：{{schedule.theClass?.name}}
+    </li>
+    <li>
+      课程：{{schedule.course?.name}}
+    </li>
+    <li>
+      教室：{{schedule.site?.name}}
+    </li>
+    <li>
+      教师：{{schedule.teacher?.name}}
+    </li>
+  </ul>
+</div>

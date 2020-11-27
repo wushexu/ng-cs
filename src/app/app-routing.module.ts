@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {TableMatComponent} from './week-schedule/table-mat.component';
+import {WeekScheduleComponent} from './schedule/week-schedule/week-schedule.component';
 
 const routes: Routes = [
-  {path: 'ts', component: TableMatComponent}
+  {path: 'ws', component: WeekScheduleComponent}
 ];
 
 @NgModule({

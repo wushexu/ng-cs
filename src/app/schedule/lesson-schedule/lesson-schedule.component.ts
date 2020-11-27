@@ -1,22 +1,21 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
 import {Schedule} from '../../model/schedule';
-import {Dept} from '../../model/dept';
-import {Major} from '../../model/major';
+import {Site} from '../../model/site';
 import {Class} from '../../model/class';
 import {Course} from '../../model/course';
 import {Teacher} from '../../model/teacher';
-import {Site} from '../../model/site';
+import {Major} from '../../model/major';
+import {Dept} from '../../model/dept';
 
 @Component({
-  selector: 'app-day-schedule',
-  templateUrl: './day-schedule.component.html',
-  styleUrls: ['./day-schedule.component.css']
+  selector: 'app-lesson-schedule',
+  templateUrl: './lesson-schedule.component.html',
+  styleUrls: ['./lesson-schedule.component.css']
 })
-export class DayScheduleComponent implements OnInit, AfterViewInit {
+export class LessonScheduleComponent implements OnInit {
 
-  schedules: Schedule[];
-
-  displayedColumns = ['c12', 'c34', 'c56', 'c78', 'c90'];
+  schedule: Schedule;
 
   constructor() {
   }
@@ -80,7 +79,7 @@ export class DayScheduleComponent implements OnInit, AfterViewInit {
       dept
     };
 
-    const schedule1: Schedule = {
+    this.schedule = {
       id: 1,
       date: '20201012',
       dayOfWeek: 1,
@@ -95,11 +94,6 @@ export class DayScheduleComponent implements OnInit, AfterViewInit {
       course,
       teacher,
     };
-
-    this.schedules = [schedule1];
-  }
-
-  ngAfterViewInit(): void {
   }
 
 }
