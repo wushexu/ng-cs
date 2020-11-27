@@ -10,6 +10,8 @@
         "statements"
       ]
     },
+    "no-bitwise": false,
+    "no-trailing-whitespace": false,
     "array-type": false,
     "arrow-return-shorthand": true,
     "curly": true,

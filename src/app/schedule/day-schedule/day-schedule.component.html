@@ -1,5 +1,5 @@
-<table class="ui celled unstackable table">
-  <thead class="center aligned">
+<table class="ui center aligned fixed celled unstackable table">
+  <thead>
   <tr>
     <th colspan="2">上午</th>
     <th colspan="3">下午</th>
@@ -13,12 +13,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>{{schedules[0].date}}</td>
-    <td>{{schedules[0].theClass?.name}}</td>
-    <td>{{schedules[0].date}}</td>
-    <td>{{schedules[0].theClass?.name}}</td>
-    <td><i class="large green checkmark icon"></i></td>
+  <tr *ngIf="lessons">
+    <td *ngFor="let lesson of lessons" [attr.colspan]="lesson.colspan">
+      <app-lesson-schedule [schedule]="lesson.schedule" *ngIf="lesson.schedule"></app-lesson-schedule>
+    </td>
   </tr>
   </tbody>
 </table>

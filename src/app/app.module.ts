@@ -10,12 +10,11 @@ import {AppMaterialModule} from './app-material.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {NavComponent} from './nav/nav.component';
 import {TableMatComponent} from './week-schedule/table-mat.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {FhComponent} from './fh/fh.component';
 import {ScheduleService} from './service/schedule.service';
-import { LessionScheduleComponent } from './schedule/lession-schedule/lession-schedule.component';
+import { LessonScheduleComponent } from './schedule/lesson-schedule/lesson-schedule.component';
 import { DayScheduleComponent } from './schedule/day-schedule/day-schedule.component';
 import { WeekScheduleComponent } from './schedule/week-schedule/week-schedule.component';
 import { MonthScheduleComponent } from './schedule/month-schedule/month-schedule.component';
@@ -24,11 +23,10 @@ import { TermScheduleComponent } from './schedule/term-schedule/term-schedule.co
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
     TableMatComponent,
     MediaQueryStatusComponent,
     FhComponent,
-    LessionScheduleComponent,
+    LessonScheduleComponent,
     DayScheduleComponent,
     WeekScheduleComponent,
     MonthScheduleComponent,
