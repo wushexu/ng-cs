@@ -4,28 +4,29 @@
   </div>
 </div>-->
 <div class="ui container">
-    <mat-toolbar color="secondary">
-      <mat-toolbar-row>
-        <span>Dora</span>
-        <span class="spacer"></span>
-        <button type="button" mat-icon-button>
-          <mat-icon aria-label="Menu">menu</mat-icon>
-        </button>
-      </mat-toolbar-row>
-    </mat-toolbar>
-    <!--<div fxLayout="row" fxLayoutAlign="space-between center" style="min-height:3em">
-      <div fxFlexAlign="start center">&nbsp;</div>
-      <div fxFlexAlign="end center" fxLayoutAlign="space-between center">
-        &lt;!&ndash;menu |&ndash;&gt;
-        <button type="button" mat-icon-button>
-          <mat-icon aria-label="Menu">menu</mat-icon>
-        </button>
-      </div>
-    </div>-->
-    <app-day-schedule class="main-content"></app-day-schedule>
-    <div class="main-content">
-      <router-outlet></router-outlet>
+  <mat-toolbar color="secondary">
+    <mat-toolbar-row>
+      <span>Dora</span>
+      <span class="spacer"></span>
+      <button type="button" mat-icon-button>
+        <mat-icon aria-label="Menu">menu</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <!--<div fxLayout="row" fxLayoutAlign="space-between center" style="min-height:3em">
+    <div fxFlexAlign="start center">&nbsp;</div>
+    <div fxFlexAlign="end center" fxLayoutAlign="space-between center">
+      &lt;!&ndash;menu |&ndash;&gt;
+      <button type="button" mat-icon-button>
+        <mat-icon aria-label="Menu">menu</mat-icon>
+      </button>
     </div>
-    <!--<app-media-query-status></app-media-query-status>-->
-    <!--<app-fh class="main-content"></app-fh>-->
+  </div>-->
+  <!--<app-day-schedule class="main-content"></app-day-schedule>-->
+  <app-week-schedule class="main-content"></app-week-schedule>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+  <!--<app-media-query-status></app-media-query-status>-->
+  <!--<app-fh class="main-content"></app-fh>-->
 </div>
