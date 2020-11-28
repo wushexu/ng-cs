@@ -46,7 +46,7 @@ export class WeekSchedule {
       const dateDim: DateDim = {weekno: week.weekno, dayOfWeek: i + 1, date};
       DateDim.setDateLabels(dateDim);
 
-      daySchedules[i] = {dateDim, lessons: [], sequencedLessons: []};
+      daySchedules[i] = {dateDim, lessons: [], timeIndexLessons: []};
     }
 
     const timeLessons: Lesson[][] = [];
@@ -55,7 +55,7 @@ export class WeekSchedule {
       timeLessons.push(weekLessons);
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
         const daySchedule = daySchedules[dayIndex];
-        const sLesson = daySchedule.sequencedLessons[lessonIndex];
+        const sLesson = daySchedule.timeIndexLessons[lessonIndex];
         if (sLesson) {
           if (sLesson.startIndex === lessonIndex) {
             weekLessons.push(sLesson);

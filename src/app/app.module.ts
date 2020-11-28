@@ -21,6 +21,7 @@ import { MonthScheduleComponent } from './schedule/month-schedule/month-schedule
 import { TermScheduleComponent } from './schedule/term-schedule/term-schedule.component';
 import {DateLabelPipe} from './common/pipe/date-label.pipe';
 import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
+import {DayScheduleTableComponent} from './schedule/day-schedule-table/day-schedule-table.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
     MonthScheduleComponent,
     TermScheduleComponent,
     DateLabelPipe,
-    WeekdayLabelPipe
+    WeekdayLabelPipe,
+    DayScheduleTableComponent
   ],
   imports: [
     BrowserModule,
