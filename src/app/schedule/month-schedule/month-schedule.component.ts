@@ -45,8 +45,6 @@ export class MonthScheduleComponent implements OnInit {
       .subscribe(schedules => {
         // check in one day; sort, check overlap
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
-
-        console.log(this.monthSchedule);
       });
   }
 

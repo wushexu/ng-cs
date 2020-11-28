@@ -11,7 +11,7 @@
   <tr *ngFor="let weekSchedule of monthSchedule.weekSchedules">
     <td class="th">第{{weekSchedule.week.weekno}}周</td>
     <td *ngFor="let daySchedule of weekSchedule.daySchedules">
-      <app-day-schedule [daySchedule]="daySchedule"></app-day-schedule>
+      <app-day-schedule [daySchedule]="daySchedule" fxLayoutAlign="center"></app-day-schedule>
     </td>
   </tr>
   </tbody>

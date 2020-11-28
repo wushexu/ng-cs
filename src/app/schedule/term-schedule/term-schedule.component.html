@@ -1,1 +1,18 @@
-<p>term-schedule works!</p>
+<table class="ui center aligned celled unstackable table" *ngIf="termSchedule?.weekSchedules[0]">
+  <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th *ngFor="let daySchedule of termSchedule.weekSchedules[0].daySchedules">
+      <div class="week-day">{{daySchedule.dateDim | weekdayLabel}}</div>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let weekSchedule of termSchedule.weekSchedules">
+    <td class="th">第{{weekSchedule.week.weekno}}周</td>
+    <td *ngFor="let daySchedule of weekSchedule.daySchedules">
+      <app-day-schedule [daySchedule]="daySchedule" fxLayoutAlign="center"></app-day-schedule>
+    </td>
+  </tr>
+  </tbody>
+</table>
