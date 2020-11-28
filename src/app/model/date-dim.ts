@@ -1,4 +1,7 @@
 export class DateDim {
+
+  static DATE_FORMAT = 'YYYYMMDD';
+
   date: string;
   weekno: number;
   dayOfWeek: number; // 1: Monday

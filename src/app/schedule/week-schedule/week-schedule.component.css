@@ -1,4 +1,7 @@
-
+.ui.table>thead>tr>th {
+  /*background: #f9fafb;*/
+  color: rgba(0, 0, 0, .7);
+}
 .week-date {
   font-size: 0.8em;
   color: rgba(0,0,0,.6);
@@ -6,6 +9,6 @@
 
 td.th {
   background: #f9fafb;
-  color: rgba(0,0,0,.87);
+  color: rgba(0,0,0,.7);
   font-weight: 700;
 }

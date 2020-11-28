@@ -13,9 +13,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngIf="lessons">
-    <td *ngFor="let lesson of lessons" [attr.colspan]="lesson.colspan">
-      <app-lesson-schedule [schedule]="lesson.schedule" *ngIf="lesson.schedule"></app-lesson-schedule>
+  <tr *ngIf="daySchedule">
+    <td *ngFor="let lesson of daySchedule.lessons" [attr.colspan]="lesson.span">
+      <app-lesson-schedule [schedule]="lesson.schedule" *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
   </tbody>
