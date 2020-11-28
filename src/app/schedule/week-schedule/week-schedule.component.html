@@ -3,8 +3,8 @@
   <tr>
     <th colspan="2"></th>
     <th *ngFor="let daySchedule of weekSchedule.daySchedules">
-      <div class="week-day">{{daySchedule.dateDim.dayOfWeek}}</div>
-      <div class="week-date">（{{daySchedule.dateDim.date}}）</div>
+      <div class="week-day">{{daySchedule.dateDim | weekdayLabel}}</div>
+      <div class="week-date">（{{daySchedule.dateDim | dateLabel}}）</div>
     </th>
   </tr>
   </thead>

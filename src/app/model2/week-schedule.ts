@@ -29,6 +29,7 @@ export class WeekSchedule {
       const index = day - 1; // 0-6
       const {weekno, dayOfWeek, date} = schedulesOfDay[0];
       const dateDim: DateDim = {weekno, dayOfWeek, date};
+      DateDim.setDateLabels(dateDim);
       daySchedules[index] = new DaySchedule(dateDim, schedulesOfDay);
     });
 
@@ -43,6 +44,8 @@ export class WeekSchedule {
       }
       const date = mom.format(DateDim.DATE_FORMAT);
       const dateDim: DateDim = {weekno: week.weekno, dayOfWeek: i + 1, date};
+      DateDim.setDateLabels(dateDim);
+
       daySchedules[i] = {dateDim, lessons: [], sequencedLessons: []};
     }
 
