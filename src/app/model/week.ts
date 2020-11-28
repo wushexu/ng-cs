@@ -1,9 +1,10 @@
 export class Week {
-  termYear: number;
-  termMonth: number;
   weekno: number;
   firstDay: string;
   lastDay: string;
+
+  termYear?: number;
+  termMonth?: number;
 
 // {
 //   "first_day": "20200907",

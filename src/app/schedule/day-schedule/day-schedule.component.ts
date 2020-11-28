@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
@@ -13,20 +13,18 @@ import {Lesson} from '../../model2/lesson';
 })
 export class DayScheduleComponent implements OnInit {
 
-  daySchedule: DaySchedule;
-  lessons: Lesson[];
+  @Input() daySchedule: DaySchedule;
 
   constructor(private scheduleService: ScheduleService) {
   }
 
   ngOnInit(): void {
 
-    const dateDim: DateDim = {weekno: 1, dayOfWeek: 1, date: '20201123'};
-    this.scheduleService.querySchedules()
-      .subscribe(schedules => {
-        this.daySchedule = new DaySchedule(dateDim, schedules);
-        this.lessons = this.daySchedule.lessons.filter(l => l);
-      });
+    //   const dateDim: DateDim = {weekno: 1, dayOfWeek: 1, date: '20201123'};
+    //   this.scheduleService.querySchedules()
+    //     .subscribe(schedules => {
+    //       this.daySchedule = new DaySchedule(dateDim, schedules);
+    //     });
   }
 
 }

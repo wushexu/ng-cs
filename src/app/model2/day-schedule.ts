@@ -8,6 +8,7 @@ export class DaySchedule {
 
   dateDim: DateDim;
   lessons: Lesson[];
+  notnullLessons: Lesson[];
   timeIndexLessons: Lesson[];
 
   // lesson9 = false;
@@ -52,6 +53,7 @@ export class DaySchedule {
     }
 
     this.lessons = lessons.filter(l => l !== removalMark);
+    this.notnullLessons = this.lessons.filter(l => l);
   }
 
 }
