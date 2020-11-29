@@ -1,6 +1,6 @@
 export class ScheduleFilter {
   date?: string;
-  month?: string; // YYYYMM
+  month?: string; // YYYY-MM
   weekNo?: number;
   termId?: string;
 

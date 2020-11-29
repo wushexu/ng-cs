@@ -55,7 +55,11 @@ td.th {
   width: 8em;
 }
 
-.mat-form-field:not(:first-child) {
+.mat-form-field.monthpicker {
+  width: 6em;
+}
+
+.inline-form > *:not(:first-child) {
   margin-left: 1em;
 }
 

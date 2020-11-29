@@ -1,10 +1,9 @@
-<div>
+<div class="inline-form">
   <mat-form-field class="datepicker">
-    <mat-label>课表日期</mat-label>
+    <mat-label>日期</mat-label>
     <input matInput [matDatepicker]="datePicker"
            placeholder="日期"
-           [(ngModel)]="filter.date"
-           (dblclick)="filter.date=null">
+           [(ngModel)]="filter.date">
     <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
     <mat-datepicker #datePicker></mat-datepicker>
   </mat-form-field>
@@ -16,6 +15,8 @@
       <mat-option value="2">第2周</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <app-monthpicker [yearMonth]="filter.month" (selected)="monthSelected($event)"></app-monthpicker>
 
   <button mat-button color="primary" (click)="execute()">
     <mat-icon>search</mat-icon>

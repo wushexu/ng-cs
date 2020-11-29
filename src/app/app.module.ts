@@ -28,6 +28,7 @@ import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
 import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
 import {DATE_FORMATS, PaginatorIntl} from './common/locale';
+import {MonthPickerComponent} from './common/month-picker/month-picker.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {DATE_FORMATS, PaginatorIntl} from './common/locale';
     DateLabelPipe,
     WeekdayLabelPipe,
     DayScheduleComponent,
-    SerialDayScheduleComponent
+    SerialDayScheduleComponent,
+    MonthPickerComponent
   ],
   imports: [
     FormsModule,
@@ -61,7 +63,8 @@ import {DATE_FORMATS, PaginatorIntl} from './common/locale';
     {provide: MatPaginatorIntl, useValue: PaginatorIntl},
     {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},],
+    {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

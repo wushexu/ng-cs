@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Moment} from 'moment';
 
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {ScheduleFilter} from '../../model2/schedule-filter';
+import {MatDatepicker} from '@angular/material/datepicker';
 
 
 @Component({
@@ -12,7 +14,9 @@ import {ScheduleFilter} from '../../model2/schedule-filter';
   templateUrl: './day-schedule.component.html',
   styleUrls: ['./day-schedule.component.css']
 })
-export class DayScheduleComponent implements OnInit {
+export class DayScheduleComponent implements OnInit, AfterViewInit {
+  @ViewChild('datePicker') datePicker: MatDatepicker<Moment>;
+  @ViewChild('monthPicker') monthPicker: MatDatepicker<Moment>;
 
   daySchedule: DaySchedule;
   context: ScheduleContext = {};
@@ -32,8 +36,18 @@ export class DayScheduleComponent implements OnInit {
       });
   }
 
+  ngAfterViewInit(): void {
+    console.log(this.datePicker);
+    console.log(this.monthPicker);
+  }
+
   execute(): void {
 
+  }
+
+  monthSelected(yearMonth: string): void {
+    console.log(yearMonth);
+    this.filter.month = yearMonth;
   }
 
 }
