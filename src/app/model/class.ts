@@ -8,7 +8,8 @@ export class Class {
   classNo: number;
   size: number;
 
-  major: Major;
+  majorId?: number;
+  major?: Major;
 
 // {
 //   "id": 1,

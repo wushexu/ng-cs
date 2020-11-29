@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {MatDialog} from '@angular/material/dialog';
+// import {MatDialog} from '@angular/material/dialog';
 
 import {Observable, of} from 'rxjs';
 
@@ -91,7 +91,7 @@ export class ScheduleService {
 
     const schedule1: Schedule = {
       id: 1,
-      date: '20201012',
+      date: '2020-10-12',
       dayOfWeek: 1,
       termMonth: 9,
       termYear: 2020,

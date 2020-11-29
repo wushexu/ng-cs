@@ -1,12 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Moment} from 'moment';
+import {Component, OnInit} from '@angular/core';
 
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {ScheduleFilter} from '../../model2/schedule-filter';
-import {MatDatepicker} from '@angular/material/datepicker';
+import {Class} from '../../model/class';
 
 
 @Component({
@@ -14,15 +13,15 @@ import {MatDatepicker} from '@angular/material/datepicker';
   templateUrl: './day-schedule.component.html',
   styleUrls: ['./day-schedule.component.css']
 })
-export class DayScheduleComponent implements OnInit, AfterViewInit {
-  @ViewChild('datePicker') datePicker: MatDatepicker<Moment>;
-  @ViewChild('monthPicker') monthPicker: MatDatepicker<Moment>;
+export class DayScheduleComponent implements OnInit {
 
   daySchedule: DaySchedule;
   context: ScheduleContext = {};
   perspective: 'class' | 'teacher' | 'room';
 
   filter: ScheduleFilter = new ScheduleFilter();
+
+  selectedClass: Class;
 
   constructor(private scheduleService: ScheduleService) {
   }
@@ -36,11 +35,6 @@ export class DayScheduleComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.datePicker);
-    console.log(this.monthPicker);
-  }
-
   execute(): void {
 
   }
@@ -48,6 +42,11 @@ export class DayScheduleComponent implements OnInit, AfterViewInit {
   monthSelected(yearMonth: string): void {
     console.log(yearMonth);
     this.filter.month = yearMonth;
+  }
+
+  classSelected(selectedClass: Class) {
+    this.selectedClass = selectedClass;
+    console.log(selectedClass);
   }
 
 }

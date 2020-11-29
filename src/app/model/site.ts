@@ -13,6 +13,7 @@ export class Site {
   name4Training?: string;
   memo?: string;
 
+  deptId?: number;
   dept?: Dept;
 
 // {

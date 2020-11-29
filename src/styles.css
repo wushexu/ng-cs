@@ -48,7 +48,7 @@ td.th {
 }
 
 .active-link {
-  color: #f44336 !important;
+  color: #3f51b5 !important;
 }
 
 .mat-form-field.datepicker {
@@ -59,10 +59,18 @@ td.th {
   width: 6em;
 }
 
+.mat-form-field:not(:first-child) {
+  margin-left: 1em;
+}
+
 .inline-form > *:not(:first-child) {
   margin-left: 1em;
 }
 
-.mat-form-field.weekselect {
+.mat-form-field.week-select {
+  width: 6em;
+}
+
+.mat-form-field.year-select {
   width: 6em;
 }

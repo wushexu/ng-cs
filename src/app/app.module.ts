@@ -29,6 +29,8 @@ import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
 import {DATE_FORMATS, PaginatorIntl} from './common/locale';
 import {MonthPickerComponent} from './common/month-picker/month-picker.component';
+import { ClassSelectComponent } from './common/class-select/class-select.component';
+import {DeptMajorClassService} from './service/dept-major-class.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {MonthPickerComponent} from './common/month-picker/month-picker.component
     WeekdayLabelPipe,
     DayScheduleComponent,
     SerialDayScheduleComponent,
-    MonthPickerComponent
+    MonthPickerComponent,
+    ClassSelectComponent
   ],
   imports: [
     FormsModule,
@@ -60,6 +63,7 @@ import {MonthPickerComponent} from './common/month-picker/month-picker.component
   ],
   providers: [
     ScheduleService,
+    DeptMajorClassService,
     {provide: MatPaginatorIntl, useValue: PaginatorIntl},
     {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

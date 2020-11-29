@@ -16,6 +16,11 @@ export class Schedule {
   timeEnd: number;
   trainingType: string; // N: 理论课；S: 校内实现；E: 企业实训
 
+  siteId?: number;
+  classId?: number;
+  courseCode?: number;
+  teacherId?: number;
+
   site?: Site;
   theClass?: Class;
   course?: Course;
@@ -23,7 +28,7 @@ export class Schedule {
 
 // {
 //   "id": 1,
-//   "date": "20201012",
+//   "date": "2020-10-12",
 //   "day_of_week": 1,
 //   "term_month": 9,
 //   "term_year": 2020,

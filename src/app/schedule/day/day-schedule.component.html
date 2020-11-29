@@ -1,4 +1,10 @@
 <div class="inline-form">
+  <mat-label>视角</mat-label>
+
+  <app-class-select (selected)="classSelected($event)"></app-class-select>
+  班级
+  教师
+  教室
   <mat-form-field class="datepicker">
     <mat-label>日期</mat-label>
     <input matInput [matDatepicker]="datePicker"
@@ -8,7 +14,7 @@
     <mat-datepicker #datePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field class="weekselect">
+  <mat-form-field class="week-select">
     <mat-label>学周</mat-label>
     <mat-select [(ngModel)]="filter.weekNo">
       <mat-option value="1">第1周</mat-option>

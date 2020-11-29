@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+
 import {WeekScheduleComponent} from './schedule/week/week-schedule.component';
 import {MonthScheduleComponent} from './schedule/month/month-schedule.component';
 import {TermScheduleComponent} from './schedule/term/term-schedule.component';
@@ -17,7 +18,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     // enableTracing: true,
-    // useHash: true
+    useHash: true
   })],
   exports: [RouterModule]
 })
