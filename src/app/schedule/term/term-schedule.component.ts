@@ -5,6 +5,7 @@ import {Week} from '../../model/week';
 import {TermSchedule} from '../../model2/term-schedule';
 import {TermDim} from '../../model2/term-dim';
 import {Term} from '../../model/term';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 @Component({
   selector: 'app-term-schedule',
@@ -14,6 +15,7 @@ import {Term} from '../../model/term';
 export class TermScheduleComponent implements OnInit {
 
   termSchedule: TermSchedule;
+  context: ScheduleContext = {};
 
   constructor(private scheduleService: ScheduleService) {
   }

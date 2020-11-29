@@ -1,6 +1,6 @@
 <div class="ui left floated list lessons" *ngIf="daySchedule">
   <div class="item" *ngFor="let lesson of daySchedule.notnullLessons">
     <div class="header">{{lesson.schedule.timeStart}}-{{lesson.schedule.timeEnd}}</div>
-    <app-lesson-schedule [schedule]="lesson.schedule"></app-lesson-schedule>
+    <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"></app-lesson-schedule>
   </div>
 </div>

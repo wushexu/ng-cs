@@ -4,16 +4,18 @@ import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {Lesson} from '../../model2/lesson';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 
 @Component({
-  selector: 'app-day-schedule',
-  templateUrl: './day-schedule.component.html',
-  styleUrls: ['./day-schedule.component.css']
+  selector: 'app-day-lessons',
+  templateUrl: './day-lessons.component.html',
+  styleUrls: ['./day-lessons.component.css']
 })
-export class DayScheduleComponent implements OnInit {
+export class DayLessonsComponent implements OnInit {
 
   @Input() daySchedule: DaySchedule;
+  @Input() context: ScheduleContext;
 
   constructor(private scheduleService: ScheduleService) {
   }

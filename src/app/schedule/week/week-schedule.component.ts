@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {ScheduleService} from '../../service/schedule.service';
 import {Week} from '../../model/week';
 import {WeekSchedule} from '../../model2/week-schedule';
+import {ScheduleContext} from '../../model2/schedule-context';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -13,8 +15,14 @@ import {WeekSchedule} from '../../model2/week-schedule';
 export class WeekScheduleComponent implements OnInit {
 
   weekSchedule: WeekSchedule;
+  context: ScheduleContext = {};
+  perspective: 'class' | 'teacher' | 'room';
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor(private scheduleService: ScheduleService,
+              private route: ActivatedRoute) {
+    route.data.subscribe(data => {
+      this.perspective = data.perspective;
+    });
   }
 
   ngOnInit(): void {

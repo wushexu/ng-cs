@@ -3,16 +3,18 @@ import {Component, OnInit} from '@angular/core';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 
 @Component({
-  selector: 'app-day-schedule-table',
-  templateUrl: './day-schedule-table.component.html',
-  styleUrls: ['./day-schedule-table.component.css']
+  selector: 'app-day-schedule',
+  templateUrl: './day-schedule.component.html',
+  styleUrls: ['./day-schedule.component.css']
 })
-export class DayScheduleTableComponent implements OnInit {
+export class DayScheduleComponent implements OnInit {
 
   daySchedule: DaySchedule;
+  context: ScheduleContext = {};
 
   constructor(private scheduleService: ScheduleService) {
   }

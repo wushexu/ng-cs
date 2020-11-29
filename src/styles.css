@@ -17,7 +17,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 td.th {
-  background: #f9fafb;
-  color: rgba(0,0,0,.7);
+  /*background: #f9fafb;*/
+  background: rgba(0,0,0,.03);
+  color: rgba(0,0,0,.8);
   font-weight: 700;
 }

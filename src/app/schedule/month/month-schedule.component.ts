@@ -4,6 +4,7 @@ import {ScheduleService} from '../../service/schedule.service';
 import {MonthSchedule} from '../../model2/month-schedule';
 import {Week} from '../../model/week';
 import {MonthDim} from '../../model2/month-dim';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 @Component({
   selector: 'app-month-schedule',
@@ -13,6 +14,7 @@ import {MonthDim} from '../../model2/month-dim';
 export class MonthScheduleComponent implements OnInit {
 
   monthSchedule: MonthSchedule;
+  context: ScheduleContext = {};
 
   constructor(private scheduleService: ScheduleService) {
   }
