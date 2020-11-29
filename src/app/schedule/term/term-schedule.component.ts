@@ -6,6 +6,7 @@ import {TermSchedule} from '../../model2/term-schedule';
 import {TermDim} from '../../model2/term-dim';
 import {Term} from '../../model/term';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-term-schedule',
@@ -16,8 +17,10 @@ export class TermScheduleComponent implements OnInit {
 
   termSchedule: TermSchedule;
   context: ScheduleContext = {};
+  perspective: 'class' | 'teacher' | 'room';
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor(private scheduleService: ScheduleService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {

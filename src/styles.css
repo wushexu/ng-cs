@@ -4,10 +4,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*@import "~fomantic-ui-css/semantic.min.css";*/
 @import "~fomantic-ui-css/components/reset.min.css";
-@import "~fomantic-ui-css/components/site.min.css";
+@import "./styles/site.css";
+/*@import "~fomantic-ui-css/components/site.min.css";*/
 @import "~fomantic-ui-css/components/container.min.css";
 @import "~fomantic-ui-css/components/table.min.css";
 @import "~fomantic-ui-css/components/list.min.css";
+@import "~fomantic-ui-css/components/menu.min.css";
+@import "~fomantic-ui-css/components/dropdown.min.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -21,4 +24,41 @@ td.th {
   background: rgba(0,0,0,.03);
   color: rgba(0,0,0,.8);
   font-weight: 700;
+}
+
+
+.mat-primary-color {
+  color: #3f51b5;
+}
+
+.mat-accent-color {
+  color: #ff4081;
+}
+
+.mat-warn-color {
+  color: #f44336;
+}
+
+.mat-secondary-color {
+  color: rgba(0, 0, 0, .58)
+}
+
+.mat-disabled-color {
+  color: rgba(0, 0, 0, .38)
+}
+
+.active-link {
+  color: #f44336 !important;
+}
+
+.mat-form-field.datepicker {
+  width: 8em;
+}
+
+.mat-form-field:not(:first-child) {
+  margin-left: 1em;
+}
+
+.mat-form-field.weekselect {
+  width: 6em;
 }

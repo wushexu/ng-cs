@@ -6,8 +6,26 @@
 <div class="ui container">
   <mat-toolbar color="secondary">
     <mat-toolbar-row>
-      <span>Dora</span>
+
+      <div class="ui text menu">
+        <div class="header item">课表</div>
+        <a routerLink="/day" class="item" routerLinkActive="active-link">单日课表</a>
+        <a routerLink="/week" class="item" routerLinkActive="active-link">单周课表</a>
+        <a routerLink="/month" class="item" routerLinkActive="active-link">单月课表</a>
+        <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
+      </div>
       <span class="spacer"></span>
+      <!--<div class="ui text menu">
+        <div class="ui simple dropdown item">
+          视角
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item">班级</div>
+            <div class="item">教师</div>
+            <div class="item">教室</div>
+          </div>
+        </div>
+      </div>-->
       <button type="button" mat-icon-button>
         <mat-icon aria-label="Menu">menu</mat-icon>
       </button>
@@ -23,12 +41,12 @@
     </div>
   </div>-->
   <!--<input type="date" name="futuredate" min="2020-11-28[c=gregory]">-->
-<!--  <app-day-lessons class="main-content"></app-day-lessons>-->
-<!--  <app-day-schedule class="main-content"></app-day-schedule>-->
-  <app-serial-day-schedule class="main-content"></app-serial-day-schedule>
-<!--  <app-week-schedule class="main-content"></app-week-schedule>-->
-<!--  <app-month-schedule class="main-content"></app-month-schedule>-->
-<!--  <app-term-schedule class="main-content"></app-term-schedule>-->
+  <!--  <app-day-lessons class="main-content"></app-day-lessons>-->
+  <!--  <app-day-schedule class="main-content"></app-day-schedule>-->
+  <!--  <app-serial-day-schedule class="main-content"></app-serial-day-schedule>-->
+  <!--  <app-week-schedule class="main-content"></app-week-schedule>-->
+  <!--  <app-month-schedule class="main-content"></app-month-schedule>-->
+  <!--  <app-term-schedule class="main-content"></app-term-schedule>-->
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>

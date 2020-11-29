@@ -5,6 +5,7 @@ import {MonthSchedule} from '../../model2/month-schedule';
 import {Week} from '../../model/week';
 import {MonthDim} from '../../model2/month-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-month-schedule',
@@ -15,8 +16,10 @@ export class MonthScheduleComponent implements OnInit {
 
   monthSchedule: MonthSchedule;
   context: ScheduleContext = {};
+  perspective: 'class' | 'teacher' | 'room';
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor(private scheduleService: ScheduleService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {

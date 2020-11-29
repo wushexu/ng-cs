@@ -3,17 +3,15 @@ import {Routes, RouterModule} from '@angular/router';
 import {WeekScheduleComponent} from './schedule/week/week-schedule.component';
 import {MonthScheduleComponent} from './schedule/month/month-schedule.component';
 import {TermScheduleComponent} from './schedule/term/term-schedule.component';
+import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
+import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 
 const routes: Routes = [
-  {path: 'class/week', component: WeekScheduleComponent, data: {perspective: 'class'}},
-  {path: 'teacher/week', component: WeekScheduleComponent, data: {perspective: 'teacher'}},
-  {path: 'room/week', component: WeekScheduleComponent, data: {perspective: 'room'}},
-  {path: 'class/month', component: MonthScheduleComponent, data: {perspective: 'class'}},
-  {path: 'teacher/month', component: MonthScheduleComponent, data: {perspective: 'teacher'}},
-  {path: 'room/month', component: MonthScheduleComponent, data: {perspective: 'room'}},
-  {path: 'class/term', component: TermScheduleComponent, data: {perspective: 'class'}},
-  {path: 'teacher/term', component: TermScheduleComponent, data: {perspective: 'teacher'}},
-  {path: 'room/term', component: TermScheduleComponent, data: {perspective: 'room'}}
+  {path: 'day', component: DayScheduleComponent},
+  {path: 'week', component: WeekScheduleComponent},
+  {path: 'month', component: MonthScheduleComponent},
+  {path: 'term', component: TermScheduleComponent},
+  {path: 's', component: SerialDayScheduleComponent}
 ];
 
 @NgModule({

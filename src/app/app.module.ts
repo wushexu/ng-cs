@@ -1,5 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
@@ -13,15 +18,16 @@ import {TableMatComponent} from './week-schedule/table-mat.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {FhComponent} from './fh/fh.component';
 import {ScheduleService} from './service/schedule.service';
-import { LessonScheduleComponent } from './schedule/lesson/lesson-schedule.component';
-import { DayLessonsComponent } from './schedule/day/day-lessons.component';
-import { WeekScheduleComponent } from './schedule/week/week-schedule.component';
-import { MonthScheduleComponent } from './schedule/month/month-schedule.component';
-import { TermScheduleComponent } from './schedule/term/term-schedule.component';
+import {LessonScheduleComponent} from './schedule/lesson/lesson-schedule.component';
+import {DayLessonsComponent} from './schedule/day/day-lessons.component';
+import {WeekScheduleComponent} from './schedule/week/week-schedule.component';
+import {MonthScheduleComponent} from './schedule/month/month-schedule.component';
+import {TermScheduleComponent} from './schedule/term/term-schedule.component';
 import {DateLabelPipe} from './common/pipe/date-label.pipe';
 import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
 import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
+import {DATE_FORMATS, PaginatorIntl} from './common/locale';
 
 @NgModule({
   declarations: [
@@ -40,6 +46,8 @@ import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-sched
     SerialDayScheduleComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     FlexLayoutModule,
     AppRoutingModule,
@@ -48,7 +56,12 @@ import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-sched
     LayoutModule,
     AppMaterialModule
   ],
-  providers: [ScheduleService],
+  providers: [
+    ScheduleService,
+    {provide: MatPaginatorIntl, useValue: PaginatorIntl},
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},],
   bootstrap: [AppComponent]
 })
 export class AppModule {

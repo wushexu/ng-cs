@@ -20,9 +20,6 @@ export class WeekScheduleComponent implements OnInit {
 
   constructor(private scheduleService: ScheduleService,
               private route: ActivatedRoute) {
-    route.data.subscribe(data => {
-      this.perspective = data.perspective;
-    });
   }
 
   ngOnInit(): void {

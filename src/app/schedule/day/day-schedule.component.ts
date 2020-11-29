@@ -4,6 +4,7 @@ import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {ScheduleFilter} from '../../model2/schedule-filter';
 
 
 @Component({
@@ -15,6 +16,9 @@ export class DayScheduleComponent implements OnInit {
 
   daySchedule: DaySchedule;
   context: ScheduleContext = {};
+  perspective: 'class' | 'teacher' | 'room';
+
+  filter: ScheduleFilter = new ScheduleFilter();
 
   constructor(private scheduleService: ScheduleService) {
   }
@@ -26,6 +30,10 @@ export class DayScheduleComponent implements OnInit {
       .subscribe(schedules => {
         this.daySchedule = new DaySchedule(dateDim, schedules);
       });
+  }
+
+  execute(): void {
+
   }
 
 }

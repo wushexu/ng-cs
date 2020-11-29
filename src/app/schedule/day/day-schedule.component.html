@@ -1,4 +1,29 @@
-<table class="ui center aligned fixed celled unstackable table">
+<div>
+  <mat-form-field class="datepicker">
+    <mat-label>课表日期</mat-label>
+    <input matInput [matDatepicker]="datePicker"
+           placeholder="日期"
+           [(ngModel)]="filter.date"
+           (dblclick)="filter.date=null">
+    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="weekselect">
+    <mat-label>学周</mat-label>
+    <mat-select [(ngModel)]="filter.weekNo">
+      <mat-option value="1">第1周</mat-option>
+      <mat-option value="2">第2周</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button color="primary" (click)="execute()">
+    <mat-icon>search</mat-icon>
+    查询
+  </button>
+</div>
+
+<table class="ui center aligned fixed celled unstackable table" *ngIf="daySchedule">
   <thead>
   <tr>
     <th colspan="2">上午</th>
@@ -13,9 +38,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngIf="daySchedule">
+  <tr>
     <td *ngFor="let lesson of daySchedule.lessons" [attr.colspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context" *ngIf="lesson?.schedule"></app-lesson-schedule>
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+                           *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
   </tbody>
