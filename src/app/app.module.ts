@@ -35,6 +35,8 @@ import {TeacherSelectComponent} from './common/teacher-select/teacher-select-com
 import {TeacherCourseService} from './service/teacher-course.service';
 import { ClassroomSelectComponent } from './common/classroom-select/classroom-select.component';
 import {ClassroomService} from './service/classroom.service';
+import {TermWeekService} from './service/term-week.service';
+import { TermWeekSelectComponent } from './common/term-week-select/term-week-select.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import {ClassroomService} from './service/classroom.service';
     MonthPickerComponent,
     ClassSelectComponent,
     TeacherSelectComponent,
-    ClassroomSelectComponent
+    ClassroomSelectComponent,
+    TermWeekSelectComponent
   ],
   imports: [
     FormsModule,
@@ -72,6 +75,7 @@ import {ClassroomService} from './service/classroom.service';
     DeptMajorClassService,
     TeacherCourseService,
     ClassroomService,
+    TermWeekService,
     {provide: MatPaginatorIntl, useValue: PaginatorIntl},
     {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

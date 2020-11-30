@@ -19,13 +19,7 @@
     <mat-datepicker #datePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field class="week-select">
-    <mat-label>学周</mat-label>
-    <mat-select [(ngModel)]="filter.weekNo">
-      <mat-option value="1">第1周</mat-option>
-      <mat-option value="2">第2周</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <app-term-week-select (selected)="weekSelected($event)"></app-term-week-select>
 
   <app-monthpicker [yearMonth]="filter.month" (selected)="monthSelected($event)"></app-monthpicker>
 

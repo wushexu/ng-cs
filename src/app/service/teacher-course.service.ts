@@ -1,19 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-
-import {MatDialog} from '@angular/material/dialog';
 
 import {Observable, of} from 'rxjs';
-import {catchError, filter, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
-import {environment} from '../../environments/environment';
-import {Schedule} from '../model/schedule';
-import {Dept} from '../model/dept';
-import {Major} from '../model/major';
-import {Class} from '../model/class';
 import {Course} from '../model/course';
 import {Teacher} from '../model/teacher';
-import {Site} from '../model/site';
 
 
 @Injectable()
@@ -1628,6 +1619,8 @@ export class TeacherCourseService {
     if (typeof size === 'undefined') {
       size = 10;
     }
+
+    // const numericKey = /\d+/.test(key);
 
     return this.getAllTeachers().pipe(
       map(teachers => {

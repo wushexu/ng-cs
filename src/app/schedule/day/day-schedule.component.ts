@@ -8,6 +8,7 @@ import {ScheduleFilter} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
 import {Teacher} from '../../model/teacher';
 import {Classroom} from '../../model/site';
+import {Week} from '../../model/week';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class DayScheduleComponent implements OnInit {
   selectedClass: Class;
   selectedTeacher: Teacher;
   selectedClassroom: Classroom;
+  selectedWeek: Week;
 
   constructor(private scheduleService: ScheduleService) {
   }
@@ -61,6 +63,11 @@ export class DayScheduleComponent implements OnInit {
   classroomSelected(selectedClassroom: Classroom) {
     this.selectedClassroom = selectedClassroom;
     console.log(selectedClassroom);
+  }
+
+  weekSelected(selectedWeek: Week) {
+    this.selectedWeek = selectedWeek;
+    console.log(selectedWeek);
   }
 
 }

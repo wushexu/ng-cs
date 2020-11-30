@@ -3,6 +3,7 @@ export class Term {
   termYear: number;
   termMonth: number;
 
+  name?: string;
 // {
 //   "id": "202009",
 //   "term_month": 9,
