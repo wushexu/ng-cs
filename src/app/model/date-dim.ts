@@ -1,11 +1,9 @@
-import * as moment from 'moment';
+// import * as moment from 'moment';
+// import {DATE_FORMAT} from '../config';
 
 export class DateDim {
 
-  static DATE_FORMAT = 'YYYY-MM-DD';
-  // static DATE_DISPLAY_FORMAT = 'YYYY-MM-DD';
-
-  date: string;
+  date: string; // DATE_FORMAT @../config
   weekno: number;
   dayOfWeek: number; // 1: Monday
 
@@ -18,7 +16,7 @@ export class DateDim {
 
   static setDateLabels(dateDim: DateDim): void {
     // const mom = moment(dateDim.date);
-    // dateDim.dateLabel = mom.format(DateDim.DATE_DISPLAY_FORMAT);
+    // dateDim.dateLabel = mom.format(...);
     dateDim.dateLabel = dateDim.date;
     dateDim.weekdayLabel = ['一', '二', '三', '四', '五', '六', '日'][dateDim.dayOfWeek - 1];
   }

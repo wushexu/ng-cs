@@ -1,3 +1,5 @@
+import {Term} from './term';
+
 export class Week {
   weekno: number;
   firstDay: string;
@@ -5,6 +7,8 @@ export class Week {
 
   termYear?: number;
   termMonth?: number;
+
+  term?: Term;
 
 // {
 //   "first_day": "2020-09-07",

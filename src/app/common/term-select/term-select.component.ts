@@ -29,7 +29,7 @@ export class TermSelectComponent implements OnInit {
       });
   }
 
-  classSelected() {
+  termSelected() {
     this.selected.emit(this.selectedTerm);
   }
 

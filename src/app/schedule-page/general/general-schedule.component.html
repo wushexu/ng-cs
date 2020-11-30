@@ -24,19 +24,14 @@
         视角
         <i class="dropdown icon"></i>
         <div class="menu">
-          <div class="item" (click)="perspective='class'">
-            <span [class.primary-color]="perspective==='class'">班级</span>
-          </div>
-          <div class="item" (click)="perspective='teacher'">
-            <span [class.primary-color]="perspective==='teacher'">教师</span>
-          </div>
-          <div class="item" (click)="perspective='classroom'">
-            <span [class.primary-color]="perspective==='classroom'">教室</span>
+          <div class="item" (click)="perspective=pers.key" *ngFor="let pers of perspectiveDefs">
+            <span [class.primary-color]="perspective===pers.key">{{pers.name}}</span>
           </div>
         </div>
       </div>
+
       <mat-label class="primary-color perspective-label">
-        {{perspective === 'class' ? '班级' : (perspective === 'teacher' ? '教师' : '教室')}}
+        {{perspectiveName()}}
       </mat-label>
 
       <app-class-select (selected)="classSelected($event)" [hidden]="perspective!=='class'"></app-class-select>
@@ -47,24 +42,17 @@
     </div>
 
     <div>
+
       <div class="ui simple dropdown item">
         时间
         <i class="dropdown icon"></i>
         <div class="menu">
-          <div class="item" (click)="timeScope='day'">
-            <span [class.primary-color]="timeScope==='day'">单日</span>
-          </div>
-          <div class="item" (click)="timeScope='week'">
-            <span [class.primary-color]="timeScope==='week'">单周</span>
-          </div>
-          <div class="item" (click)="timeScope='month'">
-            <span [class.primary-color]="timeScope==='month'">单月</span>
-          </div>
-          <div class="item" (click)="timeScope='term'">
-            <span [class.primary-color]="timeScope==='term'">学期</span>
+          <div class="item" (click)="timeScope=ts.key" *ngFor="let ts of timeScopeDefs">
+            <span [class.primary-color]="timeScope===ts.key">{{ts.name}}</span>
           </div>
         </div>
       </div>
+
       <mat-label class="primary-color time-scope-label">
         {{timeScopeName()}}
       </mat-label>

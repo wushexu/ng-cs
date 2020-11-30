@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>学期</mat-label>
-  <mat-select [(ngModel)]="selectedTerm" (selectionChange)="classSelected()">
+  <mat-select [(ngModel)]="selectedTerm" (selectionChange)="termSelected()">
     <mat-option *ngFor="let term of terms" [value]="term">{{term.name}}</mat-option>
   </mat-select>
 </mat-form-field>

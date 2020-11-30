@@ -2,6 +2,7 @@ import {each, groupBy} from 'underscore';
 
 import * as moment from 'moment';
 
+import {DATE_FORMAT} from '../config';
 import {DaySchedule} from './day-schedule';
 import {Schedule} from '../model/schedule';
 import {Week} from '../model/week';
@@ -33,7 +34,7 @@ export class WeekSchedule {
       daySchedules[index] = new DaySchedule(dateDim, schedulesOfDay);
     });
 
-    const mom0 = moment(week.firstDay, DateDim.DATE_FORMAT);
+    const mom0 = moment(week.firstDay, DATE_FORMAT);
     for (let i = 0; i < 7; i++) {
       if (daySchedules[i]) {
         continue;
@@ -42,7 +43,7 @@ export class WeekSchedule {
       if (i > 0) {
         mom.add(i, 'days');
       }
-      const date = mom.format(DateDim.DATE_FORMAT);
+      const date = mom.format(DATE_FORMAT);
       const dateDim: DateDim = {weekno: week.weekno, dayOfWeek: i + 1, date};
       DateDim.setDateLabels(dateDim);
 

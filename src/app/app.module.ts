@@ -27,7 +27,7 @@ import {DateLabelPipe} from './common/pipe/date-label.pipe';
 import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
 import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
-import {DATE_FORMATS, PaginatorIntl} from './common/locale';
+import {DATE_FORMATS, PaginatorIntl} from './config';
 import {MonthPickerComponent} from './common/month-picker/month-picker.component';
 import { ClassSelectComponent } from './common/class-select/class-select.component';
 import {DeptMajorClassService} from './service/dept-major-class.service';
