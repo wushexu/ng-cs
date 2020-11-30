@@ -20,7 +20,7 @@ export class ClassSelectComponent implements OnInit {
   majors: Major[];
 
   yearFilter: number;
-  majorFilter: number;
+  majorFilter: Major;
 
   allClasses: Class[];
   filteredClasses: Class[];
@@ -54,9 +54,7 @@ export class ClassSelectComponent implements OnInit {
       this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
 
       this.yearFilter = this.years[this.years.length - 1];
-      if (this.majors[0]) {
-        this.majorFilter = this.majors[0].id;
-      }
+      this.majorFilter = this.majors[0];
 
       this.filterClass();
     });
@@ -69,7 +67,8 @@ export class ClassSelectComponent implements OnInit {
       return;
     }
     this.filteredClasses = this.allClasses.filter(cla => {
-      return cla.year === this.yearFilter && cla.major && cla.major.id === this.majorFilter;
+      return (!this.yearFilter || cla.year === this.yearFilter)
+        && (!this.majorFilter || cla.major === this.majorFilter);
     });
 
     if (!this.selectedClass) {

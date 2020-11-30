@@ -38,17 +38,17 @@ export class TeacherSelectComponent implements OnInit {
   }
 
   teacherNameFn(option?: Teacher): string | undefined {
-    if (!option) {
-      return undefined;
-    }
-    return option.name;
+    return option ? option.name : undefined;
   }
 
-  teacherCodeNameFn(option?: Teacher): string | undefined {
+  teacherNameCodeFn(option?: Teacher): string | undefined {
     if (!option) {
       return undefined;
     }
-    return `${option.code} ${option.name}`;
+    if (!option.code) {
+      return option.name;
+    }
+    return `${option.name} ${option.code}`;
   }
 
   optionSelected($event: MatAutocompleteSelectedEvent) {

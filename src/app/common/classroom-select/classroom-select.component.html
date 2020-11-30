@@ -1,0 +1,34 @@
+<mat-form-field>
+  <mat-label>院系</mat-label>
+  <mat-select [(ngModel)]="deptFilter" (selectionChange)="filterClassroom()">
+    <mat-option [value]="null">（不限）</mat-option>
+    <mat-option *ngFor="let dept of depts" [value]="dept">
+      {{dept.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>教室类型</mat-label>
+  <mat-select [(ngModel)]="roomTypeFilter" (selectionChange)="filterClassroom()">
+    <mat-option [value]="null">（不限）</mat-option>
+    <mat-option *ngFor="let roomType of roomTypes" [value]="roomType">
+      {{roomType}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field class="classroom-autocomplete">
+  <input type="text" placeholder="教室名称" matInput [matAutocomplete]="auto"
+         [formControl]="nameControl">
+  <button mat-icon-button matSuffix (click)="clear()" [disabled]="!nameControl.value">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="classroomNameFn"
+                    (optionSelected)="optionSelected($event)">
+    <mat-option *ngFor="let option of autoCompleteClassrooms" [value]="option">
+      {{classroomNameFn(option)}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+

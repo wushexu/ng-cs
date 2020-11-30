@@ -7,7 +7,7 @@
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="teacherNameFn"
                     (optionSelected)="optionSelected($event)">
     <mat-option *ngFor="let option of filteredTeachers | async" [value]="option">
-      {{teacherCodeNameFn(option)}}
+      {{teacherNameCodeFn(option)}}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

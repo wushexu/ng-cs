@@ -1,6 +1,7 @@
 <mat-form-field class="year-select">
   <mat-label>入学年</mat-label>
   <mat-select [(ngModel)]="yearFilter" (selectionChange)="filterClass()">
+    <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let year of years" [value]="year">{{year}}年</mat-option>
   </mat-select>
 </mat-form-field>
@@ -8,9 +9,9 @@
 <mat-form-field>
   <mat-label>院系/专业</mat-label>
   <mat-select [(ngModel)]="majorFilter" (selectionChange)="filterClass()">
-    <!--    <mat-option>（全部）</mat-option>-->
+    <mat-option [value]="null">（不限）</mat-option>
     <mat-optgroup *ngFor="let dept of depts" [label]="dept.name">
-      <mat-option *ngFor="let major of dept.majors" [value]="major.id">
+      <mat-option *ngFor="let major of dept.majors" [value]="major">
         {{major.name}}
       </mat-option>
     </mat-optgroup>

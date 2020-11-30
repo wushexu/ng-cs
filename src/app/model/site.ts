@@ -29,3 +29,5 @@ export class Site {
 //   "dept_id": 2
 // }
 }
+
+export declare type Classroom = Site;
