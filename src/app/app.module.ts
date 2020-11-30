@@ -37,8 +37,22 @@ import { ClassroomSelectComponent } from './common/classroom-select/classroom-se
 import {ClassroomService} from './service/classroom.service';
 import {TermWeekService} from './service/term-week.service';
 import { TermWeekSelectComponent } from './common/term-week-select/term-week-select.component';
+import {GeneralScheduleComponent} from './schedule-page/general/general-schedule.component';
+import {TermSelectComponent} from './common/term-select/term-select.component';
+import { DatePickerComponent } from './common/date-picker/date-picker.component';
 
 @NgModule({
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    FlexLayoutModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    LayoutModule,
+    AppMaterialModule
+  ],
   declarations: [
     AppComponent,
     TableMatComponent,
@@ -57,18 +71,10 @@ import { TermWeekSelectComponent } from './common/term-week-select/term-week-sel
     ClassSelectComponent,
     TeacherSelectComponent,
     ClassroomSelectComponent,
-    TermWeekSelectComponent
-  ],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    FlexLayoutModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    LayoutModule,
-    AppMaterialModule
+    TermWeekSelectComponent,
+    TermSelectComponent,
+    GeneralScheduleComponent,
+    DatePickerComponent
   ],
   providers: [
     ScheduleService,

@@ -3,7 +3,7 @@ import * as moment from 'moment';
 export class DateDim {
 
   static DATE_FORMAT = 'YYYY-MM-DD';
-  static DATE_DISPLAY_FORMAT = 'YYYY-MM-DD';
+  // static DATE_DISPLAY_FORMAT = 'YYYY-MM-DD';
 
   date: string;
   weekno: number;

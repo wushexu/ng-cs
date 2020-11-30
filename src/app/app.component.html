@@ -1,36 +1,4 @@
-<!--<app-nav></app-nav>-->
-<!--<div fxLayout="row" fxLayoutAlign="center center">
-  <div fxLayout="column" fxFlex="960px" fxFlex.lt-md="100%">
-  </div>
-</div>-->
 <div class="ui container">
-  <mat-toolbar color="secondary">
-    <mat-toolbar-row>
-
-      <div class="ui text menu">
-        <div class="header item">课表</div>
-        <a routerLink="/day" class="item" routerLinkActive="active-link">单日课表</a>
-        <a routerLink="/week" class="item" routerLinkActive="active-link">单周课表</a>
-        <a routerLink="/month" class="item" routerLinkActive="active-link">单月课表</a>
-        <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
-      </div>
-      <span class="spacer"></span>
-      <!--<div class="ui text menu">
-        <div class="ui simple dropdown item">
-          视角
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div class="item">班级</div>
-            <div class="item">教师</div>
-            <div class="item">教室</div>
-          </div>
-        </div>
-      </div>-->
-      <button type="button" mat-icon-button>
-        <mat-icon aria-label="Menu">menu</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
   <!--<div fxLayout="row" fxLayoutAlign="space-between center" style="min-height:3em">
     <div fxFlexAlign="start center">&nbsp;</div>
     <div fxFlexAlign="end center" fxLayoutAlign="space-between center">
@@ -47,9 +15,7 @@
   <!--  <app-week-schedule class="main-content"></app-week-schedule>-->
   <!--  <app-month-schedule class="main-content"></app-month-schedule>-->
   <!--  <app-term-schedule class="main-content"></app-term-schedule>-->
-  <div class="main-content">
-    <router-outlet></router-outlet>
-  </div>
   <!--<app-media-query-status></app-media-query-status>-->
   <!--<app-fh class="main-content"></app-fh>-->
+  <router-outlet></router-outlet>
 </div>

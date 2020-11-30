@@ -12,8 +12,24 @@
 @import "~fomantic-ui-css/components/menu.min.css";
 @import "~fomantic-ui-css/components/dropdown.min.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.main-content {
+  display: block;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.schedule-tables {
+  margin-top: 2em;
+}
 
 .spacer {
   flex: 1 1 auto;
@@ -21,42 +37,34 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 td.th {
   /*background: #f9fafb;*/
-  background: rgba(0,0,0,.03);
-  color: rgba(0,0,0,.8);
+  background: rgba(0, 0, 0, .03);
+  color: rgba(0, 0, 0, .8);
   font-weight: 700;
 }
 
 
-.mat-primary-color {
+.primary-color {
   color: #3f51b5;
 }
 
-.mat-accent-color {
+.accent-color {
   color: #ff4081;
 }
 
-.mat-warn-color {
+.warn-color {
   color: #f44336;
 }
 
-.mat-secondary-color {
+.secondary-color {
   color: rgba(0, 0, 0, .58)
 }
 
-.mat-disabled-color {
+.disabled-color {
   color: rgba(0, 0, 0, .38)
 }
 
 .active-link {
   color: #ff4081 !important;
-}
-
-.mat-form-field.datepicker {
-  width: 8em;
-}
-
-.mat-form-field.monthpicker {
-  width: 6em;
 }
 
 .mat-form-field:not(:first-child) {
@@ -65,12 +73,4 @@ td.th {
 
 .inline-form > *:not(:first-child) {
   margin-left: 1em;
-}
-
-.mat-form-field.week-select {
-  width: 6em;
-}
-
-.mat-form-field.year-select {
-  width: 6em;
 }

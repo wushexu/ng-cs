@@ -18,6 +18,7 @@ PaginatorIntl.getRangeLabel = (page: number,
 
 
 const DATE_FORMAT = 'YYYY-MM-DD';
+const MONTH_PICKER_FORMAT = 'YYYY-MM';
 
 const DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -34,5 +35,6 @@ const DATE_FORMATS: MatDateFormats = {
 export {
   PaginatorIntl,
   DATE_FORMATS,
-  DATE_FORMAT
+  DATE_FORMAT,
+  MONTH_PICKER_FORMAT
 };

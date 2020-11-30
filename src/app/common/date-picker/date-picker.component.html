@@ -1,0 +1,8 @@
+<mat-form-field class="date-picker">
+  <mat-label>日期</mat-label>
+  <input matInput [matDatepicker]="datePicker"
+         placeholder="日期"
+         [(ngModel)]="selectedDate" (dateChange)="dateSelected()">
+  <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+  <mat-datepicker #datePicker></mat-datepicker>
+</mat-form-field>

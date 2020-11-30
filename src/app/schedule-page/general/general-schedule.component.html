@@ -1,0 +1,99 @@
+<mat-toolbar color="secondary">
+  <mat-toolbar-row>
+    <span>课表</span>
+    <!--<div class="ui text menu">
+      <div class="header item">课表</div>
+      <a routerLink="/day" class="item" routerLinkActive="active-link">单日课表</a>
+      <a routerLink="/week" class="item" routerLinkActive="active-link">单周课表</a>
+      <a routerLink="/month" class="item" routerLinkActive="active-link">单月课表</a>
+      <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
+    </div>-->
+    <span class="spacer"></span>
+    <!--<button type="button" mat-icon-button>
+      <mat-icon aria-label="Menu">menu</mat-icon>
+    </button>-->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<div class="main-content">
+
+  <div class="schedule-form">
+    <div>
+      <div class="ui simple dropdown item">
+        视角
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" (click)="perspective='class'">
+            <span [class.primary-color]="perspective==='class'">班级</span>
+          </div>
+          <div class="item" (click)="perspective='teacher'">
+            <span [class.primary-color]="perspective==='teacher'">教师</span>
+          </div>
+          <div class="item" (click)="perspective='classroom'">
+            <span [class.primary-color]="perspective==='classroom'">教室</span>
+          </div>
+        </div>
+      </div>
+      <mat-label class="primary-color perspective-label">
+        {{perspective === 'class' ? '班级' : (perspective === 'teacher' ? '教师' : '教室')}}
+      </mat-label>
+
+      <app-class-select (selected)="classSelected($event)" [hidden]="perspective!=='class'"></app-class-select>
+      <app-teacher-select (selected)="teacherSelected($event)" [hidden]="perspective!=='teacher'"></app-teacher-select>
+      <app-classroom-select (selected)="classroomSelected($event)"
+                            [hidden]="perspective!=='classroom'"></app-classroom-select>
+
+    </div>
+
+    <div>
+      <div class="ui simple dropdown item">
+        时间
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" (click)="timeScope='day'">
+            <span [class.primary-color]="timeScope==='day'">单日</span>
+          </div>
+          <div class="item" (click)="timeScope='week'">
+            <span [class.primary-color]="timeScope==='week'">单周</span>
+          </div>
+          <div class="item" (click)="timeScope='month'">
+            <span [class.primary-color]="timeScope==='month'">单月</span>
+          </div>
+          <div class="item" (click)="timeScope='term'">
+            <span [class.primary-color]="timeScope==='term'">学期</span>
+          </div>
+        </div>
+      </div>
+      <mat-label class="primary-color time-scope-label">
+        {{timeScopeName()}}
+      </mat-label>
+
+      <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
+                       [hidden]="timeScope!=='day'"></app-date-picker>
+
+      <app-term-week-select (selected)="weekSelected($event)" [hidden]="timeScope!=='week'"></app-term-week-select>
+
+      <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
+                        [hidden]="timeScope!=='month'"></app-month-picker>
+
+      <app-term-select (selected)="termSelected($event)" [hidden]="timeScope!=='term'"></app-term-select>
+
+
+      <span class="spacer"></span>
+
+      <button mat-button color="primary" (click)="execute()">
+        <mat-icon>search</mat-icon>
+        查询
+      </button>
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="schedule-tables">
+    <app-day-schedule [daySchedule]="daySchedule" [context]="context"></app-day-schedule>
+  </div>
+
+</div>

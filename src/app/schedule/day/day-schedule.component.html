@@ -1,34 +1,3 @@
-<div class="inline-form">
-  <mat-label>视角</mat-label>
-
-  班级
-  <app-class-select (selected)="classSelected($event)"></app-class-select>
-  教师
-  <app-teacher-select (selected)="teacherSelected($event)"></app-teacher-select>
-  教室
-  <app-classroom-select (selected)="classroomSelected($event)"></app-classroom-select>
-
-</div>
-<div class="inline-form">
-  <mat-form-field class="datepicker">
-    <mat-label>日期</mat-label>
-    <input matInput [matDatepicker]="datePicker"
-           placeholder="日期"
-           [(ngModel)]="filter.date">
-    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-    <mat-datepicker #datePicker></mat-datepicker>
-  </mat-form-field>
-
-  <app-term-week-select (selected)="weekSelected($event)"></app-term-week-select>
-
-  <app-monthpicker [yearMonth]="filter.month" (selected)="monthSelected($event)"></app-monthpicker>
-
-  <button mat-button color="primary" (click)="execute()">
-    <mat-icon>search</mat-icon>
-    查询
-  </button>
-</div>
-
 <table class="ui center aligned fixed celled unstackable table" *ngIf="daySchedule">
   <thead>
   <tr>

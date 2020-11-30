@@ -15,6 +15,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatAutocompleteModule,
     MatInputModule,
     MatSelectModule,
+    MatDividerModule
     // MatButtonToggleModule,
 
   ]
