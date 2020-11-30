@@ -6,6 +6,7 @@ import {DateDim} from '../../model/date-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {ScheduleFilter} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
+import {Teacher} from '../../model/teacher';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class DayScheduleComponent implements OnInit {
   filter: ScheduleFilter = new ScheduleFilter();
 
   selectedClass: Class;
+  selectedTeacher: Teacher;
 
   constructor(private scheduleService: ScheduleService) {
   }
@@ -40,13 +42,18 @@ export class DayScheduleComponent implements OnInit {
   }
 
   monthSelected(yearMonth: string): void {
-    console.log(yearMonth);
     this.filter.month = yearMonth;
+    console.log(yearMonth);
   }
 
   classSelected(selectedClass: Class) {
     this.selectedClass = selectedClass;
     console.log(selectedClass);
+  }
+
+  teacherSelected(selectedTeacher: Teacher) {
+    this.selectedTeacher = selectedTeacher;
+    console.log(selectedTeacher);
   }
 
 }

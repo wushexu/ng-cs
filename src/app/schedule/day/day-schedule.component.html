@@ -1,10 +1,14 @@
 <div class="inline-form">
   <mat-label>视角</mat-label>
 
-  <app-class-select (selected)="classSelected($event)"></app-class-select>
   班级
+  <app-class-select (selected)="classSelected($event)"></app-class-select>
   教师
+  <app-teacher-select (selected)="teacherSelected($event)"></app-teacher-select>
   教室
+
+</div>
+<div class="inline-form">
   <mat-form-field class="datepicker">
     <mat-label>日期</mat-label>
     <input matInput [matDatepicker]="datePicker"

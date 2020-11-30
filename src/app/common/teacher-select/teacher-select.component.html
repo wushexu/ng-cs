@@ -1,0 +1,13 @@
+<mat-form-field class="teacher-autocomplete">
+  <input type="text" placeholder="教师姓名/编号" matInput [matAutocomplete]="auto"
+         [formControl]="nameControl">
+  <button mat-icon-button matSuffix (click)="clear()" [disabled]="!nameControl.value">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="teacherNameFn"
+                    (optionSelected)="optionSelected($event)">
+    <mat-option *ngFor="let option of filteredTeachers | async" [value]="option">
+      {{teacherCodeNameFn(option)}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

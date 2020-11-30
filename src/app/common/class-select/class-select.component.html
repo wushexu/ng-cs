@@ -17,7 +17,7 @@
   </mat-select>
 </mat-form-field>
 
-<mat-form-field class="year-select">
+<mat-form-field>
   <mat-label>班级</mat-label>
   <mat-select [(ngModel)]="selectedClass" (selectionChange)="classSelected()">
     <mat-option *ngFor="let class1 of filteredClasses" [value]="class1">{{class1.name}}</mat-option>

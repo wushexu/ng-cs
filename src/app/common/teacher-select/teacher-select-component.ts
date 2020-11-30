@@ -1,0 +1,64 @@
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+
+import {Observable} from 'rxjs';
+import {startWith, switchMap} from 'rxjs/operators';
+
+import {TeacherCourseService} from '../../service/teacher-course.service';
+import {Teacher} from '../../model/teacher';
+
+@Component({
+  selector: 'app-teacher-select',
+  templateUrl: './teacher-select.component.html',
+  styleUrls: ['./teacher-select.component.css']
+})
+export class TeacherSelectComponent implements OnInit {
+
+  @Output() selected: EventEmitter<Teacher> = new EventEmitter<Teacher>();
+
+  nameControl = new FormControl();
+
+  filteredTeachers: Observable<Teacher[]>;
+
+
+  constructor(protected teacherService: TeacherCourseService) {
+
+  }
+
+  ngOnInit() {
+
+    this.filteredTeachers = this.nameControl.valueChanges
+      .pipe(
+        startWith(''),
+        switchMap((key: string) => {
+          return this.teacherService.filterTeachers({size: 10, key});
+        })
+      );
+  }
+
+  teacherNameFn(option?: Teacher): string | undefined {
+    if (!option) {
+      return undefined;
+    }
+    return option.name;
+  }
+
+  teacherCodeNameFn(option?: Teacher): string | undefined {
+    if (!option) {
+      return undefined;
+    }
+    return `${option.code} ${option.name}`;
+  }
+
+  optionSelected($event: MatAutocompleteSelectedEvent) {
+    const option = $event.option;
+    this.selected.emit(option.value);
+  }
+
+  clear() {
+    this.nameControl.reset();
+    this.selected.emit(null);
+  }
+
+}
