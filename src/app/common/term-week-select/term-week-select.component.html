@@ -9,7 +9,7 @@
   <mat-label>学周</mat-label>
   <mat-select [(ngModel)]="selectedWeek" (selectionChange)="weekSelected()">
     <mat-option *ngFor="let week of weeks" [value]="week">
-      第{{week.weekno}}周（{{week.firstDay}} 至 {{week.lastDay}}）
+      第{{week.weekno}}周（{{week.firstDay | dateMd}} ~ {{week.lastDay | dateMd}}）
     </mat-option>
   </mat-select>
 </mat-form-field>

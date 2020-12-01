@@ -60,7 +60,17 @@
   <mat-divider></mat-divider>
 
   <div class="schedule-tables">
-    <app-day-schedule [daySchedule]="daySchedule" [context]="context"></app-day-schedule>
+    <app-day-schedule [daySchedule]="daySchedule" [context]="context"
+                      *ngIf="timeScope==='day'&&daySchedule"></app-day-schedule>
+
+    <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
+                       *ngIf="timeScope==='week'&&weekSchedule"></app-week-schedule>
+
+    <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
+                        *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>
+
+    <app-term-schedule [termSchedule]="termSchedule" [context]="context"
+                       *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>
   </div>
 
 </div>

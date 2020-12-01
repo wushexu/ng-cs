@@ -15,9 +15,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let scopedDaySchedule of scopedDaySchedules">
-    <td class="th">{{scopedDaySchedule.scopeLabel}}</td>
-    <td *ngFor="let lesson of scopedDaySchedule.daySchedule.lessons" [attr.colspan]="lesson?.span">
+  <tr *ngFor="let sds of scopedDaySchedules">
+    <td class="th">{{sds.scopeLabel}}</td>
+    <td *ngFor="let lesson of sds.daySchedule.lessons" [attr.colspan]="lesson?.span">
       <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>

@@ -8,9 +8,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let weekSchedule of monthSchedule.weekSchedules">
-    <td class="th">第{{weekSchedule.week.weekno}}周</td>
-    <td *ngFor="let daySchedule of weekSchedule.daySchedules">
+  <tr *ngFor="let ws of monthSchedule.weekSchedules">
+    <td class="th">
+      <div>第{{ws.week.weekno}}周</div>
+      <div>（{{ws.week.firstDay | dateMd}} ~ {{ws.week.lastDay | dateMd}}）</div>
+    </td>
+    <td *ngFor="let daySchedule of ws.daySchedules">
       <app-day-lessons [daySchedule]="daySchedule" [context]="context"
                         fxLayoutAlign="center"></app-day-lessons>
     </td>

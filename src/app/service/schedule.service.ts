@@ -13,17 +13,24 @@ import {Class} from '../model/class';
 import {Course} from '../model/course';
 import {Teacher} from '../model/teacher';
 import {Site} from '../model/site';
+import {ClassroomService} from './classroom.service';
+import {DeptMajorClassService} from './dept-major-class.service';
+import {TeacherCourseService} from './teacher-course.service';
 
 
 @Injectable()
 export class ScheduleService {
 
-  // constructor(protected http: HttpClient,
-  //             protected dialog: MatDialog) {
-  //   super(http, dialog);
-  //   let apiBase = environment.apiBase || '';
-  //   this.baseUrl = `${apiBase}/profile`;
-  // }
+  constructor(protected http: HttpClient,
+              // protected dialog: MatDialog,
+              protected classroomService: ClassroomService,
+              protected deptMajorClassService: DeptMajorClassService,
+              protected teacherCourseService: TeacherCourseService
+  ) {
+    // super(http, dialog);
+    // let apiBase = environment.apiBase || '';
+    // this.baseUrl = `${apiBase}/profile`;
+  }
 
   // resetPassword(password: string, newPassword: string): Observable<OpResult> {
   //   let url = `${this.baseUrl}/resetPassword`;

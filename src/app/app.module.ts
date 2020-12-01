@@ -26,7 +26,7 @@ import {TermScheduleComponent} from './schedule/term/term-schedule.component';
 import {DateLabelPipe} from './common/pipe/date-label.pipe';
 import {WeekdayLabelPipe} from './common/pipe/weekday-label.pipe';
 import {DayScheduleComponent} from './schedule/day/day-schedule.component';
-import {SerialDayScheduleComponent} from './schedule/serial-day/serial-day-schedule.component';
+import {DayScheduleSerialComponent} from './schedule/day-serial/day-schedule-serial.component';
 import {DATE_FORMATS, PaginatorIntl} from './config';
 import {MonthPickerComponent} from './common/month-picker/month-picker.component';
 import { ClassSelectComponent } from './common/class-select/class-select.component';
@@ -42,6 +42,7 @@ import {TermSelectComponent} from './common/term-select/term-select.component';
 import { DatePickerComponent } from './common/date-picker/date-picker.component';
 import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-menu.component';
 import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu.component';
+import {DateMdPipe} from './common/pipe/date-md.pipe';
 
 @NgModule({
   imports: [
@@ -65,10 +66,11 @@ import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu
     WeekScheduleComponent,
     MonthScheduleComponent,
     TermScheduleComponent,
+    DateMdPipe,
     DateLabelPipe,
     WeekdayLabelPipe,
     DayScheduleComponent,
-    SerialDayScheduleComponent,
+    DayScheduleSerialComponent,
     MonthPickerComponent,
     ClassSelectComponent,
     TeacherSelectComponent,

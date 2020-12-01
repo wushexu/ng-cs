@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {DaySchedule} from '../../model2/day-schedule';
 import {ScheduleContext} from '../../model2/schedule-context';
