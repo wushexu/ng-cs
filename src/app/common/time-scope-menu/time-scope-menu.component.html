@@ -1,0 +1,13 @@
+<div class="ui simple dropdown item">
+  时间
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <div class="item" (click)="timeScopeSelected(ts.key)" *ngFor="let ts of timeScopeDefs">
+      <span [class.primary-color]="timeScope===ts.key">{{ts.name}}</span>
+    </div>
+  </div>
+</div>
+
+<mat-label class="primary-color time-scope-label">
+  {{timeScopeName()}}
+</mat-label>

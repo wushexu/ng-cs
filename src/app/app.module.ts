@@ -40,6 +40,8 @@ import { TermWeekSelectComponent } from './common/term-week-select/term-week-sel
 import {GeneralScheduleComponent} from './schedule-page/general/general-schedule.component';
 import {TermSelectComponent} from './common/term-select/term-select.component';
 import { DatePickerComponent } from './common/date-picker/date-picker.component';
+import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-menu.component';
+import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu.component';
 
 @NgModule({
   imports: [
@@ -74,7 +76,9 @@ import { DatePickerComponent } from './common/date-picker/date-picker.component'
     TermWeekSelectComponent,
     TermSelectComponent,
     GeneralScheduleComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    PerspectiveMenuComponent,
+    TimeScopeMenuComponent
   ],
   providers: [
     ScheduleService,

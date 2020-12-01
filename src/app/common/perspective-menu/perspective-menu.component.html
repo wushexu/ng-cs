@@ -1,0 +1,13 @@
+<div class="ui simple dropdown item">
+  视角
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <div class="item" (click)="perspectiveSelected(pers.key)" *ngFor="let pers of perspectiveDefs">
+      <span [class.primary-color]="perspective===pers.key">{{pers.name}}</span>
+    </div>
+  </div>
+</div>
+
+<mat-label class="primary-color perspective-label">
+  {{perspectiveName()}}
+</mat-label>

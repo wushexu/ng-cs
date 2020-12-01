@@ -18,21 +18,11 @@
 
 <div class="main-content">
 
-  <div class="schedule-form">
-    <div>
-      <div class="ui simple dropdown item">
-        视角
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          <div class="item" (click)="perspective=pers.key" *ngFor="let pers of perspectiveDefs">
-            <span [class.primary-color]="perspective===pers.key">{{pers.name}}</span>
-          </div>
-        </div>
-      </div>
+  <div fxLayout="column">
+    <div fxLayout fxLayoutAlign="start center">
 
-      <mat-label class="primary-color perspective-label">
-        {{perspectiveName()}}
-      </mat-label>
+      <app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
+                            class="perspective-menu"></app-perspective-menu>
 
       <app-class-select (selected)="classSelected($event)" [hidden]="perspective!=='class'"></app-class-select>
       <app-teacher-select (selected)="teacherSelected($event)" [hidden]="perspective!=='teacher'"></app-teacher-select>
@@ -41,21 +31,10 @@
 
     </div>
 
-    <div>
+    <div fxLayout fxLayoutAlign="start center">
 
-      <div class="ui simple dropdown item">
-        时间
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          <div class="item" (click)="timeScope=ts.key" *ngFor="let ts of timeScopeDefs">
-            <span [class.primary-color]="timeScope===ts.key">{{ts.name}}</span>
-          </div>
-        </div>
-      </div>
-
-      <mat-label class="primary-color time-scope-label">
-        {{timeScopeName()}}
-      </mat-label>
+      <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
+                           class="time-scope-menu"></app-time-scope-menu>
 
       <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
                        [hidden]="timeScope!=='day'"></app-date-picker>

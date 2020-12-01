@@ -7,7 +7,7 @@ import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {ScheduleContext} from '../../model2/schedule-context';
-import {Perspective, PerspectiveDef, ScheduleFilter, TimeScope, TimeScopeDef} from '../../model2/schedule-filter';
+import {Perspective, ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
 import {Teacher} from '../../model/teacher';
 import {Classroom} from '../../model/site';
@@ -26,9 +26,6 @@ export class GeneralScheduleComponent implements OnInit {
   perspective: Perspective = 'class';
   timeScope: TimeScope = 'day';
 
-  perspectiveDefs = PerspectiveDef.All;
-  timeScopeDefs = TimeScopeDef.All;
-
   filter: ScheduleFilter = new ScheduleFilter();
 
   selectedClass: Class;
@@ -41,14 +38,6 @@ export class GeneralScheduleComponent implements OnInit {
   selectedTerm: Term;
 
   constructor(private scheduleService: ScheduleService) {
-  }
-
-  perspectiveName(): string {
-    return PerspectiveDef.getName(this.perspective);
-  }
-
-  timeScopeName(): string {
-    return TimeScopeDef.getName(this.timeScope);
   }
 
   ngOnInit(): void {
@@ -103,6 +92,16 @@ export class GeneralScheduleComponent implements OnInit {
   termSelected(selectedTerm: Term) {
     this.selectedTerm = selectedTerm;
     console.log(selectedTerm);
+  }
+
+  perspectiveSelected(perspective: Perspective) {
+    this.perspective = perspective;
+    console.log(perspective);
+  }
+
+  timeScopeSelected(timeScope: TimeScope) {
+    this.timeScope = timeScope;
+    console.log(timeScope);
   }
 
 }

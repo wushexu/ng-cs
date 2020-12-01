@@ -74,3 +74,9 @@ td.th {
 .inline-form > *:not(:first-child) {
   margin-left: 1em;
 }
+
+.perspective-menu .perspective-label, .time-scope-menu .time-scope-label {
+  margin-left: 1em;
+  margin-right: 1.5em;
+  word-break: keep-all;
+}
