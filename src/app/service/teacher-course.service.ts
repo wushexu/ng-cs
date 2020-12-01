@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -10,12 +11,10 @@ import {Teacher} from '../model/teacher';
 @Injectable()
 export class TeacherCourseService {
 
-  // constructor(protected http: HttpClient,
-  //             protected dialog: MatDialog) {
-  //   super(http, dialog);
-  //   let apiBase = environment.apiBase || '';
-  //   this.baseUrl = `${apiBase}/profile`;
-  // }
+  constructor(protected http: HttpClient) {
+    // let apiBase = environment.apiBase || '';
+    // this.baseUrl = `${apiBase}/profile`;
+  }
 
   getAllTeachers(): Observable<Teacher[]> {
 

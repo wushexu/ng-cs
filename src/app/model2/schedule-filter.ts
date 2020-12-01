@@ -1,4 +1,5 @@
 import {object} from 'underscore';
+import {Schedule} from '../model/schedule';
 
 export type Perspective = 'class' | 'teacher' | 'classroom';
 export type TimeScope = 'day' | 'week' | 'month' | 'term';
@@ -39,6 +40,7 @@ export class TimeScopeDef {
 }
 
 
-export class ScheduleFilter {
+export class ScheduleFilter extends Schedule {
 
+  yearMonth: string;
 }

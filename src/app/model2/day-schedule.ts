@@ -7,8 +7,8 @@ import {DateDim} from '../model/date-dim';
 export class DaySchedule {
 
   dateDim: DateDim;
-  lessons: Lesson[];
-  notnullLessons: Lesson[];
+  lessons: Lesson[]; // null as placeholder
+  noPlaceholderLessons: Lesson[];
   timeIndexLessons: Lesson[];
 
   // lesson9 = false;
@@ -53,7 +53,7 @@ export class DaySchedule {
     }
 
     this.lessons = lessons.filter(l => l !== removalMark);
-    this.notnullLessons = this.lessons.filter(l => l);
+    this.noPlaceholderLessons = this.lessons.filter(l => l);
   }
 
 }

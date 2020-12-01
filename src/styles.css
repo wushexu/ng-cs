@@ -67,12 +67,12 @@ td.th {
   color: #ff4081 !important;
 }
 
-.mat-form-field:not(:first-child) {
+/*.mat-form-field:not(:first-child) {
   margin-left: 1em;
-}
+}*/
 
-.inline-form > *:not(:first-child) {
-  margin-left: 1em;
+.mat-form-field:not(:last-child) {
+  margin-right: 1em;
 }
 
 .perspective-menu .perspective-label, .time-scope-menu .time-scope-label {

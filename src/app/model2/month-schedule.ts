@@ -1,8 +1,9 @@
-import {groupBy} from 'underscore';
+import {groupBy, flatten} from 'underscore';
 
 import {Schedule} from '../model/schedule';
 import {WeekSchedule} from './week-schedule';
 import {MonthDim} from './month-dim';
+import {DaySchedule} from './day-schedule';
 
 export class MonthSchedule {
 
@@ -22,5 +23,12 @@ export class MonthSchedule {
     }
 
     this.weekSchedules = weekSchedules;
+  }
+
+  get daySchedules(): DaySchedule[] {
+    if (!this.weekSchedules) {
+      return null;
+    }
+    return flatten(this.weekSchedules.map(ws => ws.daySchedules));
   }
 }

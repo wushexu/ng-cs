@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
-import {MONTH_PICKER_FORMAT} from '../../config';
+import {DATE_FORMAT, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
@@ -20,6 +20,7 @@ import {ScopedDaySchedule} from '../../model2/scoped-day-schedule';
 import {MonthDim} from '../../model2/month-dim';
 import {TermDim} from '../../model2/term-dim';
 import {TermWeekService} from '../../service/term-week.service';
+import {Schedule} from '../../model/schedule';
 
 @Component({
   selector: 'app-general-schedule',
@@ -36,7 +37,7 @@ export class GeneralScheduleComponent implements OnInit {
 
   context: ScheduleContext = {};
   // compactness
-  outputStyle: 'calender' | 'day-list' = 'calender';
+  outputStyleList = false;
 
   perspective: Perspective = 'class';
   timeScope: TimeScope = 'day';
@@ -50,8 +51,6 @@ export class GeneralScheduleComponent implements OnInit {
   selectedWeek: Week;
   selectedTerm: Term;
 
-  filter: ScheduleFilter = new ScheduleFilter();
-
 
   constructor(private scheduleService: ScheduleService,
               private termWeekService: TermWeekService) {
@@ -62,75 +61,178 @@ export class GeneralScheduleComponent implements OnInit {
     this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
   }
 
-  execute(): void {
+  async execute() {
 
-    const week0: Week = {
-      firstDay: '2020-09-28',
-      lastDay: '2020-11-04',
-      termMonth: 9,
-      termYear: 2020,
-      weekno: 4
-    };
-    const week1: Week = {
-      firstDay: '2020-10-05',
-      lastDay: '2020-10-11',
-      termMonth: 9,
-      termYear: 2020,
-      weekno: 5
-    };
-    const week2: Week = {
-      firstDay: '2020-10-12',
-      lastDay: '2020-10-18',
-      termMonth: 9,
-      termYear: 2020,
-      weekno: 6
-    };
-    const dateDim: DateDim = {weekno: 1, dayOfWeek: 1, date: '2020-11-23'};
-
-    switch (this.timeScope) {
-      case 'day':
-        this.scheduleService.querySchedules()
-          .subscribe(schedules => {
-            this.daySchedule = new DaySchedule(dateDim, schedules);
-          });
-        break;
-      case 'week':
-        this.scheduleService.querySchedules()
-          .subscribe(schedules => {
-            // check in one day; sort, check overlap
-            this.weekSchedule = new WeekSchedule(week0, schedules);
-          });
-        break;
-      case 'month':
-        const monthDim: MonthDim = {year: 2020, month: 10, weeks: [week0, week1, week2]};
-        this.scheduleService.querySchedules()
-          .subscribe(schedules => {
-            // check in one day; sort, check overlap
-            this.monthSchedule = new MonthSchedule(monthDim, schedules);
-          });
-        break;
-      case 'term':
-        const term: Term = {id: '2020.9', termYear: 2020, termMonth: 9};
-
-        const termDim: TermDim = {term, weeks: [week0, week1, week2]};
-        this.scheduleService.querySchedules()
-          .subscribe(schedules => {
-            // check in one day; sort, check overlap
-            this.termSchedule = new TermSchedule(termDim, schedules);
-          });
-        break;
+    const filter: ScheduleFilter = this.setupFilter();
+    if (!filter) {
+      return;
     }
 
+    const schedules = await this.scheduleService.querySchedules(filter).toPromise();
 
-    this.scheduleService.querySchedules()
-      .subscribe(schedules => {
-        const daySchedule1 = new DaySchedule(dateDim, schedules);
-        const daySchedule2 = Object.assign({}, daySchedule1);
-        this.scopedDaySchedules = [
-          {daySchedule: daySchedule1, scopeLabel: 'AAA'},
-          {daySchedule: daySchedule2, scopeLabel: 'BBB'}];
+    await this.setupSchedules(filter, schedules);
+
+    this.scopedDaySchedules = null;
+    if (this.outputStyleList) {
+      this.setupScopedDaySchedules();
+    }
+
+  }
+
+  setupFilter(): ScheduleFilter | null {
+
+    const filter: ScheduleFilter = new ScheduleFilter();
+
+    const term = this.selectedTerm;
+    switch (this.timeScope) {
+      case 'day':
+        if (!this.selectedDate) {
+          return null;
+        }
+        filter.date = this.selectedDate.format(DATE_FORMAT);
+        break;
+      case 'week':
+        if (!this.selectedWeek) {
+          return null;
+        }
+        if (!term) {
+          return null;
+        }
+        filter.termYear = term.termYear;
+        filter.termMonth = term.termMonth;
+        filter.weekno = this.selectedWeek.weekno;
+        break;
+      case 'month':
+        if (!this.selectedMonth) {
+          return null;
+        }
+        // YYYY-MM
+        filter.yearMonth = this.selectedMonth;
+        break;
+      case 'term':
+        if (!term) {
+          return null;
+        }
+        filter.termYear = term.termYear;
+        filter.termMonth = term.termMonth;
+        break;
+      default:
+        return null;
+    }
+
+    switch (this.perspective) {
+      case 'class':
+        if (!this.selectedClass) {
+          return null;
+        }
+        filter.classId = this.selectedClass.id;
+        break;
+      case 'teacher':
+        if (!this.selectedTeacher) {
+          return null;
+        }
+        filter.teacherId = this.selectedTeacher.id;
+        break;
+      case 'classroom':
+        if (!this.selectedClassroom) {
+          return null;
+        }
+        filter.siteId = this.selectedClassroom.id;
+        break;
+      default:
+        return null;
+    }
+
+    return filter;
+  }
+
+  async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
+
+    const term = this.selectedTerm;
+    switch (this.timeScope) {
+      case 'day':
+        const dayOfWeek = this.selectedDate.weekday();
+        const dateDim: DateDim = {weekno: 1/* not need */, dayOfWeek, date: filter.date};
+        this.daySchedule = new DaySchedule(dateDim, schedules);
+        break;
+      case 'week':
+        this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
+        break;
+      case 'month':
+        const yearMonth = this.selectedMonth;
+        const year = parseInt(yearMonth.substr(0, 4));
+        const month = parseInt(yearMonth.substr(5));
+
+        const weeks = await this.termWeekService.getMonthWeeks(term, yearMonth).toPromise();
+
+        const monthDim: MonthDim = {year, month, weeks};
+        this.monthSchedule = new MonthSchedule(monthDim, schedules);
+        break;
+      case 'term':
+        const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
+        const termDim: TermDim = {term, weeks: termWeeks};
+        this.termSchedule = new TermSchedule(termDim, schedules);
+        break;
+    }
+  }
+
+  setupScopedDaySchedules() {
+
+    if (this.scopedDaySchedules) {
+      return;
+    }
+
+    let daySchedules: DaySchedule[];
+
+    switch (this.timeScope) {
+      case 'week':
+        if (!this.weekSchedule) {
+          return;
+        }
+        daySchedules = this.weekSchedule.daySchedules;
+        break;
+      case 'month':
+        if (!this.monthSchedule) {
+          return;
+        }
+        daySchedules = this.monthSchedule.daySchedules;
+        break;
+      case 'term':
+        if (!this.termSchedule) {
+          return;
+        }
+        daySchedules = this.termSchedule.daySchedules;
+        break;
+      default:
+        return;
+    }
+
+    if (!daySchedules) {
+      this.scopedDaySchedules = null;
+      return;
+    }
+
+    this.scopedDaySchedules = daySchedules
+      .filter(ds => ds.lessons && ds.lessons.find(l => l))
+      .map(ds => {
+        const sds = new ScopedDaySchedule();
+        const dateDim = ds.dateDim;
+        if (!dateDim.weekdayLabel) {
+          DateDim.setDateLabels(dateDim);
+        }
+
+        sds.daySchedule = ds;
+        sds.scopeLabel = `${dateDim.date}（${dateDim.weekdayLabel}）`;
+        sds.scopeObj = dateDim;
+        return sds;
       });
+  }
 
+  outputStyleListChanged() {
+    // console.log(this.outputStyleList);
+    if (this.outputStyleList) {
+      this.setupScopedDaySchedules();
+    }
   }
 
   dateSelected(date: Moment): void {

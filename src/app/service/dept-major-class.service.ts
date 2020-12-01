@@ -14,12 +14,10 @@ import {Class} from '../model/class';
 @Injectable()
 export class DeptMajorClassService {
 
-  // constructor(protected http: HttpClient,
-  //             protected dialog: MatDialog) {
-  //   super(http, dialog);
-  //   let apiBase = environment.apiBase || '';
-  //   this.baseUrl = `${apiBase}/profile`;
-  // }
+  constructor(protected http: HttpClient) {
+    // let apiBase = environment.apiBase || '';
+    // this.baseUrl = `${apiBase}/profile`;
+  }
 
   getClasses(): Observable<Class[]> {
 

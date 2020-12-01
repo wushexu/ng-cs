@@ -16,6 +16,7 @@ import {Site} from '../model/site';
 import {ClassroomService} from './classroom.service';
 import {DeptMajorClassService} from './dept-major-class.service';
 import {TeacherCourseService} from './teacher-course.service';
+import {ScheduleFilter} from '../model2/schedule-filter';
 
 
 @Injectable()
@@ -38,7 +39,12 @@ export class ScheduleService {
   //   return super.postForResult(url, form);
   // }
 
-  querySchedules(): Observable<Schedule[]> {
+  querySchedules(params: ScheduleFilter): Observable<Schedule[]> {
+
+    if (!params) {
+      // wrong
+    }
+
     const dept: Dept = {
       id: 1,
       name: '工程技术系',

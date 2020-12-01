@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+
 import {Term} from '../model/term';
 import {Week} from '../model/week';
 
@@ -8,12 +11,10 @@ import {Week} from '../model/week';
 @Injectable()
 export class TermWeekService {
 
-  // constructor(protected http: HttpClient,
-  //             protected dialog: MatDialog) {
-  //   super(http, dialog);
-  //   let apiBase = environment.apiBase || '';
-  //   this.baseUrl = `${apiBase}/profile`;
-  // }
+  constructor(protected http: HttpClient) {
+    // let apiBase = environment.apiBase || '';
+    // this.baseUrl = `${apiBase}/profile`;
+  }
 
   terms: Term[] = [
     {
@@ -74,6 +75,17 @@ export class TermWeekService {
 
     this.weeks1.forEach(w => w.term = term);
     return of(this.weeks1);
+  }
+
+  getMonthWeeks(term: Term, yearMonth: string): Observable<Week[]> {
+
+    return this.getTermWeeks(term).pipe(
+      map(weeks => {
+        return weeks.filter(
+          w => w.firstDay.startsWith(yearMonth)
+            || w.lastDay.startsWith(yearMonth));
+      })
+    );
   }
 
 }

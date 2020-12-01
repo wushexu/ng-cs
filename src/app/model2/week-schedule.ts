@@ -47,7 +47,12 @@ export class WeekSchedule {
       const dateDim: DateDim = {weekno: week.weekno, dayOfWeek: i + 1, date};
       DateDim.setDateLabels(dateDim);
 
-      daySchedules[i] = {dateDim, lessons: [], notnullLessons: [], timeIndexLessons: []};
+      daySchedules[i] = {
+        dateDim,
+        lessons: [null, null, null, null, null],
+        noPlaceholderLessons: [],
+        timeIndexLessons: []
+      };
     }
 
     const timeLessons: Lesson[][] = [];

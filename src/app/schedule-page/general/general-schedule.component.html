@@ -33,26 +33,33 @@
 
     <div fxLayout fxLayoutAlign="start center">
 
-      <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
-                           class="time-scope-menu"></app-time-scope-menu>
+      <div>
+        <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
+                             class="time-scope-menu"></app-time-scope-menu>
 
-      <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
-                       [hidden]="timeScope!=='day'"></app-date-picker>
+        <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
+                         [hidden]="timeScope!=='day'"></app-date-picker>
 
-      <app-term-week-select (selected)="weekSelected($event)" [hidden]="timeScope!=='week'"></app-term-week-select>
+        <app-term-week-select (selected)="weekSelected($event)" [hidden]="timeScope!=='week'"></app-term-week-select>
 
-      <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
-                        [hidden]="timeScope!=='month'"></app-month-picker>
+        <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
+                          [hidden]="timeScope!=='month'"></app-month-picker>
 
-      <app-term-select (selected)="termSelected($event)" [hidden]="timeScope!=='term'"></app-term-select>
-
+        <app-term-select (selected)="termSelected($event)" [hidden]="timeScope!=='term'"></app-term-select>
+      </div>
 
       <span class="spacer"></span>
 
-      <button mat-button color="primary" (click)="execute()">
-        <mat-icon>search</mat-icon>
-        查询
-      </button>
+      <div>
+        <mat-checkbox class="pad-right" [(ngModel)]="outputStyleList" [disabled]="timeScope==='day'"
+                      (change)="outputStyleListChanged()">每日详情
+        </mat-checkbox>
+
+        <button mat-button color="primary" (click)="execute()">
+          <mat-icon>search</mat-icon>
+          查询
+        </button>
+      </div>
     </div>
 
   </div>
@@ -63,14 +70,22 @@
     <app-day-schedule [daySchedule]="daySchedule" [context]="context"
                       *ngIf="timeScope==='day'&&daySchedule"></app-day-schedule>
 
-    <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
-                       *ngIf="timeScope==='week'&&weekSchedule"></app-week-schedule>
+    <ng-template [ngIf]="outputStyleList">
+      <ng-template [ngIf]="timeScope==='week'||timeScope==='month'||timeScope==='term'">
+        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"></app-day-schedule-serial>
+      </ng-template>
+    </ng-template>
 
-    <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
-                        *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>
+    <ng-template [ngIf]="!outputStyleList">
+      <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
+                         *ngIf="timeScope==='week'&&weekSchedule"></app-week-schedule>
 
-    <app-term-schedule [termSchedule]="termSchedule" [context]="context"
-                       *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>
+      <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
+                          *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>
+
+      <app-term-schedule [termSchedule]="termSchedule" [context]="context"
+                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>
+    </ng-template>
   </div>
 
 </div>
