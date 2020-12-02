@@ -129,7 +129,7 @@ export class ScheduleService {
 
     const schedule8: Schedule = Object.assign({}, schedule1, {date: '2020-10-16', dayOfWeek: 5, timeStart: 1, timeEnd: 2});
 
-    return of([schedule1, schedule2, schedule3, schedule5, schedule6, schedule7, schedule8]);
+    return of([schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, schedule7, schedule8]);
   }
 
 }

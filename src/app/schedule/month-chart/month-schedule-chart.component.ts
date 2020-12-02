@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 
-import {Moment} from 'moment';
 import * as moment from 'moment';
 
 import * as echarts from 'echarts';
@@ -9,7 +8,6 @@ import Format = echarts.EChartOption.Tooltip.Format;
 
 import {MonthSchedule} from '../../model2/month-schedule';
 import {ScheduleContext} from '../../model2/schedule-context';
-import {ChartConfig} from '../../common/ChartConfig';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
 import {DATE_FORMAT} from '../../config';
@@ -19,34 +17,30 @@ import {DATE_FORMAT} from '../../config';
   templateUrl: './month-schedule-chart.component.html',
   styleUrls: ['./month-schedule-chart.component.css']
 })
-export class MonthScheduleChartComponent extends ChartConfig implements AfterViewInit {
+export class MonthScheduleChartComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('chart') chartDiv: ElementRef;
 
   @Input() monthSchedule: MonthSchedule;
   @Input() context: ScheduleContext;
 
-  chartHeight = 600;
+  chartWidth = 600;
+  chartHeight = 500;
 
   myChart: echarts.ECharts;
 
   ngAfterViewInit(): void {
+    const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
+    this.myChart = echarts.init(holder);
+
     this.refreshChart();
   }
 
-  refreshChart(keepData = true): void {
+  refreshChart(): void {
 
-    if (!this.monthSchedule) {
+    if (!this.monthSchedule || !this.myChart) {
       return;
     }
-
-    if (this.myChart) {
-      // this.myChart.clear();
-      this.myChart.dispose();
-    }
-
-    const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
-    this.myChart = echarts.init(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
 
     const monthDim = this.monthSchedule.monthDim;
     const daySchedules: DaySchedule[] = this.monthSchedule.daySchedulesWithLessons;
@@ -80,18 +74,29 @@ export class MonthScheduleChartComponent extends ChartConfig implements AfterVie
       dateMoment.add(1, 'day');
     }
 
-    const visualMapMax = maxLessonSpansCount > 5 ? maxLessonSpansCount : 5;
+    const visualMapMax = maxLessonSpansCount > 4 ? maxLessonSpansCount : 4;
 
-    const scatterData: any[] = data.map(d => [d.dateDim.date, 1, d]);
-    const heatmapData: any[] = data.map(d => [d.dateDim.date, d.lessonSpansCount, d]);
+    const heatmapData: any[] = data.map(d => {
+      return {value: [d.dateDim.date, d.lessonSpansCount], daySchedule: d};
+    });
+    const scatterData: any[] = heatmapData;
+
+    const title = `${monthDim.year}年${monthDim.month}月课表`;
+
+    const component = this;
 
     const option1: EChartOption = {
+      color: null,
+      title: {
+        text: title,
+        top: 10,
+        left: 'center'
+      },
       tooltip: {
         formatter(params: Format) {
-          // const daySchedule = params.value[2] as DaySchedule;
+          const daySchedule = params.data.daySchedule as DaySchedule;
           // console.log(daySchedule);
-          const count = params.value[1];
-          return count > 0 ? count + '节课' : '无课';
+          return DaySchedule.lessonsHtml(daySchedule, component.context);
         }
       },
 
@@ -117,7 +122,8 @@ export class MonthScheduleChartComponent extends ChartConfig implements AfterVie
 
       calendar: [{
         left: 'center',
-        top: 'middle',
+        // top: 'middle',
+        top: 60 + 60,
         cellSize: [70, 70],
         yearLabel: {show: false},
         orient: 'vertical',
@@ -139,8 +145,7 @@ export class MonthScheduleChartComponent extends ChartConfig implements AfterVie
           label: {
             show: true,
             formatter(params) {
-              const daySchedule = params.value[2] as DaySchedule;
-              // console.log(daySchedule);
+              const daySchedule = params.data.daySchedule as DaySchedule;
               return daySchedule.dateDim.dayOfMonth + '\n\n\n\n';
             },
             color: '#000'
@@ -154,7 +159,7 @@ export class MonthScheduleChartComponent extends ChartConfig implements AfterVie
           label: {
             show: true,
             formatter(params) {
-              const daySchedule = params.value[2] as DaySchedule;
+              const daySchedule = params.data.daySchedule as DaySchedule;
               const lc = daySchedule.lessonSpansCount;
               if (lc === 0) {
                 return '';
@@ -176,9 +181,11 @@ export class MonthScheduleChartComponent extends ChartConfig implements AfterVie
       ]
     };
 
-    const option: EChartOption = Object.assign(this.buildOption(), option1);
+    this.myChart.setOption(option1);
+  }
 
-    this.myChart.setOption(option);
+  ngOnChanges(changes: SimpleChanges) {
+    this.refreshChart();
   }
 
 }

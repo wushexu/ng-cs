@@ -1,8 +1,9 @@
-import {times, constant} from 'underscore';
+import {times} from 'underscore';
 
 import {Schedule} from '../model/schedule';
 import {Lesson} from './lesson';
 import {DateDim} from '../model/date-dim';
+import {ScheduleContext} from './schedule-context';
 
 export class DaySchedule {
 
@@ -25,7 +26,7 @@ export class DaySchedule {
 
     // check in one day; sort, check overlap
 
-    const lessons: Lesson[] = times(5, constant(null));
+    const lessons: Lesson[] = [null, null, null, null, null];
 
     const removalMark: Lesson = {span: 1};
 
@@ -64,14 +65,32 @@ export class DaySchedule {
   }
 
   static emptySchedule(dateDim: DateDim): DaySchedule {
-    return {
-      dateDim,
-      schedules: [],
-      lessonSpansCount: 0,
-      lessons: [null, null, null, null, null],
-      noPlaceholderLessons: [],
-      timeIndexLessons: []
-    };
+    return new DaySchedule(dateDim, []);
+  }
+
+  static lessonsHtml(daySchedule: DaySchedule, context: ScheduleContext): string {
+    let indent = '&nbsp;';
+    times(3, () => indent = indent + indent); // 2^3=8
+    const lf = '<br>';
+    let text = '';
+    for (const {schedule} of daySchedule.noPlaceholderLessons) {
+      const {timeStart, timeEnd, course, theClass, site, teacher} = schedule;
+      const ampm = timeStart < 5 ? '（上午）' : '（下午）';
+      text += `${ampm}${timeStart}-${timeEnd}${lf}`;
+      if (!context.course && course) {
+        text += `${indent}${course.name}${lf}`;
+      }
+      if (!context.theClass && theClass) {
+        text += `${indent}${theClass.name}${lf}`;
+      }
+      if (!context.site && site) {
+        text += `${indent}${site.name}${lf}`;
+      }
+      if (!context.teacher && teacher) {
+        text += `${indent}${teacher.name}${lf}`;
+      }
+    }
+    return text;
   }
 
 }
