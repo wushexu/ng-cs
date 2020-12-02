@@ -26,7 +26,7 @@ export class DateDim {
 
   static fromMoment(mom: Moment): DateDim {
     const date = mom.format(DATE_FORMAT);
-    const dayOfWeek = mom.weekday();
+    const dayOfWeek = mom.day();
     const dateDim = new DateDim(date, dayOfWeek);
     dateDim.dayOfMonth = mom.date();
     return dateDim;

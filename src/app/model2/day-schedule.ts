@@ -69,6 +69,9 @@ export class DaySchedule {
   }
 
   static lessonsHtml(daySchedule: DaySchedule, context: ScheduleContext): string {
+    if (daySchedule.noPlaceholderLessons.length === 0) {
+      return '无课';
+    }
     let indent = '&nbsp;';
     times(3, () => indent = indent + indent); // 2^3=8
     const lf = '<br>';
