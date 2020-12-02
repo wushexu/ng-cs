@@ -3,40 +3,42 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, V
 import * as moment from 'moment';
 import * as echarts from 'echarts';
 
-import {MonthSchedule} from '../../model2/month-schedule';
 import {DaySchedule} from '../../model2/day-schedule';
 import {ScheduleCalendarChart} from '../../common/schedule-calendar-chart';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {TermSchedule} from '../../model2/term-schedule';
 
 @Component({
-  selector: 'app-month-schedule-chart',
-  templateUrl: './month-schedule-chart.component.html',
-  styleUrls: ['./month-schedule-chart.component.css']
+  selector: 'app-term-schedule-chart',
+  templateUrl: './term-schedule-chart.component.html',
+  styleUrls: ['./term-schedule-chart.component.css']
 })
-export class MonthScheduleChartComponent extends ScheduleCalendarChart implements AfterViewInit, OnChanges {
+export class TermScheduleChartComponent extends ScheduleCalendarChart implements AfterViewInit, OnChanges {
   @ViewChild('chart') chartDiv: ElementRef;
 
-  @Input() monthSchedule: MonthSchedule;
+  @Input() termSchedule: TermSchedule;
   @Input() context: ScheduleContext;
 
+  showMonthLabel = true;
+  chartHeight = 1830;
+
   inputDataReady(): boolean {
-    return !!this.monthSchedule;
+    const ts = this.termSchedule;
+    return ts && ts.termDim.weeks.length > 0;
   }
 
-  getCalendarRange(): string | string[] {
-    const monthDim = this.monthSchedule.monthDim;
-    return monthDim.yearMonth;
+  getCalendarRange(): string[] {
+    const weeks = this.termSchedule.termDim.weeks;
+    return [weeks[0].firstDay, weeks[weeks.length - 1].lastDay];
   }
 
   getStartEndDates(): moment.Moment[] {
-    const monthDim = this.monthSchedule.monthDim;
-    const dateMoment = moment(monthDim.yearMonth + '-01');
-    const nextMonth01 = dateMoment.clone().add(1, 'month');
-    return [dateMoment, nextMonth01];
+    const [start, end] = this.getCalendarRange();
+    return [moment(start), moment(end).add(1, 'day')];
   }
 
   getDaySchedulesWithLessons(): DaySchedule[] {
-    return this.monthSchedule.daySchedulesWithLessons;
+    return this.termSchedule.daySchedulesWithLessons;
   }
 
   ngAfterViewInit(): void {
@@ -47,8 +49,8 @@ export class MonthScheduleChartComponent extends ScheduleCalendarChart implement
   }
 
   setTitle(): void {
-    const monthDim = this.monthSchedule.monthDim;
-    this.title = `${monthDim.year}年${monthDim.month}月课表`;
+    const termDim = this.termSchedule.termDim;
+    this.title = `${termDim.term.name}课表`;
   }
 
   ngOnChanges(changes: SimpleChanges) {

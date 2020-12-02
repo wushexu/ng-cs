@@ -43,6 +43,7 @@ import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-
 import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu.component';
 import {DateMdPipe} from './common/pipe/date-md.pipe';
 import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedule-chart.component';
+import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-chart.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedu
     DatePickerComponent,
     PerspectiveMenuComponent,
     TimeScopeMenuComponent,
-    MonthScheduleChartComponent
+    MonthScheduleChartComponent,
+    TermScheduleChartComponent
   ],
   providers: [
     ScheduleService,

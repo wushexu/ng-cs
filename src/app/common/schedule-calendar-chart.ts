@@ -14,11 +14,14 @@ export abstract class ScheduleCalendarChart {
   context: ScheduleContext;
 
   cellSize = 70;
+  showMonthLabel = false;
   chartPaddingBottom = 30;
 
+  title: string;
   chartWidth = this.cellSize * 9;
   chartHeight = 500;
-  title: string;
+  // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
+  // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
 
   myChart: echarts.ECharts;
 
@@ -30,7 +33,7 @@ export abstract class ScheduleCalendarChart {
 
   abstract getCalendarRange(): string | string[];
 
-  abstract getStartAndEndDates(): Moment[];
+  abstract getStartEndDates(): Moment[];
 
   abstract inputDataReady(): boolean;
 
@@ -44,7 +47,7 @@ export abstract class ScheduleCalendarChart {
 
     this.setTitle();
 
-    const [startDate, endDatePlus1Moment] = this.getStartAndEndDates();
+    const [startDate, endDatePlus1Moment] = this.getStartEndDates();
 
     const daySchedules: DaySchedule[] = this.getDaySchedulesWithLessons();
 
@@ -76,9 +79,6 @@ export abstract class ScheduleCalendarChart {
     }
 
     const visualMapMax = maxLessonSpansCount > 4 ? maxLessonSpansCount : 4;
-
-    // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
-    // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
 
     const heatmapData: any[] = data.map(d => {
       return {value: [d.dateDim.date, d.lessonSpansCount], daySchedule: d};
@@ -133,7 +133,8 @@ export abstract class ScheduleCalendarChart {
           nameMap: 'cn'
         },
         monthLabel: {
-          show: false
+          show: this.showMonthLabel,
+          nameMap: 'cn'
         },
         range: this.getCalendarRange()
       }],

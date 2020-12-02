@@ -40,7 +40,7 @@ export class GeneralScheduleComponent implements OnInit {
   outputStyleList = false;
 
   perspective: Perspective = 'class';
-  timeScope: TimeScope = 'month';
+  timeScope: TimeScope = 'term';
 
   selectedClass: Class;
   selectedTeacher: Teacher;

@@ -86,8 +86,11 @@
       <app-month-schedule-chart [monthSchedule]="monthSchedule" [context]="context"
                                 *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule-chart>
 
-      <app-term-schedule [termSchedule]="termSchedule" [context]="context"
-                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>
+      <app-term-schedule-chart [termSchedule]="termSchedule" [context]="context"
+                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule-chart>
+
+      <!--<app-term-schedule [termSchedule]="termSchedule" [context]="context"
+                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>-->
     </ng-template>
   </div>
 
