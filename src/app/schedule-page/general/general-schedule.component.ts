@@ -40,7 +40,7 @@ export class GeneralScheduleComponent implements OnInit {
   outputStyleList = false;
 
   perspective: Perspective = 'class';
-  timeScope: TimeScope = 'day';
+  timeScope: TimeScope = 'month';
 
   selectedClass: Class;
   selectedTeacher: Teacher;
@@ -58,7 +58,8 @@ export class GeneralScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedDate = moment();
-    this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
+    // this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
+    this.selectedMonth = '2020-10';
   }
 
   async execute() {
@@ -148,11 +149,11 @@ export class GeneralScheduleComponent implements OnInit {
 
   async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
 
+    console.log(filter);
     const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
-        const dayOfWeek = this.selectedDate.weekday();
-        const dateDim: DateDim = {weekno: 1/* not need */, dayOfWeek, date: filter.date};
+        const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
         this.daySchedule = new DaySchedule(dateDim, schedules);
         break;
       case 'week':
@@ -160,12 +161,9 @@ export class GeneralScheduleComponent implements OnInit {
         break;
       case 'month':
         const yearMonth = this.selectedMonth;
-        const year = parseInt(yearMonth.substr(0, 4));
-        const month = parseInt(yearMonth.substr(5));
-
         const weeks = await this.termWeekService.getMonthWeeks(term, yearMonth).toPromise();
 
-        const monthDim: MonthDim = {year, month, weeks};
+        const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
         break;
       case 'term':
@@ -189,19 +187,19 @@ export class GeneralScheduleComponent implements OnInit {
         if (!this.weekSchedule) {
           return;
         }
-        daySchedules = this.weekSchedule.daySchedules;
+        daySchedules = this.weekSchedule.daySchedulesWithLessons;
         break;
       case 'month':
         if (!this.monthSchedule) {
           return;
         }
-        daySchedules = this.monthSchedule.daySchedules;
+        daySchedules = this.monthSchedule.daySchedulesWithLessons;
         break;
       case 'term':
         if (!this.termSchedule) {
           return;
         }
-        daySchedules = this.termSchedule.daySchedules;
+        daySchedules = this.termSchedule.daySchedulesWithLessons;
         break;
       default:
         return;
@@ -213,7 +211,6 @@ export class GeneralScheduleComponent implements OnInit {
     }
 
     this.scopedDaySchedules = daySchedules
-      .filter(ds => ds.lessons && ds.lessons.find(l => l))
       .map(ds => {
         const sds = new ScopedDaySchedule();
         const dateDim = ds.dateDim;

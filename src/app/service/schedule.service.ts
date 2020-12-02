@@ -120,9 +120,16 @@ export class ScheduleService {
 
     const schedule2: Schedule = Object.assign({}, schedule1, {timeStart: 5, timeEnd: 6});
     const schedule3: Schedule = Object.assign({}, schedule1, {timeStart: 7, timeEnd: 8});
-    const schedule4: Schedule = Object.assign({}, schedule1, {timeStart: 9, timeEnd: 10});
 
-    return of([schedule1, schedule2, schedule3]);
+    const schedule4: Schedule = Object.assign({}, schedule1, {date: '2020-10-14', dayOfWeek: 3, timeStart: 1, timeEnd: 2});
+    const schedule5: Schedule = Object.assign({}, schedule4, {timeStart: 5, timeEnd: 8});
+
+    const schedule6: Schedule = Object.assign({}, schedule1, {date: '2020-10-15', dayOfWeek: 4, timeStart: 1, timeEnd: 2});
+    const schedule7: Schedule = Object.assign({}, schedule6, {timeStart: 5, timeEnd: 6});
+
+    const schedule8: Schedule = Object.assign({}, schedule1, {date: '2020-10-16', dayOfWeek: 5, timeStart: 1, timeEnd: 2});
+
+    return of([schedule1, schedule2, schedule3, schedule5, schedule6, schedule7, schedule8]);
   }
 
 }

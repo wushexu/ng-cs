@@ -31,4 +31,8 @@ export class TermSchedule {
     }
     return flatten(this.weekSchedules.map(ws => ws.daySchedules));
   }
+
+  get daySchedulesWithLessons(): DaySchedule[] {
+    return this.daySchedules.filter(ds => ds.lessons.find(l => l));
+  }
 }

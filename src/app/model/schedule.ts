@@ -26,19 +26,4 @@ export class Schedule {
   course?: Course;
   teacher?: Teacher;
 
-// {
-//   "id": 1,
-//   "date": "2020-10-12",
-//   "day_of_week": 1,
-//   "term_month": 9,
-//   "term_year": 2020,
-//   "time_end": 2,
-//   "time_start": 1,
-//   "training_type": 'E',
-//   "weekno": 6,
-//   "course_code": "2001367",
-//   "site_id": 240,
-//   "teacher_id": 1,
-//   "the_class_id": 1
-// }
 }

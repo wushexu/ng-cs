@@ -29,7 +29,7 @@ export class WeekSchedule {
       const day: number = parseInt(dayStr);
       const index = day - 1; // 0-6
       const {weekno, dayOfWeek, date} = schedulesOfDay[0];
-      const dateDim: DateDim = {weekno, dayOfWeek, date};
+      const dateDim: DateDim = new DateDim(date, dayOfWeek, weekno);
       DateDim.setDateLabels(dateDim);
       daySchedules[index] = new DaySchedule(dateDim, schedulesOfDay);
     });
@@ -43,16 +43,11 @@ export class WeekSchedule {
       if (i > 0) {
         mom.add(i, 'days');
       }
-      const date = mom.format(DATE_FORMAT);
-      const dateDim: DateDim = {weekno: week.weekno, dayOfWeek: i + 1, date};
+      const dateDim: DateDim = DateDim.fromMoment(mom);
+      dateDim.weekno = week.weekno;
       DateDim.setDateLabels(dateDim);
 
-      daySchedules[i] = {
-        dateDim,
-        lessons: [null, null, null, null, null],
-        noPlaceholderLessons: [],
-        timeIndexLessons: []
-      };
+      daySchedules[i] = DaySchedule.emptySchedule(dateDim);
     }
 
     const timeLessons: Lesson[][] = [];
@@ -74,5 +69,9 @@ export class WeekSchedule {
 
     this.daySchedules = daySchedules;
     this.timeLessons = timeLessons;
+  }
+
+  get daySchedulesWithLessons(): DaySchedule[] {
+    return this.daySchedules.filter(ds => ds.lessons.find(l => l));
   }
 }

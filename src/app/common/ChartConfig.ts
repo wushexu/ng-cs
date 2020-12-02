@@ -11,7 +11,7 @@ export abstract class ChartConfig {
   chartWidth = 800;
   chartHeight = 400;
   chartTranspose = false;
-  chartDarkTheme = true;
+  chartDarkTheme = false;
   transparentBackground = true;
   lightBackgroundColor = '#FAFAFA'; // #FAFAFA, white
   darkBackgroundColor = '#333'; // #404040, #333, black

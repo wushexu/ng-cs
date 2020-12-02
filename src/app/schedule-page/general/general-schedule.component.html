@@ -80,8 +80,11 @@
       <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
                          *ngIf="timeScope==='week'&&weekSchedule"></app-week-schedule>
 
-      <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
-                          *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>
+      <!--<app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
+                          *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>-->
+
+      <app-month-schedule-chart [monthSchedule]="monthSchedule" [context]="context"
+                                *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule-chart>
 
       <app-term-schedule [termSchedule]="termSchedule" [context]="context"
                          *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>

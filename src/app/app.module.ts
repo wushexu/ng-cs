@@ -16,7 +16,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TableMatComponent} from './week-schedule/table-mat.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
-import {FhComponent} from './fh/fh.component';
 import {ScheduleService} from './service/schedule.service';
 import {LessonScheduleComponent} from './schedule/lesson/lesson-schedule.component';
 import {DayLessonsComponent} from './schedule/day/day-lessons.component';
@@ -43,6 +42,7 @@ import { DatePickerComponent } from './common/date-picker/date-picker.component'
 import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-menu.component';
 import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu.component';
 import {DateMdPipe} from './common/pipe/date-md.pipe';
+import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedule-chart.component';
 
 @NgModule({
   imports: [
@@ -60,7 +60,6 @@ import {DateMdPipe} from './common/pipe/date-md.pipe';
     AppComponent,
     TableMatComponent,
     MediaQueryStatusComponent,
-    FhComponent,
     LessonScheduleComponent,
     DayLessonsComponent,
     WeekScheduleComponent,
@@ -80,7 +79,8 @@ import {DateMdPipe} from './common/pipe/date-md.pipe';
     GeneralScheduleComponent,
     DatePickerComponent,
     PerspectiveMenuComponent,
-    TimeScopeMenuComponent
+    TimeScopeMenuComponent,
+    MonthScheduleChartComponent
   ],
   providers: [
     ScheduleService,

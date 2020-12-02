@@ -57,6 +57,27 @@ export class TermWeekService {
       termMonth: 9,
       termYear: 2020,
       weekno: 4
+    },
+    {
+      firstDay: '2020-10-05',
+      lastDay: '2020-10-11',
+      termMonth: 9,
+      termYear: 2020,
+      weekno: 5
+    },
+    {
+      firstDay: '2020-10-12',
+      lastDay: '2020-10-18',
+      termMonth: 9,
+      termYear: 2020,
+      weekno: 6
+    },
+    {
+      firstDay: '2020-10-19',
+      lastDay: '2020-10-25',
+      termMonth: 9,
+      termYear: 2020,
+      weekno: 7
     }
   ];
 

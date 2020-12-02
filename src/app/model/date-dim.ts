@@ -1,11 +1,14 @@
-// import * as moment from 'moment';
-// import {DATE_FORMAT} from '../config';
+import {Moment} from 'moment';
+import * as moment from 'moment';
+
+import {DATE_FORMAT} from '../config';
 
 export class DateDim {
 
-  date: string; // DATE_FORMAT @../config
+  date: string;
   weekno: number;
   dayOfWeek: number; // 1: Monday
+  dayOfMonth: number;
 
   year?: number;
   month?: number;
@@ -14,6 +17,21 @@ export class DateDim {
   dateLabel?: string;
   weekdayLabel?: string;
 
+  constructor(date: string, dayOfWeek?: number, weekno?: number) {
+    this.date = date;
+    this.dayOfWeek = dayOfWeek;
+    this.weekno = weekno;
+    this.dayOfMonth = +date.substr(8);
+  }
+
+  static fromMoment(mom: Moment): DateDim {
+    const date = mom.format(DATE_FORMAT);
+    const dayOfWeek = mom.weekday();
+    const dateDim = new DateDim(date, dayOfWeek);
+    dateDim.dayOfMonth = mom.date();
+    return dateDim;
+  }
+
   static setDateLabels(dateDim: DateDim): void {
     // const mom = moment(dateDim.date);
     // dateDim.dateLabel = mom.format(...);
@@ -21,12 +39,4 @@ export class DateDim {
     dateDim.weekdayLabel = ['一', '二', '三', '四', '五', '六', '日'][dateDim.dayOfWeek - 1];
   }
 
-// {
-//   "date": "2020-09-07",
-//   "day_of_week": 1,
-//   "holiday": 0,
-//   "month": 9,
-//   "weekno": 1,
-//   "year": 2020
-// }
 }

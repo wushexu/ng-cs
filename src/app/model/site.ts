@@ -16,18 +16,6 @@ export class Site {
   deptId?: number;
   dept?: Dept;
 
-// {
-//   "id": 1,
-//   "capacity": 0,
-//   "code": "90194",
-//   "memo": null,
-//   "multimedia": "",
-//   "name": "信息223A",
-//   "name4training": "",
-//   "room_type": "标准教室",
-//   "short_name": null,
-//   "dept_id": 2
-// }
 }
 
 export declare type Classroom = Site;

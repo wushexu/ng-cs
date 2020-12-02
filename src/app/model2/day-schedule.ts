@@ -11,12 +11,17 @@ export class DaySchedule {
   noPlaceholderLessons: Lesson[];
   timeIndexLessons: Lesson[];
 
+  schedules: Schedule[];
+  lessonSpansCount: number;
+
   // lesson9 = false;
 
   constructor(dateDim: DateDim, schedules: Schedule[]) {
 
     this.dateDim = dateDim;
     this.timeIndexLessons = [];
+    this.schedules = schedules;
+    this.lessonSpansCount = 0;
 
     // check in one day; sort, check overlap
 
@@ -29,6 +34,8 @@ export class DaySchedule {
       const {timeStart, timeEnd} = schedule;
       const index = timeStart >> 1;
       const span = (timeEnd - timeStart + 1) >> 1;
+      this.lessonSpansCount += span;
+
       const thisLesson: Lesson = {schedule, span, startIndex: index};
 
       if (span > 1) {
@@ -54,6 +61,17 @@ export class DaySchedule {
 
     this.lessons = lessons.filter(l => l !== removalMark);
     this.noPlaceholderLessons = this.lessons.filter(l => l);
+  }
+
+  static emptySchedule(dateDim: DateDim): DaySchedule {
+    return {
+      dateDim,
+      schedules: [],
+      lessonSpansCount: 0,
+      lessons: [null, null, null, null, null],
+      noPlaceholderLessons: [],
+      timeIndexLessons: []
+    };
   }
 
 }
