@@ -1,8 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
+import * as moment from 'moment';
+
 import {TermWeekService} from '../../service/term-week.service';
 import {Term} from '../../model/term';
 import {Week} from '../../model/week';
+import {DATE_FORMAT} from '../../config';
 
 @Component({
   selector: 'app-term-week-select',
@@ -39,13 +42,30 @@ export class TermWeekSelectComponent implements OnInit {
     this.service.getTermWeeks(this.selectedTerm)
       .subscribe((weeks: Week[]) => {
         this.weeks = weeks;
-        this.selectedWeek = weeks[0];
+        const today = moment().format(DATE_FORMAT);
+        this.selectedWeek = weeks.find(w => today.localeCompare(w.lastDay) <= 0);
+        if (!this.selectedWeek) {
+          this.selectedWeek = this.weeks[this.weeks.length - 1];
+        }
         this.selected.emit(this.selectedWeek);
       });
   }
 
   weekSelected() {
     this.selected.emit(this.selectedWeek);
+  }
+
+  roll(ws: number): void {
+    if (!this.selectedWeek) {
+      return;
+    }
+    const len = this.weeks.length;
+    const index = this.weeks.indexOf(this.selectedWeek);
+    if (index === -1) {
+      this.selectedWeek = this.weeks[0];
+      return;
+    }
+    this.selectedWeek = this.weeks[(index + ws + len) % len];
   }
 
 }

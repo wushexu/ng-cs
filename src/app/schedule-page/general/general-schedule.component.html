@@ -1,4 +1,4 @@
-<mat-toolbar color="secondary">
+<mat-toolbar color="secondary" class="not-print">
   <mat-toolbar-row>
     <span>课表</span>
     <!--<div class="ui text menu">
@@ -18,58 +18,61 @@
 
 <div class="main-content">
 
-  <div fxLayout="column">
-    <div fxLayout fxLayoutAlign="start center">
+  <div class="not-print">
 
-      <app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
-                            class="perspective-menu"></app-perspective-menu>
+    <div fxLayout="column">
+      <div fxLayout fxLayoutAlign="start center">
 
-      <app-class-select (selected)="classSelected($event)" *ngIf="perspective==='class'"></app-class-select>
-      <app-teacher-select (selected)="teacherSelected($event)" *ngIf="perspective==='teacher'"></app-teacher-select>
-      <app-classroom-select (selected)="classroomSelected($event)"
-                            *ngIf="perspective==='classroom'"></app-classroom-select>
+        <app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
+                              class="perspective-menu"></app-perspective-menu>
+
+        <app-class-select (selected)="classSelected($event)" *ngIf="perspective==='class'"></app-class-select>
+        <app-teacher-select (selected)="teacherSelected($event)" *ngIf="perspective==='teacher'"></app-teacher-select>
+        <app-classroom-select (selected)="classroomSelected($event)"
+                              *ngIf="perspective==='classroom'"></app-classroom-select>
+
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center">
+
+        <div>
+          <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
+                               class="time-scope-menu"></app-time-scope-menu>
+
+          <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
+                           *ngIf="timeScope==='day'"></app-date-picker>
+
+          <app-term-week-select (selected)="weekSelected($event)" *ngIf="timeScope==='week'"></app-term-week-select>
+
+          <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
+                            *ngIf="timeScope==='month'"></app-month-picker>
+
+          <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
+        </div>
+
+        <span class="spacer"></span>
+
+        <div>
+          <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
+            <mat-radio-button value="table">默认表格</mat-radio-button>
+            <mat-radio-button value="detail-table" [disabled]="timeScope==='day'">按日期</mat-radio-button>
+            <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
+
+          <button mat-button color="primary" (click)="execute()">
+            <mat-icon>search</mat-icon>
+            查询
+          </button>
+        </div>
+      </div>
 
     </div>
 
-    <div fxLayout fxLayoutAlign="start center">
-
-      <div>
-        <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
-                             class="time-scope-menu"></app-time-scope-menu>
-
-        <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
-                         *ngIf="timeScope==='day'"></app-date-picker>
-
-        <app-term-week-select (selected)="weekSelected($event)" *ngIf="timeScope==='week'"></app-term-week-select>
-
-        <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
-                          *ngIf="timeScope==='month'"></app-month-picker>
-
-        <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
-      </div>
-
-      <span class="spacer"></span>
-
-      <div>
-        <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
-          <mat-radio-button value="table">默认表格</mat-radio-button>
-          <mat-radio-button value="detail-table" [disabled]="timeScope==='day'">按日期</mat-radio-button>
-          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
-          </mat-radio-button>
-        </mat-radio-group>
-
-        <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
-
-        <button mat-button color="primary" (click)="execute()">
-          <mat-icon>search</mat-icon>
-          查询
-        </button>
-      </div>
-    </div>
-
+    <mat-divider></mat-divider>
   </div>
-
-  <mat-divider></mat-divider>
 
   <div class="schedule-tables">
 

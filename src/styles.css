@@ -21,6 +21,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+@media print {
+  .not-print, .not-print * {
+    display: none;
+  }
+}
+
 .main-content {
   display: block;
   margin-top: 2em;
@@ -79,6 +85,18 @@ td.th {
 
 .mat-form-field:not(:last-child) {
   margin-right: 1em;
+}
+
+.mat-icon-button.time-scroll {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.mat-icon-button.time-scroll .mat-icon {
+  height: 24px;
+  width: 24px;
+  font-size: 16px;
 }
 
 .perspective-menu .perspective-label, .time-scope-menu .time-scope-label {

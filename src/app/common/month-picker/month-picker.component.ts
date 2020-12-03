@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
 
+import * as moment from 'moment';
 import {Moment} from 'moment';
 
 import {DATE_FORMATS, MONTH_PICKER_FORMAT} from '../../config';
@@ -23,11 +24,22 @@ const MY_FORMATS = {
   ],
 })
 export class MonthPickerComponent {
-  @Input() yearMonth: string | Moment;
+  @Input() yearMonth: string;
   @Output() selected: EventEmitter<string> = new EventEmitter<string>();
 
   monthSelected(date: Moment, dp: MatDatepicker<any>): void {
     this.selected.emit(date.format(MONTH_PICKER_FORMAT));
     dp.close();
+  }
+
+
+  roll(months: number): void {
+    if (!this.yearMonth) {
+      return;
+    }
+    this.yearMonth = moment(this.yearMonth + '-01')
+      .add(months, 'months')
+      .format(MONTH_PICKER_FORMAT);
+    this.selected.emit(this.yearMonth);
   }
 }

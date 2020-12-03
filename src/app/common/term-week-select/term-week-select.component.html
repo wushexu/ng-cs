@@ -13,3 +13,10 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+
+<button mat-button mat-icon-button class="time-scroll" (click)="roll(-1)">
+  <mat-icon>west</mat-icon><!--arrow_back-->
+</button>
+<button mat-button mat-icon-button class="time-scroll" (click)="roll(1)">
+  <mat-icon>east</mat-icon><!--arrow_forward-->
+</button>

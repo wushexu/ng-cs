@@ -3,8 +3,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
-import {MatDatepicker} from '@angular/material/datepicker';
-
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
@@ -24,6 +22,14 @@ export class DatePickerComponent {
     } else {
       this.selected.emit(date);
     }
+  }
+
+  roll(days: number): void {
+    if (!this.selectedDate) {
+      return;
+    }
+    this.selectedDate = moment(this.selectedDate).add(days, 'days');
+    this.selected.emit(this.selectedDate);
   }
 
 }

@@ -105,7 +105,15 @@ export abstract class ScheduleCalendarChart {
           return DaySchedule.lessonsHtml(daySchedule, component.scheduleDatasource.context);
         }
       },
-
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true,
+            pixelRatio: 2
+          }
+        }
+      },
       visualMap: [{
         show: false,
         min: 0,
