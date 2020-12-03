@@ -12,7 +12,7 @@ import {Major} from '../model/major';
 import {Class} from '../model/class';
 import {Course} from '../model/course';
 import {Teacher} from '../model/teacher';
-import {Site} from '../model/site';
+import {Classroom, Site} from '../model/site';
 
 
 @Injectable()
@@ -67,6 +67,21 @@ export class ClassroomService {
         dept: dept1
       }
     ]);
+  }
+
+  getClassroom(id: number): Observable<Classroom> {
+    return of({
+      id: 2,
+      capacity: 0,
+      code: '90195',
+      memo: null,
+      multimedia: '',
+      name: 'JX2-206',
+      name4training: '',
+      roomType: '合班教室',
+      shortName: null,
+      dept: null
+    });
   }
 
 }

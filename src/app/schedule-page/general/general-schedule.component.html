@@ -9,6 +9,17 @@
       <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
     </div>-->
     <span class="spacer"></span>
+    <span *ngIf="perspectiveFixed">
+      <span *ngIf="perspective==='class'&&selectedClass">
+        班级：<span class="primary-color">{{selectedClass.name}}</span>
+      </span>
+      <span *ngIf="perspective==='teacher'&&selectedTeacher">
+        教师：<span class="primary-color">{{selectedTeacher.name}}</span>
+      </span>
+      <span *ngIf="perspective==='classroom'&&selectedClassroom">
+        教室：<span class="primary-color">{{selectedClassroom.name}}</span>
+      </span>
+    </span>
     <!--<button type="button" mat-icon-button>
       <mat-icon aria-label="Menu">menu</mat-icon>
     </button>-->
@@ -21,7 +32,7 @@
   <div class="not-print">
 
     <div fxLayout="column">
-      <div fxLayout fxLayoutAlign="start center">
+      <div fxLayout fxLayoutAlign="start center" *ngIf="!perspectiveFixed">
 
         <app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
                               class="perspective-menu"></app-perspective-menu>

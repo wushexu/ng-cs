@@ -36,12 +36,12 @@ export class DeptMajorClassService {
     };
 
     const major1: Major = {
-        id: 1,
-        degree: '高职',
-        name: '理化测试与质检技术(无损检测技术)',
-        shortName: '理化',
-        dept: dept1
-      };
+      id: 1,
+      degree: '高职',
+      name: '理化测试与质检技术(无损检测技术)',
+      shortName: '理化',
+      dept: dept1
+    };
 
     const major2: Major = {
       id: 2,
@@ -115,6 +115,19 @@ export class DeptMajorClassService {
         major: major3
       }
     ]);
+  }
+
+  getClassByIdc(idc: string): Observable<Class> {
+    return of({
+        id: 6,
+        classNo: 2,
+        degree: '高职',
+        name: '软工2',
+        size: 40,
+        year: 2019,
+        major: null
+      }
+    );
   }
 
 }

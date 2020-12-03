@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+
 import {Moment} from 'moment';
 import * as moment from 'moment';
+import {switchMap} from 'rxjs/operators';
 
 import {DATE_FORMAT, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
@@ -22,6 +25,10 @@ import {TermWeekService} from '../../service/term-week.service';
 import {Schedule} from '../../model/schedule';
 import {DayScheduleSerial} from '../../model2/day-schedule-serial';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {TeacherCourseService} from '../../service/teacher-course.service';
+import {DeptMajorClassService} from '../../service/dept-major-class.service';
+import {ClassroomService} from '../../service/classroom.service';
+
 
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
 
@@ -42,6 +49,7 @@ export class GeneralScheduleComponent implements OnInit {
   showTitle = true;
 
   perspective: Perspective = 'class';
+  perspectiveFixed = false;
   timeScope: TimeScope = 'week';
 
   selectedClass: Class;
@@ -55,13 +63,47 @@ export class GeneralScheduleComponent implements OnInit {
 
 
   constructor(private scheduleService: ScheduleService,
-              private termWeekService: TermWeekService) {
+              private termWeekService: TermWeekService,
+              private deptMajorClassService: DeptMajorClassService,
+              private teacherCourseService: TeacherCourseService,
+              private classroomService: ClassroomService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.selectedDate = moment();
     this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
-    // this.selectedMonth = '2020-10';
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log(params);
+      if (params.has('class-idc')) {
+        this.deptMajorClassService.getClassByIdc(params.get('class-idc'))
+          .subscribe((theClass: Class) => {
+            this.perspective = 'class';
+            this.perspectiveFixed = true;
+            this.selectedClass = theClass;
+          });
+        return;
+      }
+      if (params.has('teacher-idc')) {
+        this.teacherCourseService.getTeacherByIdc(params.get('teacher-idc'))
+          .subscribe((teacher: Teacher) => {
+            this.perspective = 'teacher';
+            this.perspectiveFixed = true;
+            this.selectedTeacher = teacher;
+          });
+        return;
+      }
+      if (params.has('classroom-id')) {
+        this.classroomService.getClassroom(+params.get('classroom-id'))
+          .subscribe((classroom: Classroom) => {
+            this.perspective = 'classroom';
+            this.perspectiveFixed = true;
+            this.selectedClassroom = classroom;
+          });
+        return;
+      }
+    });
   }
 
   async execute() {

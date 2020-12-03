@@ -4,7 +4,10 @@ import {Routes, RouterModule} from '@angular/router';
 import {GeneralScheduleComponent} from './schedule-page/general/general-schedule.component';
 
 const routes: Routes = [
-  {path: '', component: GeneralScheduleComponent}
+  {path: '', component: GeneralScheduleComponent},
+  {path: 'cl/:class-idc', component: GeneralScheduleComponent},
+  {path: 'tc/:teacher-idc', component: GeneralScheduleComponent},
+  {path: 'cr/:classroom-id', component: GeneralScheduleComponent}
 ];
 
 @NgModule({

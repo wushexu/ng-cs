@@ -1639,6 +1639,14 @@ export class TeacherCourseService {
     );
   }
 
+  getTeacherByIdc(idc: string): Observable<Teacher> {
+    return of({
+      id: 255,
+      code: '11214',
+      name: '武莉'
+    });
+  }
+
   getCourses(): Observable<Course[]> {
 
 
