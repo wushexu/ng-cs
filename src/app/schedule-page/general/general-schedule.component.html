@@ -51,9 +51,12 @@
       <span class="spacer"></span>
 
       <div>
-        <mat-checkbox class="pad-right" [(ngModel)]="outputStyleList" [disabled]="timeScope==='day'"
-                      (change)="outputStyleListChanged()">每日详情
-        </mat-checkbox>
+        <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
+          <mat-radio-button value="table">默认表格</mat-radio-button>
+          <mat-radio-button value="detail-table" [disabled]="timeScope==='day'">按日期</mat-radio-button>
+          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
+          </mat-radio-button>
+        </mat-radio-group>
 
         <button mat-button color="primary" (click)="execute()">
           <mat-icon>search</mat-icon>
@@ -67,31 +70,68 @@
   <mat-divider></mat-divider>
 
   <div class="schedule-tables">
-    <app-day-schedule [daySchedule]="daySchedule" [context]="context"
-                      *ngIf="timeScope==='day'&&daySchedule"></app-day-schedule>
 
-    <ng-template [ngIf]="outputStyleList">
-      <ng-template [ngIf]="timeScope==='week'||timeScope==='month'||timeScope==='term'">
-        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"></app-day-schedule-serial>
+    <ng-template [ngIf]="timeScope==='day'">
+      <ng-template [ngIf]="outputStyle==='table'">
+        <app-day-schedule [daySchedule]="daySchedule" [context]="context"
+                          *ngIf="daySchedule"></app-day-schedule>
+      </ng-template>
+
+      <!--<ng-template [ngIf]="outputStyle==='detail-table'">
+      </ng-template>
+
+      <ng-template [ngIf]="outputStyle==='calendar-chart'">
+      </ng-template>-->
+    </ng-template>
+
+    <ng-template [ngIf]="timeScope==='week'">
+      <ng-template [ngIf]="outputStyle==='table'">
+        <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
+                           *ngIf="weekSchedule"></app-week-schedule>
+      </ng-template>
+
+      <ng-template [ngIf]="outputStyle==='detail-table'">
+        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"
+                                 [context]="context" *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+      </ng-template>
+
+      <!--<ng-template [ngIf]="outputStyle==='calendar-chart'">
+      </ng-template>-->
+    </ng-template>
+
+    <ng-template [ngIf]="timeScope==='month'">
+      <ng-template [ngIf]="outputStyle==='table'">
+        <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
+                            *ngIf="monthSchedule"></app-month-schedule>
+      </ng-template>
+
+      <ng-template [ngIf]="outputStyle==='detail-table'">
+        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules" [context]="context"
+                                 *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+      </ng-template>
+
+      <ng-template [ngIf]="outputStyle==='calendar-chart'">
+        <app-month-schedule-chart [monthSchedule]="monthSchedule" [context]="context"
+                                  *ngIf="monthSchedule"></app-month-schedule-chart>
       </ng-template>
     </ng-template>
 
-    <ng-template [ngIf]="!outputStyleList">
-      <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
-                         *ngIf="timeScope==='week'&&weekSchedule"></app-week-schedule>
+    <ng-template [ngIf]="timeScope==='term'">
+      <ng-template [ngIf]="outputStyle==='table'">
+        <app-term-schedule [termSchedule]="termSchedule" [context]="context" *ngIf="termSchedule"></app-term-schedule>
+      </ng-template>
 
-      <!--<app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
-                          *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule>-->
+      <ng-template [ngIf]="outputStyle==='detail-table'">
+        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"
+                                 [context]="context" *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+      </ng-template>
 
-      <app-month-schedule-chart [monthSchedule]="monthSchedule" [context]="context"
-                                *ngIf="timeScope==='month'&&monthSchedule"></app-month-schedule-chart>
-
-      <app-term-schedule-chart [termSchedule]="termSchedule" [context]="context"
-                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule-chart>
-
-      <!--<app-term-schedule [termSchedule]="termSchedule" [context]="context"
-                         *ngIf="timeScope==='term'&&termSchedule"></app-term-schedule>-->
+      <ng-template [ngIf]="outputStyle==='calendar-chart'">
+        <app-term-schedule-chart [termSchedule]="termSchedule" [context]="context"
+                                 *ngIf="termSchedule"></app-term-schedule-chart>
+      </ng-template>
     </ng-template>
+
   </div>
 
 </div>

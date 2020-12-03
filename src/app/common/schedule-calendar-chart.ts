@@ -108,8 +108,9 @@ export abstract class ScheduleCalendarChart {
         max: visualMapMax,
         calculable: true,
         seriesIndex: [2],
-        orient: 'horizontal',
-        left: 'center',
+        orient: 'vertical',
+        left: 'right',
+        top: 'middle',
         bottom: 20,
         inRange: {
           color: ['#e0ffff', '#006edd'],
@@ -148,7 +149,7 @@ export abstract class ScheduleCalendarChart {
             show: true,
             formatter(params) {
               const daySchedule = params.data.daySchedule as DaySchedule;
-              return daySchedule.dateDim.dayOfMonth + '\n\n\n\n';
+              return '\n'+daySchedule.dateDim.dayOfMonth + '\n\n\n';
             },
             color: '#000'
           },

@@ -15,9 +15,9 @@ export class DaySchedule {
   schedules: Schedule[];
   lessonSpansCount: number;
 
-  // lesson9 = false;
-
   constructor(dateDim: DateDim, schedules: Schedule[]) {
+
+    // schedules.sort((a, b) => a.timeStart - b.timeStart);
 
     this.dateDim = dateDim;
     this.timeIndexLessons = [];
@@ -28,39 +28,41 @@ export class DaySchedule {
 
     const lessons: Lesson[] = [null, null, null, null, null];
 
-    const removalMark: Lesson = {span: 1};
+    const removeMarker: Lesson = {span: 1};
 
-    let lastLesson = null;
+    let lastLesson: Lesson = null;
     for (const schedule of schedules) {
       const {timeStart, timeEnd} = schedule;
       const index = timeStart >> 1;
       const span = (timeEnd - timeStart + 1) >> 1;
-      this.lessonSpansCount += span;
 
       const thisLesson: Lesson = {schedule, span, startIndex: index};
 
-      if (span > 1) {
-        for (let i = 1; i < span; i++) {
-          lessons[index + i] = removalMark;
-          this.timeIndexLessons[index + i] = thisLesson;
+      if (lastLesson) {
+        const lastSchedule = lastLesson.schedule;
+        if (lastSchedule) {
+          // overlap
+          if (timeStart === lastSchedule.timeStart) {
+            // TODO: merge
+            continue;
+          } else if (timeStart <= lastSchedule.timeEnd) {
+            continue;
+          }
         }
       }
-      if (index > 0 && lastLesson) {
-        const lastSchedule = lastLesson.schedule;
-        // overlap
-        if (lastSchedule && lastSchedule.timeEnd >= timeStart) {
-          continue;
+      this.lessonSpansCount += span;
+      if (span > 1) {
+        for (let i = 1; i < span; i++) {
+          lessons[index + i] = removeMarker;
+          this.timeIndexLessons[index + i] = thisLesson;
         }
       }
       lessons[index] = thisLesson;
       this.timeIndexLessons[index] = thisLesson;
       lastLesson = thisLesson;
-      // if (timeStart === 9) {
-      //   this.lesson9 = true;
-      // }
     }
 
-    this.lessons = lessons.filter(l => l !== removalMark);
+    this.lessons = lessons.filter(l => l !== removeMarker);
     this.noPlaceholderLessons = this.lessons.filter(l => l);
   }
 

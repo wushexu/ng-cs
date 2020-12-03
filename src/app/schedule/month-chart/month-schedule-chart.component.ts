@@ -48,7 +48,7 @@ export class MonthScheduleChartComponent extends ScheduleCalendarChart implement
 
   setTitle(): void {
     const monthDim = this.monthSchedule.monthDim;
-    this.title = `${monthDim.year}年${monthDim.month}月课表`;
+    this.title = `${monthDim.year}年${monthDim.month}月 课表`;
   }
 
   ngOnChanges(changes: SimpleChanges) {

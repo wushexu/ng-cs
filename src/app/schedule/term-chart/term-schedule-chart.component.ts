@@ -20,7 +20,9 @@ export class TermScheduleChartComponent extends ScheduleCalendarChart implements
   @Input() context: ScheduleContext;
 
   showMonthLabel = true;
-  chartHeight = 1830;
+  // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
+  // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
+  chartHeight = 50 + this.cellSize + Math.ceil((7 - 1 + 160) / 7) * this.cellSize + this.chartPaddingBottom; // 1830
 
   inputDataReady(): boolean {
     const ts = this.termSchedule;
@@ -50,7 +52,7 @@ export class TermScheduleChartComponent extends ScheduleCalendarChart implements
 
   setTitle(): void {
     const termDim = this.termSchedule.termDim;
-    this.title = `${termDim.term.name}课表`;
+    this.title = `${termDim.term.name} 课表`;
   }
 
   ngOnChanges(changes: SimpleChanges) {

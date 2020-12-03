@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
-import {DATE_FORMAT, MONTH_PICKER_FORMAT} from '../../config';
+import {DATE_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
@@ -22,6 +22,8 @@ import {TermDim} from '../../model2/term-dim';
 import {TermWeekService} from '../../service/term-week.service';
 import {Schedule} from '../../model/schedule';
 
+declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
+
 @Component({
   selector: 'app-general-schedule',
   templateUrl: './general-schedule.component.html',
@@ -37,10 +39,10 @@ export class GeneralScheduleComponent implements OnInit {
 
   context: ScheduleContext = {};
   // compactness
-  outputStyleList = false;
+  outputStyle: OutputStyle = 'table';
 
   perspective: Perspective = 'class';
-  timeScope: TimeScope = 'term';
+  timeScope: TimeScope = 'week';
 
   selectedClass: Class;
   selectedTeacher: Teacher;
@@ -74,7 +76,7 @@ export class GeneralScheduleComponent implements OnInit {
     await this.setupSchedules(filter, schedules);
 
     this.scopedDaySchedules = null;
-    if (this.outputStyleList) {
+    if (this.outputStyle === 'detail-table') {
       this.setupScopedDaySchedules();
     }
 
@@ -127,18 +129,21 @@ export class GeneralScheduleComponent implements OnInit {
           return null;
         }
         filter.classId = this.selectedClass.id;
+        this.context = {theClass: this.selectedClass};
         break;
       case 'teacher':
         if (!this.selectedTeacher) {
           return null;
         }
         filter.teacherId = this.selectedTeacher.id;
+        this.context = {teacher: this.selectedTeacher};
         break;
       case 'classroom':
         if (!this.selectedClassroom) {
           return null;
         }
         filter.siteId = this.selectedClassroom.id;
+        this.context = {site: this.selectedClassroom};
         break;
       default:
         return null;
@@ -225,9 +230,37 @@ export class GeneralScheduleComponent implements OnInit {
       });
   }
 
-  outputStyleListChanged() {
+  perspectiveSelected(perspective: Perspective) {
+    this.perspective = perspective;
+    console.log(perspective);
+  }
+
+  ensureOutputStyle(outputStyles: OutputStyle[]): void {
+    if (outputStyles.indexOf(this.outputStyle) === -1) {
+      this.outputStyle = outputStyles[0];
+    }
+  }
+
+  timeScopeSelected(timeScope: TimeScope) {
+    this.timeScope = timeScope;
+    console.log(timeScope);
+    switch (this.timeScope) {
+      case 'day':
+        this.outputStyle = 'table';
+        break;
+      case 'week':
+        this.ensureOutputStyle(['table', 'detail-table']);
+        break;
+      case 'month':
+        break;
+      case 'term':
+        break;
+    }
+  }
+
+  outputStyleChanged() {
     // console.log(this.outputStyleList);
-    if (this.outputStyleList) {
+    if (this.outputStyle === 'detail-table') {
       this.setupScopedDaySchedules();
     }
   }
@@ -268,16 +301,6 @@ export class GeneralScheduleComponent implements OnInit {
   termSelected(selectedTerm: Term) {
     this.selectedTerm = selectedTerm;
     console.log(selectedTerm);
-  }
-
-  perspectiveSelected(perspective: Perspective) {
-    this.perspective = perspective;
-    console.log(perspective);
-  }
-
-  timeScopeSelected(timeScope: TimeScope) {
-    this.timeScope = timeScope;
-    console.log(timeScope);
   }
 
 }

@@ -17,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatToolbarModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatIconModule,
     MatListModule,
     MatTableModule,

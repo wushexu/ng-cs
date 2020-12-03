@@ -36,7 +36,7 @@ export class DateDim {
     // const mom = moment(dateDim.date);
     // dateDim.dateLabel = mom.format(...);
     dateDim.dateLabel = dateDim.date;
-    dateDim.weekdayLabel = ['一', '二', '三', '四', '五', '六', '日'][dateDim.dayOfWeek - 1];
+    dateDim.weekdayLabel = ['日', '一', '二', '三', '四', '五', '六'][dateDim.dayOfWeek % 7];
   }
 
 }
