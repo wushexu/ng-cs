@@ -9,7 +9,7 @@
       <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
     </div>-->
     <span class="spacer"></span>
-    <span *ngIf="perspectiveFixed">
+    <span *ngIf="perspectiveFixed" class="perspective-info">
       <span *ngIf="perspective==='class'&&selectedClass">
         班级：<span class="primary-color">{{selectedClass.name}}</span>
       </span>
@@ -151,4 +151,5 @@
 
   </div>
 
+  <div class="tables-bottom not-print">&nbsp;</div>
 </div>

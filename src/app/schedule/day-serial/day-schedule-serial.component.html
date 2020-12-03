@@ -21,7 +21,7 @@
     <tbody>
     <tr *ngFor="let sds of dayScheduleSerial.scopedDaySchedules">
       <td class="th">{{sds.scopeLabel}}</td>
-      <td *ngFor="let lesson of sds.daySchedule.lessons" [attr.colspan]="lesson?.span">
+      <td *ngFor="let lesson of sds.daySchedule.lessons" [attr.colspan]="lesson?.span" [class.has-lessons]="lesson">
         <app-lesson-schedule [schedule]="lesson.schedule" [context]="dayScheduleSerial.context"
                              *ngIf="lesson?.schedule"></app-lesson-schedule>
       </td>
