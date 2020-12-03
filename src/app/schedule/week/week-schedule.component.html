@@ -1,3 +1,6 @@
+<div *ngIf="showTitle&&weekSchedule?.title" class="schedule-table-title">
+  <h2 class="ui center aligned header">{{weekSchedule?.title}}</h2>
+</div>
 <table class="ui center aligned celled unstackable table" *ngIf="weekSchedule">
   <thead>
   <tr>
@@ -13,7 +16,7 @@
     <td rowspan="2" class="th">上午</td>
     <td class="th">1-2</td>
     <td *ngFor="let lesson of weekSchedule.timeLessons[0]" [attr.rowspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="weekSchedule.context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
@@ -21,7 +24,7 @@
     <td class="rowspanned th"></td>
     <td class="th">3-4</td>
     <td *ngFor="let lesson of weekSchedule.timeLessons[1]" [attr.rowspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="weekSchedule.context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
@@ -29,7 +32,7 @@
     <td rowspan="3" class="th">下午</td>
     <td class="th">5-6</td>
     <td *ngFor="let lesson of weekSchedule.timeLessons[2]" [attr.rowspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="weekSchedule.context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
@@ -37,7 +40,7 @@
     <td class="rowspanned th"></td>
     <td class="th">7-8</td>
     <td *ngFor="let lesson of weekSchedule.timeLessons[3]" [attr.rowspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="weekSchedule.context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>
@@ -45,7 +48,7 @@
     <td class="rowspanned th"></td>
     <td class="th">9-10</td>
     <td *ngFor="let lesson of weekSchedule.timeLessons[4]" [attr.rowspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
+      <app-lesson-schedule [schedule]="lesson.schedule" [context]="weekSchedule.context"
                            *ngIf="lesson?.schedule"></app-lesson-schedule>
     </td>
   </tr>

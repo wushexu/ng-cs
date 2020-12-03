@@ -24,10 +24,10 @@
       <app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
                             class="perspective-menu"></app-perspective-menu>
 
-      <app-class-select (selected)="classSelected($event)" [hidden]="perspective!=='class'"></app-class-select>
-      <app-teacher-select (selected)="teacherSelected($event)" [hidden]="perspective!=='teacher'"></app-teacher-select>
+      <app-class-select (selected)="classSelected($event)" *ngIf="perspective==='class'"></app-class-select>
+      <app-teacher-select (selected)="teacherSelected($event)" *ngIf="perspective==='teacher'"></app-teacher-select>
       <app-classroom-select (selected)="classroomSelected($event)"
-                            [hidden]="perspective!=='classroom'"></app-classroom-select>
+                            *ngIf="perspective==='classroom'"></app-classroom-select>
 
     </div>
 
@@ -38,14 +38,14 @@
                              class="time-scope-menu"></app-time-scope-menu>
 
         <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
-                         [hidden]="timeScope!=='day'"></app-date-picker>
+                         *ngIf="timeScope==='day'"></app-date-picker>
 
-        <app-term-week-select (selected)="weekSelected($event)" [hidden]="timeScope!=='week'"></app-term-week-select>
+        <app-term-week-select (selected)="weekSelected($event)" *ngIf="timeScope==='week'"></app-term-week-select>
 
         <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
-                          [hidden]="timeScope!=='month'"></app-month-picker>
+                          *ngIf="timeScope==='month'"></app-month-picker>
 
-        <app-term-select (selected)="termSelected($event)" [hidden]="timeScope!=='term'"></app-term-select>
+        <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
       </div>
 
       <span class="spacer"></span>
@@ -57,6 +57,8 @@
           <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
           </mat-radio-button>
         </mat-radio-group>
+
+        <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
 
         <button mat-button color="primary" (click)="execute()">
           <mat-icon>search</mat-icon>
@@ -73,7 +75,7 @@
 
     <ng-template [ngIf]="timeScope==='day'">
       <ng-template [ngIf]="outputStyle==='table'">
-        <app-day-schedule [daySchedule]="daySchedule" [context]="context"
+        <app-day-schedule [daySchedule]="daySchedule" [showTitle]="showTitle"
                           *ngIf="daySchedule"></app-day-schedule>
       </ng-template>
 
@@ -86,13 +88,13 @@
 
     <ng-template [ngIf]="timeScope==='week'">
       <ng-template [ngIf]="outputStyle==='table'">
-        <app-week-schedule [weekSchedule]="weekSchedule" [context]="context"
+        <app-week-schedule [weekSchedule]="weekSchedule" [showTitle]="showTitle"
                            *ngIf="weekSchedule"></app-week-schedule>
       </ng-template>
 
       <ng-template [ngIf]="outputStyle==='detail-table'">
-        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"
-                                 [context]="context" *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+        <app-day-schedule-serial [dayScheduleSerial]="dayScheduleSerial"
+                                 [showTitle]="showTitle" *ngIf="dayScheduleSerial"></app-day-schedule-serial>
       </ng-template>
 
       <!--<ng-template [ngIf]="outputStyle==='calendar-chart'">
@@ -101,33 +103,34 @@
 
     <ng-template [ngIf]="timeScope==='month'">
       <ng-template [ngIf]="outputStyle==='table'">
-        <app-month-schedule [monthSchedule]="monthSchedule" [context]="context"
+        <app-month-schedule [monthSchedule]="monthSchedule" [showTitle]="showTitle"
                             *ngIf="monthSchedule"></app-month-schedule>
       </ng-template>
 
       <ng-template [ngIf]="outputStyle==='detail-table'">
-        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules" [context]="context"
-                                 *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+        <app-day-schedule-serial [dayScheduleSerial]="dayScheduleSerial" [showTitle]="showTitle"
+                                 *ngIf="dayScheduleSerial"></app-day-schedule-serial>
       </ng-template>
 
       <ng-template [ngIf]="outputStyle==='calendar-chart'">
-        <app-month-schedule-chart [monthSchedule]="monthSchedule" [context]="context"
+        <app-month-schedule-chart [monthSchedule]="monthSchedule" [showTitle]="showTitle"
                                   *ngIf="monthSchedule"></app-month-schedule-chart>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="timeScope==='term'">
       <ng-template [ngIf]="outputStyle==='table'">
-        <app-term-schedule [termSchedule]="termSchedule" [context]="context" *ngIf="termSchedule"></app-term-schedule>
+        <app-term-schedule [termSchedule]="termSchedule" [showTitle]="showTitle"
+                           *ngIf="termSchedule"></app-term-schedule>
       </ng-template>
 
       <ng-template [ngIf]="outputStyle==='detail-table'">
-        <app-day-schedule-serial [scopedDaySchedules]="scopedDaySchedules"
-                                 [context]="context" *ngIf="scopedDaySchedules"></app-day-schedule-serial>
+        <app-day-schedule-serial [dayScheduleSerial]="dayScheduleSerial"
+                                 [showTitle]="showTitle" *ngIf="dayScheduleSerial"></app-day-schedule-serial>
       </ng-template>
 
       <ng-template [ngIf]="outputStyle==='calendar-chart'">
-        <app-term-schedule-chart [termSchedule]="termSchedule" [context]="context"
+        <app-term-schedule-chart [termSchedule]="termSchedule" [showTitle]="showTitle"
                                  *ngIf="termSchedule"></app-term-schedule-chart>
       </ng-template>
     </ng-template>

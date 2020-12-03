@@ -2,11 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Moment} from 'moment';
 import * as moment from 'moment';
 
-import {DATE_FORMAT} from '../../config';
+import {DATE_FORMAT, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
-import {ScheduleContext} from '../../model2/schedule-context';
 import {Perspective, ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
 import {Teacher} from '../../model/teacher';
@@ -21,6 +20,8 @@ import {MonthDim} from '../../model2/month-dim';
 import {TermDim} from '../../model2/term-dim';
 import {TermWeekService} from '../../service/term-week.service';
 import {Schedule} from '../../model/schedule';
+import {DayScheduleSerial} from '../../model2/day-schedule-serial';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
 
@@ -35,11 +36,10 @@ export class GeneralScheduleComponent implements OnInit {
   weekSchedule: WeekSchedule;
   monthSchedule: MonthSchedule;
   termSchedule: TermSchedule;
-  scopedDaySchedules: ScopedDaySchedule[];
+  dayScheduleSerial: DayScheduleSerial;
 
-  context: ScheduleContext = {};
-  // compactness
   outputStyle: OutputStyle = 'table';
+  showTitle = true;
 
   perspective: Perspective = 'class';
   timeScope: TimeScope = 'week';
@@ -60,8 +60,8 @@ export class GeneralScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedDate = moment();
-    // this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
-    this.selectedMonth = '2020-10';
+    this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
+    // this.selectedMonth = '2020-10';
   }
 
   async execute() {
@@ -75,9 +75,9 @@ export class GeneralScheduleComponent implements OnInit {
 
     await this.setupSchedules(filter, schedules);
 
-    this.scopedDaySchedules = null;
+    this.dayScheduleSerial = null;
     if (this.outputStyle === 'detail-table') {
-      this.setupScopedDaySchedules();
+      this.setupDayScheduleSerial();
     }
 
   }
@@ -129,21 +129,21 @@ export class GeneralScheduleComponent implements OnInit {
           return null;
         }
         filter.classId = this.selectedClass.id;
-        this.context = {theClass: this.selectedClass};
+        filter.context = {theClass: this.selectedClass};
         break;
       case 'teacher':
         if (!this.selectedTeacher) {
           return null;
         }
         filter.teacherId = this.selectedTeacher.id;
-        this.context = {teacher: this.selectedTeacher};
+        filter.context = {teacher: this.selectedTeacher};
         break;
       case 'classroom':
         if (!this.selectedClassroom) {
           return null;
         }
         filter.siteId = this.selectedClassroom.id;
-        this.context = {site: this.selectedClassroom};
+        filter.context = {site: this.selectedClassroom};
         break;
       default:
         return null;
@@ -152,40 +152,67 @@ export class GeneralScheduleComponent implements OnInit {
     return filter;
   }
 
+  evalTitle(titlePerspectivePart: string, titleTimeScopePart: string): string {
+    return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
+  }
+
   async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
 
     console.log(filter);
+
+    let titlePerspectivePart = '';
+    switch (this.perspective) {
+      case 'class':
+        titlePerspectivePart = this.selectedClass.name;
+        break;
+      case 'teacher':
+        titlePerspectivePart = this.selectedTeacher.name;
+        break;
+      case 'classroom':
+        titlePerspectivePart = this.selectedClassroom.name;
+        break;
+    }
+
     const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
         this.daySchedule = new DaySchedule(dateDim, schedules);
+        this.daySchedule.context = filter.context;
+        this.daySchedule.title = this.evalTitle(titlePerspectivePart, dateDim.date);
         break;
       case 'week':
         this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
+        this.weekSchedule.context = filter.context;
+        this.weekSchedule.title = this.evalTitle(titlePerspectivePart, `第${this.selectedWeek.weekno}周`);
         break;
       case 'month':
         const yearMonth = this.selectedMonth;
         const weeks = await this.termWeekService.getMonthWeeks(term, yearMonth).toPromise();
-
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
+        this.monthSchedule.context = filter.context;
+        this.monthSchedule.title = this.evalTitle(titlePerspectivePart, `${monthDim.year}年${monthDim.month}月`);
         break;
       case 'term':
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
         this.termSchedule = new TermSchedule(termDim, schedules);
+        this.termSchedule.context = filter.context;
+        this.termSchedule.title = this.evalTitle(titlePerspectivePart, term.name);
         break;
     }
   }
 
-  setupScopedDaySchedules() {
+  setupDayScheduleSerial() {
 
-    if (this.scopedDaySchedules) {
+    if (this.dayScheduleSerial) {
       return;
     }
 
     let daySchedules: DaySchedule[];
+    let context: ScheduleContext;
+    let title: string;
 
     switch (this.timeScope) {
       case 'week':
@@ -193,29 +220,35 @@ export class GeneralScheduleComponent implements OnInit {
           return;
         }
         daySchedules = this.weekSchedule.daySchedulesWithLessons;
+        context = this.weekSchedule.context;
+        title = this.weekSchedule.title;
         break;
       case 'month':
         if (!this.monthSchedule) {
           return;
         }
         daySchedules = this.monthSchedule.daySchedulesWithLessons;
+        context = this.monthSchedule.context;
+        title = this.monthSchedule.title;
         break;
       case 'term':
         if (!this.termSchedule) {
           return;
         }
         daySchedules = this.termSchedule.daySchedulesWithLessons;
+        context = this.termSchedule.context;
+        title = this.termSchedule.title;
         break;
       default:
         return;
     }
 
     if (!daySchedules) {
-      this.scopedDaySchedules = null;
+      this.dayScheduleSerial = null;
       return;
     }
 
-    this.scopedDaySchedules = daySchedules
+    const scopedDaySchedules: ScopedDaySchedule[] = daySchedules
       .map(ds => {
         const sds = new ScopedDaySchedule();
         const dateDim = ds.dateDim;
@@ -228,6 +261,8 @@ export class GeneralScheduleComponent implements OnInit {
         sds.scopeObj = dateDim;
         return sds;
       });
+
+    this.dayScheduleSerial = {scopedDaySchedules, context, title};
   }
 
   perspectiveSelected(perspective: Perspective) {
@@ -261,7 +296,7 @@ export class GeneralScheduleComponent implements OnInit {
   outputStyleChanged() {
     // console.log(this.outputStyleList);
     if (this.outputStyle === 'detail-table') {
-      this.setupScopedDaySchedules();
+      this.setupDayScheduleSerial();
     }
   }
 

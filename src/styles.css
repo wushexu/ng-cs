@@ -31,6 +31,12 @@ body {
   margin-top: 2em;
 }
 
+.schedule-table-title {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
 .spacer {
   flex: 1 1 auto;
 }

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import {ScheduleContext} from '../../model2/schedule-context';
-import {ScopedDaySchedule} from '../../model2/scoped-day-schedule';
+import {DayScheduleSerial} from '../../model2/day-schedule-serial';
 
 
 @Component({
@@ -11,7 +10,7 @@ import {ScopedDaySchedule} from '../../model2/scoped-day-schedule';
 })
 export class DayScheduleSerialComponent {
 
-  @Input() scopedDaySchedules: ScopedDaySchedule[];
-  @Input() context: ScheduleContext;
+  @Input() dayScheduleSerial: DayScheduleSerial;
+  @Input() showTitle;
 
 }

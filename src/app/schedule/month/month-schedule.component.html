@@ -1,22 +1,26 @@
-<table class="ui center aligned celled unstackable table" *ngIf="monthSchedule?.weekSchedules[0]">
-  <thead>
-  <tr>
-    <th></th>
-    <th *ngFor="let daySchedule of monthSchedule.weekSchedules[0].daySchedules">
-      <div class="week-day">{{daySchedule.dateDim | weekdayLabel}}</div>
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let ws of monthSchedule.weekSchedules">
-    <td class="th">
-      <div>第{{ws.week.weekno}}周</div>
-      <div>（{{ws.week.firstDay | dateMd}} ~ {{ws.week.lastDay | dateMd}}）</div>
-    </td>
-    <td *ngFor="let daySchedule of ws.daySchedules">
-      <app-day-lessons [daySchedule]="daySchedule" [context]="context"
-                        fxLayoutAlign="center"></app-day-lessons>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div *ngIf="monthSchedule">
+  <div *ngIf="showTitle&&monthSchedule.title" class="schedule-table-title">
+    <h2 class="ui center aligned header">{{monthSchedule.title}}</h2>
+  </div>
+  <table class="ui center aligned celled unstackable table" *ngIf="monthSchedule.weekSchedules[0]">
+    <thead>
+    <tr>
+      <th></th>
+      <th *ngFor="let daySchedule of monthSchedule.weekSchedules[0].daySchedules">
+        <div class="week-day">{{daySchedule.dateDim | weekdayLabel}}</div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ws of monthSchedule.weekSchedules">
+      <td class="th">
+        <div>第{{ws.week.weekno}}周</div>
+        <div>（{{ws.week.firstDay | dateMd}} ~ {{ws.week.lastDay | dateMd}}）</div>
+      </td>
+      <td *ngFor="let daySchedule of ws.daySchedules">
+        <app-day-lessons [daySchedule]="daySchedule" fxLayoutAlign="center"></app-day-lessons>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -4,13 +4,16 @@ import {Schedule} from '../model/schedule';
 import {WeekSchedule} from './week-schedule';
 import {TermDim} from './term-dim';
 import {DaySchedule} from './day-schedule';
+import {ScheduleDatasource} from './schedule-datasource';
 
-export class TermSchedule {
+export class TermSchedule extends ScheduleDatasource {
 
   termDim: TermDim;
   weekSchedules: WeekSchedule[];
 
   constructor(termDim: TermDim, schedules: Schedule[]) {
+    super();
+
     this.termDim = termDim;
     const weeks = termDim.weeks;
 

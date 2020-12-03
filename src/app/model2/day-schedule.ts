@@ -4,8 +4,9 @@ import {Schedule} from '../model/schedule';
 import {Lesson} from './lesson';
 import {DateDim} from '../model/date-dim';
 import {ScheduleContext} from './schedule-context';
+import {ScheduleDatasource} from './schedule-datasource';
 
-export class DaySchedule {
+export class DaySchedule extends ScheduleDatasource {
 
   dateDim: DateDim;
   lessons: Lesson[]; // null as placeholder
@@ -16,6 +17,7 @@ export class DaySchedule {
   lessonSpansCount: number;
 
   constructor(dateDim: DateDim, schedules: Schedule[]) {
+    super();
 
     // schedules.sort((a, b) => a.timeStart - b.timeStart);
 

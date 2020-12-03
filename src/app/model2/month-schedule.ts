@@ -4,13 +4,16 @@ import {Schedule} from '../model/schedule';
 import {WeekSchedule} from './week-schedule';
 import {MonthDim} from './month-dim';
 import {DaySchedule} from './day-schedule';
+import {ScheduleDatasource} from './schedule-datasource';
 
-export class MonthSchedule {
+export class MonthSchedule extends ScheduleDatasource {
 
   monthDim: MonthDim;
   weekSchedules: WeekSchedule[];
 
   constructor(monthDim: MonthDim, schedules: Schedule[]) {
+    super();
+
     this.monthDim = monthDim;
     const weeks = monthDim.weeks;
 

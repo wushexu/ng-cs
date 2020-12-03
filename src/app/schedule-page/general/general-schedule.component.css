@@ -1,7 +1,3 @@
-.pad-right {
-  margin-right: 1em;
-}
-
-.output-style-radio-group .mat-radio-button {
+.mat-checkbox, .output-style-radio-group .mat-radio-button {
   margin-right: 1em;
 }

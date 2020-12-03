@@ -1,23 +1,28 @@
-<table class="ui center aligned fixed celled unstackable table" *ngIf="daySchedule">
-  <thead>
-  <tr>
-    <th colspan="2">上午</th>
-    <th colspan="3">下午</th>
-  </tr>
-  <tr>
-    <th>1-2</th>
-    <th>3-4</th>
-    <th>5-6</th>
-    <th>7-8</th>
-    <th>9-10</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td *ngFor="let lesson of daySchedule.lessons" [attr.colspan]="lesson?.span">
-      <app-lesson-schedule [schedule]="lesson.schedule" [context]="context"
-                           *ngIf="lesson?.schedule"></app-lesson-schedule>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div *ngIf="daySchedule">
+  <div *ngIf="showTitle&&daySchedule.title" class="schedule-table-title">
+    <h2 class="ui center aligned header">{{daySchedule.title}}</h2>
+  </div>
+  <table class="ui center aligned fixed celled unstackable table">
+    <thead>
+    <tr>
+      <th colspan="2">上午</th>
+      <th colspan="3">下午</th>
+    </tr>
+    <tr>
+      <th>1-2</th>
+      <th>3-4</th>
+      <th>5-6</th>
+      <th>7-8</th>
+      <th>9-10</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td *ngFor="let lesson of daySchedule.lessons" [attr.colspan]="lesson?.span">
+        <app-lesson-schedule [schedule]="lesson.schedule" [context]="daySchedule.context"
+                             *ngIf="lesson?.schedule"></app-lesson-schedule>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

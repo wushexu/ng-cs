@@ -8,26 +8,24 @@ import {ScheduleContext} from '../model2/schedule-context';
 import {DaySchedule} from '../model2/day-schedule';
 import {DateDim} from '../model/date-dim';
 import {DATE_FORMAT} from '../config';
+import {ScheduleDatasource} from '../model2/schedule-datasource';
 
 export abstract class ScheduleCalendarChart {
 
-  context: ScheduleContext;
-
+  showTitle = true;
   cellSize = 70;
   showMonthLabel = false;
   chartPaddingBottom = 30;
 
-  title: string;
   chartWidth = this.cellSize * 9;
   chartHeight = 500;
   // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
   // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
 
   myChart: echarts.ECharts;
+  viewInitialized = false;
 
-  get calendarTop(): number {
-    return (this.title ? 50 : 0) + this.cellSize;
-  }
+  abstract get scheduleDatasource(): ScheduleDatasource;
 
   abstract getDaySchedulesWithLessons(): DaySchedule[];
 
@@ -35,17 +33,23 @@ export abstract class ScheduleCalendarChart {
 
   abstract getStartEndDates(): Moment[];
 
-  abstract inputDataReady(): boolean;
+  abstract resetChart(): void;
 
-  abstract setTitle(): void;
+  get calendarTop(): number {
+    return (this.showTitle && this.scheduleDatasource.title ? 50 : 0) + this.cellSize;
+  }
+
+  inputDataReady(): boolean {
+    return !!this.scheduleDatasource;
+  }
 
   refreshChart(): void {
 
-    if (!this.inputDataReady() || !this.myChart) {
+    if (!this.viewInitialized || !this.inputDataReady()) {
       return;
     }
 
-    this.setTitle();
+    this.resetChart();
 
     const [startDate, endDatePlus1Moment] = this.getStartEndDates();
 
@@ -89,8 +93,8 @@ export abstract class ScheduleCalendarChart {
 
     const option1: EChartOption = {
       color: null,
-      title: this.title ? {
-        text: this.title,
+      title: this.showTitle && this.scheduleDatasource.title ? {
+        text: this.scheduleDatasource.title,
         top: 10,
         left: 'center'
       } : null,
@@ -98,7 +102,7 @@ export abstract class ScheduleCalendarChart {
         formatter(params: Format) {
           const daySchedule = params.data.daySchedule as DaySchedule;
           // console.log(daySchedule);
-          return DaySchedule.lessonsHtml(daySchedule, component.context);
+          return DaySchedule.lessonsHtml(daySchedule, component.scheduleDatasource.context);
         }
       },
 
@@ -149,7 +153,7 @@ export abstract class ScheduleCalendarChart {
             show: true,
             formatter(params) {
               const daySchedule = params.data.daySchedule as DaySchedule;
-              return '\n'+daySchedule.dateDim.dayOfMonth + '\n\n\n';
+              return '\n' + daySchedule.dateDim.dayOfMonth + '\n\n\n';
             },
             color: '#000'
           },

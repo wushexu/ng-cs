@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 
 import {DaySchedule} from '../../model2/day-schedule';
-import {ScheduleContext} from '../../model2/schedule-context';
 
 
 @Component({
@@ -12,6 +11,5 @@ import {ScheduleContext} from '../../model2/schedule-context';
 export class DayLessonsComponent {
 
   @Input() daySchedule: DaySchedule;
-  @Input() context: ScheduleContext;
 
 }

@@ -8,14 +8,16 @@ import {Schedule} from '../model/schedule';
 import {Week} from '../model/week';
 import {DateDim} from '../model/date-dim';
 import {Lesson} from './lesson';
+import {ScheduleDatasource} from './schedule-datasource';
 
-export class WeekSchedule {
+export class WeekSchedule extends ScheduleDatasource {
   week: Week;
   daySchedules: DaySchedule[];
 
   timeLessons: Lesson[][];
 
   constructor(week: Week, schedules: Schedule[]) {
+    super();
 
     this.week = week;
 

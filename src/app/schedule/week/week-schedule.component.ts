@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 
 import {WeekSchedule} from '../../model2/week-schedule';
-import {ScheduleContext} from '../../model2/schedule-context';
 
 @Component({
   selector: 'app-week-schedule',
@@ -11,6 +10,6 @@ import {ScheduleContext} from '../../model2/schedule-context';
 export class WeekScheduleComponent {
 
   @Input() weekSchedule: WeekSchedule;
-  @Input() context: ScheduleContext;
+  @Input() showTitle;
 
 }

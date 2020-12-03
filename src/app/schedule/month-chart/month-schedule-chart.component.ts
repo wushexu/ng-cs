@@ -6,7 +6,7 @@ import * as echarts from 'echarts';
 import {MonthSchedule} from '../../model2/month-schedule';
 import {DaySchedule} from '../../model2/day-schedule';
 import {ScheduleCalendarChart} from '../../common/schedule-calendar-chart';
-import {ScheduleContext} from '../../model2/schedule-context';
+import {ScheduleDatasource} from '../../model2/schedule-datasource';
 
 @Component({
   selector: 'app-month-schedule-chart',
@@ -17,10 +17,10 @@ export class MonthScheduleChartComponent extends ScheduleCalendarChart implement
   @ViewChild('chart') chartDiv: ElementRef;
 
   @Input() monthSchedule: MonthSchedule;
-  @Input() context: ScheduleContext;
+  @Input() showTitle;
 
-  inputDataReady(): boolean {
-    return !!this.monthSchedule;
+  get scheduleDatasource(): ScheduleDatasource {
+    return this.monthSchedule;
   }
 
   getCalendarRange(): string | string[] {
@@ -39,16 +39,17 @@ export class MonthScheduleChartComponent extends ScheduleCalendarChart implement
     return this.monthSchedule.daySchedulesWithLessons;
   }
 
-  ngAfterViewInit(): void {
+  resetChart(): void {
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
     const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
     this.myChart = echarts.init(holder);
-
-    this.refreshChart();
   }
 
-  setTitle(): void {
-    const monthDim = this.monthSchedule.monthDim;
-    this.title = `${monthDim.year}年${monthDim.month}月 课表`;
+  ngAfterViewInit(): void {
+    this.viewInitialized = true;
+    this.refreshChart();
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -5,8 +5,8 @@ import * as echarts from 'echarts';
 
 import {DaySchedule} from '../../model2/day-schedule';
 import {ScheduleCalendarChart} from '../../common/schedule-calendar-chart';
-import {ScheduleContext} from '../../model2/schedule-context';
 import {TermSchedule} from '../../model2/term-schedule';
+import {ScheduleDatasource} from '../../model2/schedule-datasource';
 
 @Component({
   selector: 'app-term-schedule-chart',
@@ -17,12 +17,16 @@ export class TermScheduleChartComponent extends ScheduleCalendarChart implements
   @ViewChild('chart') chartDiv: ElementRef;
 
   @Input() termSchedule: TermSchedule;
-  @Input() context: ScheduleContext;
+  @Input() showTitle;
 
   showMonthLabel = true;
   // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
   // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
   chartHeight = 50 + this.cellSize + Math.ceil((7 - 1 + 160) / 7) * this.cellSize + this.chartPaddingBottom; // 1830
+
+  get scheduleDatasource(): ScheduleDatasource {
+    return this.termSchedule;
+  }
 
   inputDataReady(): boolean {
     const ts = this.termSchedule;
@@ -43,16 +47,17 @@ export class TermScheduleChartComponent extends ScheduleCalendarChart implements
     return this.termSchedule.daySchedulesWithLessons;
   }
 
-  ngAfterViewInit(): void {
+  resetChart(): void {
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
     const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
     this.myChart = echarts.init(holder);
-
-    this.refreshChart();
   }
 
-  setTitle(): void {
-    const termDim = this.termSchedule.termDim;
-    this.title = `${termDim.term.name} 课表`;
+  ngAfterViewInit(): void {
+    this.viewInitialized = true;
+    this.refreshChart();
   }
 
   ngOnChanges(changes: SimpleChanges) {
