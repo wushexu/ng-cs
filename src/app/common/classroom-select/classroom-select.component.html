@@ -1,5 +1,5 @@
 <mat-form-field>
-  <mat-label>院系</mat-label>
+  <mat-label>系部</mat-label>
   <mat-select [(ngModel)]="deptFilter" (selectionChange)="filterClassroom()">
     <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let dept of depts" [value]="dept">

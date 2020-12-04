@@ -1,6 +1,6 @@
 <mat-toolbar color="secondary" class="not-print">
   <mat-toolbar-row>
-    <span>课表统计</span>
+    <span>课表查询</span>
 
     <span class="spacer"></span>
 
@@ -51,16 +51,16 @@
 
         <div>
           <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
-            <mat-radio-button value="table">表格</mat-radio-button>
-            <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历</mat-radio-button>
-            <mat-radio-button value="chart">其他图表</mat-radio-button>
+            <mat-radio-button value="table">默认表格</mat-radio-button>
+            <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
+            </mat-radio-button>
           </mat-radio-group>
 
           <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
 
           <button mat-button color="primary" (click)="execute()">
-            <mat-icon>bar_chart</mat-icon>
-            统计
+            <mat-icon>search</mat-icon>
+            查询
           </button>
         </div>
       </div>
@@ -71,7 +71,6 @@
   </div>
 
   <div class="schedule-tables">
-
 
   </div>
 

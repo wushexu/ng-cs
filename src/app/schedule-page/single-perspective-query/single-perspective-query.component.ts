@@ -7,7 +7,7 @@ import {MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model2/day-schedule';
 import {DateDim} from '../../model/date-dim';
-import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
+import {Perspective, ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
 import {Teacher} from '../../model/teacher';
 import {Classroom} from '../../model/site';
@@ -30,11 +30,11 @@ import {GeneralScheduleComponent} from '../common/general-schedule.component';
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
 
 @Component({
-  selector: 'app-schedule-query',
-  templateUrl: './schedule-query.component.html',
-  styleUrls: ['./schedule-query.component.css']
+  selector: 'app-single-perspective-query',
+  templateUrl: './single-perspective-query.component.html',
+  styleUrls: ['./single-perspective-query.component.css']
 })
-export class ScheduleQueryComponent extends GeneralScheduleComponent implements OnInit {
+export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent implements OnInit {
 
   daySchedule: DaySchedule;
   weekSchedule: WeekSchedule;
@@ -42,9 +42,9 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
   termSchedule: TermSchedule;
   dayScheduleSerial: DayScheduleSerial;
 
+  perspective: Perspective = 'class';
+  perspectiveFixed = false;
   outputStyle: OutputStyle = 'table';
-
-
 
   constructor(private scheduleService: ScheduleService,
               private termWeekService: TermWeekService,
@@ -109,6 +109,51 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
 
   }
 
+  setupFilter(): ScheduleFilter | null {
+
+    const filter: ScheduleFilter = new ScheduleFilter();
+
+    const ok1 = this.setupTimeFilter(filter);
+    if (!ok1) {
+      return null;
+    }
+
+    const ok2 = this.setupPerspectiveFilter(filter);
+    if (!ok2) {
+      return null;
+    }
+
+    return filter;
+  }
+
+  setupPerspectiveFilter(filter: ScheduleFilter): boolean {
+    switch (this.perspective) {
+      case 'class':
+        if (!this.selectedClass) {
+          return false;
+        }
+        filter.classId = this.selectedClass.id;
+        filter.context = {theClass: this.selectedClass};
+        return true;
+      case 'teacher':
+        if (!this.selectedTeacher) {
+          return false;
+        }
+        filter.teacherId = this.selectedTeacher.id;
+        filter.context = {teacher: this.selectedTeacher};
+        return true;
+      case 'classroom':
+        if (!this.selectedClassroom) {
+          return false;
+        }
+        filter.siteId = this.selectedClassroom.id;
+        filter.context = {site: this.selectedClassroom};
+        return true;
+      default:
+        return false;
+    }
+  }
+
 
   evalTitle(titlePerspectivePart: string, titleTimeScopePart: string): string {
     return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
@@ -118,16 +163,16 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
 
     console.log(filter);
 
-    let titlePerspectivePart = '';
+    let titlePersPart = '';
     switch (this.perspective) {
       case 'class':
-        titlePerspectivePart = this.selectedClass.name;
+        titlePersPart = this.selectedClass.name;
         break;
       case 'teacher':
-        titlePerspectivePart = this.selectedTeacher.name;
+        titlePersPart = this.selectedTeacher.name;
         break;
       case 'classroom':
-        titlePerspectivePart = this.selectedClassroom.name;
+        titlePersPart = this.selectedClassroom.name;
         break;
     }
 
@@ -137,12 +182,12 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
         this.daySchedule = new DaySchedule(dateDim, schedules);
         this.daySchedule.context = filter.context;
-        this.daySchedule.title = this.evalTitle(titlePerspectivePart, dateDim.date);
+        this.daySchedule.title = this.evalTitle(titlePersPart, dateDim.date);
         break;
       case 'week':
         this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
         this.weekSchedule.context = filter.context;
-        this.weekSchedule.title = this.evalTitle(titlePerspectivePart, `第${this.selectedWeek.weekno}周`);
+        this.weekSchedule.title = this.evalTitle(titlePersPart, `第${this.selectedWeek.weekno}周`);
         break;
       case 'month':
         const yearMonth = this.selectedMonth;
@@ -150,14 +195,14 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
         this.monthSchedule.context = filter.context;
-        this.monthSchedule.title = this.evalTitle(titlePerspectivePart, `${monthDim.year}年${monthDim.month}月`);
+        this.monthSchedule.title = this.evalTitle(titlePersPart, `${monthDim.year}年${monthDim.month}月`);
         break;
       case 'term':
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
         this.termSchedule = new TermSchedule(termDim, schedules);
         this.termSchedule.context = filter.context;
-        this.termSchedule.title = this.evalTitle(titlePerspectivePart, term.name);
+        this.termSchedule.title = this.evalTitle(titlePersPart, term.name);
         break;
     }
   }
@@ -252,5 +297,9 @@ export class ScheduleQueryComponent extends GeneralScheduleComponent implements 
     }
   }
 
+  perspectiveSelected(perspective: Perspective) {
+    this.perspective = perspective;
+    console.log(perspective);
+  }
 
 }

@@ -36,7 +36,7 @@ import { ClassroomSelectComponent } from './common/classroom-select/classroom-se
 import {ClassroomService} from './service/classroom.service';
 import {TermWeekService} from './service/term-week.service';
 import { TermWeekSelectComponent } from './common/term-week-select/term-week-select.component';
-import {ScheduleQueryComponent} from './schedule-page/query/schedule-query.component';
+import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
 import {TermSelectComponent} from './common/term-select/term-select.component';
 import { DatePickerComponent } from './common/date-picker/date-picker.component';
 import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-menu.component';
@@ -45,6 +45,8 @@ import {DateMdPipe} from './common/pipe/date-md.pipe';
 import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedule-chart.component';
 import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-chart.component';
 import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
+import { MainMenuComponent } from './common/menu/main-menu.component';
+import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
 
 @NgModule({
   imports: [
@@ -78,13 +80,15 @@ import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.co
     ClassroomSelectComponent,
     TermWeekSelectComponent,
     TermSelectComponent,
-    ScheduleQueryComponent,
+    SinglePerspectiveQueryComponent,
     DatePickerComponent,
     PerspectiveMenuComponent,
     TimeScopeMenuComponent,
     MonthScheduleChartComponent,
     TermScheduleChartComponent,
-    ScheduleStatisComponent
+    ScheduleStatisComponent,
+    MainMenuComponent,
+    IntegratedQueryComponent
   ],
   providers: [
     ScheduleService,

@@ -1,14 +1,16 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {ScheduleQueryComponent} from './schedule-page/query/schedule-query.component';
+import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
 import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
+import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
 
 const routes: Routes = [
-  {path: 'query', component: ScheduleQueryComponent},
-  {path: 'cl/:class-idc', component: ScheduleQueryComponent},
-  {path: 'tc/:teacher-idc', component: ScheduleQueryComponent},
-  {path: 'cr/:classroom-id', component: ScheduleQueryComponent},
+  {path: 'query', component: SinglePerspectiveQueryComponent},
+  {path: 'cl/:class-idc', component: SinglePerspectiveQueryComponent},
+  {path: 'tc/:teacher-idc', component: SinglePerspectiveQueryComponent},
+  {path: 'cr/:classroom-id', component: SinglePerspectiveQueryComponent},
+  {path: 'query-i', component: IntegratedQueryComponent},
   {path: 'statis', component: ScheduleStatisComponent}
 ];
 

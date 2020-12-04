@@ -4,11 +4,8 @@
 
     <span class="spacer"></span>
 
-    <div class="ui text menu" *ngIf="!perspectiveFixed">
-      <!--<div class="header item">课表</div>-->
-      <a routerLink="/query" class="item" routerLinkActive="active-link">查询</a>
-      <a routerLink="/statis" class="item" routerLinkActive="active-link">统计</a>
-    </div>
+    <app-main-menu *ngIf="!perspectiveFixed"></app-main-menu>
+
     <div class="perspective-info" *ngIf="perspectiveFixed">
       <span *ngIf="perspective==='class'&&selectedClass">
         班级：<span class="primary-color">{{selectedClass.name}}</span>

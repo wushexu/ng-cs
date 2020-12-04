@@ -1,7 +1,7 @@
 import {Moment} from 'moment';
 
 import {DATE_FORMAT} from '../../config';
-import {Perspective, ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
+import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
 import {Class} from '../../model/class';
 import {Teacher} from '../../model/teacher';
 import {Classroom} from '../../model/site';
@@ -13,8 +13,6 @@ export class GeneralScheduleComponent {
 
   showTitle = true;
 
-  perspective: Perspective = 'class';
-  perspectiveFixed = false;
   timeScope: TimeScope = 'week';
 
   selectedClass: Class;
@@ -26,80 +24,44 @@ export class GeneralScheduleComponent {
   selectedWeek: Week;
   selectedTerm: Term;
 
-
-  setupFilter(): ScheduleFilter | null {
-
-    const filter: ScheduleFilter = new ScheduleFilter();
+  setupTimeFilter(filter: ScheduleFilter): boolean {
 
     const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         if (!this.selectedDate) {
-          return null;
+          return false;
         }
         filter.date = this.selectedDate.format(DATE_FORMAT);
-        break;
+        return true;
       case 'week':
         if (!this.selectedWeek) {
-          return null;
+          return false;
         }
         if (!term) {
-          return null;
+          return false;
         }
         filter.termYear = term.termYear;
         filter.termMonth = term.termMonth;
         filter.weekno = this.selectedWeek.weekno;
-        break;
+        return true;
       case 'month':
         if (!this.selectedMonth) {
-          return null;
+          return false;
         }
         // YYYY-MM
         filter.yearMonth = this.selectedMonth;
-        break;
+        return true;
       case 'term':
         if (!term) {
-          return null;
+          return false;
         }
         filter.termYear = term.termYear;
         filter.termMonth = term.termMonth;
-        break;
+        return true;
       default:
-        return null;
+        return false;
     }
-
-    switch (this.perspective) {
-      case 'class':
-        if (!this.selectedClass) {
-          return null;
-        }
-        filter.classId = this.selectedClass.id;
-        filter.context = {theClass: this.selectedClass};
-        break;
-      case 'teacher':
-        if (!this.selectedTeacher) {
-          return null;
-        }
-        filter.teacherId = this.selectedTeacher.id;
-        filter.context = {teacher: this.selectedTeacher};
-        break;
-      case 'classroom':
-        if (!this.selectedClassroom) {
-          return null;
-        }
-        filter.siteId = this.selectedClassroom.id;
-        filter.context = {site: this.selectedClassroom};
-        break;
-      default:
-        return null;
-    }
-
-    return filter;
-  }
-
-  perspectiveSelected(perspective: Perspective) {
-    this.perspective = perspective;
-    console.log(perspective);
   }
 
   timeScopeSelected(timeScope: TimeScope) {
