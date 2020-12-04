@@ -49,6 +49,7 @@ import { MainMenuComponent } from './common/menu/main-menu.component';
 import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
 import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';
 import {DeptSelectComponent} from './common/dept-select/dept-select.component';
+import {ClassYearSelectComponent} from './common/class-year-select/class-year-select.component';
 
 @NgModule({
   imports: [
@@ -92,7 +93,8 @@ import {DeptSelectComponent} from './common/dept-select/dept-select.component';
     MainMenuComponent,
     IntegratedQueryComponent,
     DeptMajorSelectComponent,
-    DeptSelectComponent
+    DeptSelectComponent,
+    ClassYearSelectComponent
   ],
   providers: [
     ScheduleService,

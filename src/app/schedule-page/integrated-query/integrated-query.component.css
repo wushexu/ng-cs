@@ -10,3 +10,23 @@
 .tables-bottom {
   height: 2em;
 }
+
+.dimensions-select, .dimensions-divider {
+  margin-bottom: .5em;
+}
+
+.dimensions-select > * {
+  margin-right: 1em;
+}
+
+.dimensions-select .title {
+  font-weight: bold;
+}
+
+.dimension-label {
+  margin-right: 1em;
+}
+
+.dimension-condition {
+  margin-right: 1em;
+}

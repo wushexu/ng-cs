@@ -1,0 +1,6 @@
+<mat-form-field class="year-select">
+  <mat-label>入学年</mat-label>
+  <mat-select [(ngModel)]="selectedYear" (selectionChange)="yearSelected()">
+    <mat-option *ngFor="let year of years" [value]="year">{{year}}年</mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,5 +1,5 @@
 <mat-form-field>
-  <mat-label>系部</mat-label>
+  <mat-label>（筛选）系部</mat-label>
   <mat-select [(ngModel)]="deptFilter" (selectionChange)="filterClassroom()">
     <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let dept of depts" [value]="dept">
@@ -9,7 +9,7 @@
 </mat-form-field>
 
 <mat-form-field>
-  <mat-label>教室类型</mat-label>
+  <mat-label>（筛选）类型</mat-label>
   <mat-select [(ngModel)]="roomTypeFilter" (selectionChange)="filterClassroom()">
     <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let roomType of roomTypes" [value]="roomType">
@@ -31,4 +31,3 @@
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
-

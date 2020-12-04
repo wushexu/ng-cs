@@ -1,7 +1,6 @@
 <mat-form-field>
-  <mat-label>系部/专业</mat-label>
+  <mat-label>专业</mat-label>
   <mat-select [(ngModel)]="selectedMajor" (selectionChange)="majorSelected()">
-    <mat-option [value]="null">（不限）</mat-option>
     <mat-optgroup *ngFor="let dept of depts" [label]="dept.name">
       <mat-option *ngFor="let major of dept.majors" [value]="major">
         {{major.name}}

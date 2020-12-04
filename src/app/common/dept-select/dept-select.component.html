@@ -1,7 +1,6 @@
 <mat-form-field>
   <mat-label>系部</mat-label>
   <mat-select [(ngModel)]="selectedDept" (selectionChange)="deptSelected()">
-    <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let dept of depts" [value]="dept">
       {{dept.name}}
     </mat-option>

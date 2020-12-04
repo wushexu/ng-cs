@@ -33,11 +33,23 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   termSchedule: TermSchedule;
   dayScheduleSerial: DayScheduleSerial;
 
+  timeScope: TimeScope = 'day';
   outputStyle: OutputStyle = 'table';
 
   selectedDept: Dept;
   selectedMajor: Major;
+  selectedClassYear: number;
 
+  majorDimEnabled = false;
+  classDimEnabled = false;
+  classroomDimEnabled = false;
+  teacherDimEnabled = false;
+  timeDimEnabled = true;
+
+  majorDim: 'dept' | 'major' = 'dept';
+  classDim: 'year' | 'class' = 'class';
+  // classroomDim: 'dept' | 'room';
+  // teacherDim: 'teacher';
 
   constructor(private scheduleService: ScheduleService) {
     super();
@@ -181,6 +193,10 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   majorSelected(major: Major) {
     this.selectedMajor = major;
     console.log(major);
+  }
+
+  classYearSelected(year: number) {
+    this.selectedClassYear = year;
   }
 
 }
