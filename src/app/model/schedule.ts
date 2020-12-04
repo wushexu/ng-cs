@@ -14,7 +14,7 @@ export class Schedule {
 
   timeStart: number;
   timeEnd: number;
-  trainingType: string; // N: 理论课；S: 校内实现；E: 企业实训
+  trainingType: string; // N: 理论课；S: 校内实训；E: 企业实训
 
   siteId?: number;
   classId?: number;

@@ -24,9 +24,7 @@ export class ScheduleService {
 
   constructor(protected http: HttpClient,
               // protected dialog: MatDialog,
-              protected classroomService: ClassroomService,
-              protected deptMajorClassService: DeptMajorClassService,
-              protected teacherCourseService: TeacherCourseService
+              protected deptMajorClassService: DeptMajorClassService
   ) {
     // super(http, dialog);
     // let apiBase = environment.apiBase || '';
@@ -110,7 +108,7 @@ export class ScheduleService {
       termYear: 2020,
       timeStart: 1,
       timeEnd: 4,
-      trainingType: 'E',
+      trainingType: 'N',
       weekno: 6,
       site,
       theClass: clazz,
@@ -121,10 +119,22 @@ export class ScheduleService {
     const schedule2: Schedule = Object.assign({}, schedule1, {timeStart: 5, timeEnd: 6});
     const schedule3: Schedule = Object.assign({}, schedule1, {timeStart: 7, timeEnd: 8});
 
-    const schedule4: Schedule = Object.assign({}, schedule1, {date: '2020-10-14', dayOfWeek: 3, timeStart: 1, timeEnd: 2});
+    const schedule4: Schedule = Object.assign({}, schedule1, {
+      date: '2020-10-14',
+      dayOfWeek: 3,
+      timeStart: 1,
+      timeEnd: 2,
+      trainingType: 'E'
+    });
     const schedule5: Schedule = Object.assign({}, schedule4, {timeStart: 5, timeEnd: 8});
 
-    const schedule6: Schedule = Object.assign({}, schedule1, {date: '2020-10-15', dayOfWeek: 4, timeStart: 1, timeEnd: 2});
+    const schedule6: Schedule = Object.assign({}, schedule1, {
+      date: '2020-10-15',
+      dayOfWeek: 4,
+      timeStart: 1,
+      timeEnd: 2,
+      trainingType: 'S'
+    });
     const schedule7: Schedule = Object.assign({}, schedule6, {timeStart: 5, timeEnd: 6});
 
     const schedule8: Schedule = Object.assign({}, schedule1, {date: '2020-10-16', dayOfWeek: 5, timeStart: 1, timeEnd: 2});

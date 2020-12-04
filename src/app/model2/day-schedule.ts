@@ -76,12 +76,12 @@ export class DaySchedule extends ScheduleDatasource {
     if (daySchedule.noPlaceholderLessons.length === 0) {
       return '无课';
     }
-    let indent = '&nbsp;';
-    times(3, () => indent = indent + indent); // 2^3=8
+    let indent = '&nbsp;&nbsp;&nbsp;';
+    indent += indent;
     const lf = '<br>';
     let text = '';
     for (const {schedule} of daySchedule.noPlaceholderLessons) {
-      const {timeStart, timeEnd, course, theClass, site, teacher} = schedule;
+      const {timeStart, timeEnd, course, theClass, site, teacher, trainingType} = schedule;
       const ampm = timeStart < 5 ? '（上午）' : '（下午）';
       text += `${ampm}${timeStart}-${timeEnd}${lf}`;
       if (!context.course && course) {
@@ -90,8 +90,16 @@ export class DaySchedule extends ScheduleDatasource {
       if (!context.theClass && theClass) {
         text += `${indent}${theClass.name}${lf}`;
       }
-      if (!context.site && site) {
-        text += `${indent}${site.name}${lf}`;
+      if (!context.site) {
+        if (site || trainingType !== 'N') {
+          let siteText = site ? site.name : '';
+          if (trainingType === 'S') {
+            siteText = '（实训）' + siteText;
+          } else if (trainingType === 'E') {
+            siteText = '（企业实训）' + siteText;
+          }
+          text += `${indent}${siteText}${lf}`;
+        }
       }
       if (!context.teacher && teacher) {
         text += `${indent}${teacher.name}${lf}`;

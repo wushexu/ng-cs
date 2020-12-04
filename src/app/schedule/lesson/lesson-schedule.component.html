@@ -1,8 +1,22 @@
 <div *ngIf="schedule" class="lesson-info" fxLayoutAlign="center center">
-  <div class="ui list">
-    <div class="item course-name" *ngIf="!context?.course">{{schedule.course?.name}}</div>
+  <div class="ui list" [class.training-class]="schedule.trainingType!=='N'">
+    <div class="item course-name"
+         [matTooltip]="courseTooltip()"
+         matTooltipShowDelay="200"
+         matTooltipHideDelay="200"
+         matTooltipClass="multi-lines-tooltip"
+         *ngIf="!context?.course">
+      {{schedule.course?.name}}
+    </div>
     <div class="item class-name" *ngIf="!context?.theClass">{{schedule.theClass?.name}}</div>
-    <div class="item classroom-name" *ngIf="!context?.site">{{schedule.site?.name}}</div>
+    <div class="item classroom-name"
+         [matTooltip]="classroomTooltip()"
+         matTooltipShowDelay="200"
+         matTooltipHideDelay="200"
+         matTooltipClass="multi-lines-tooltip"
+         *ngIf="!context?.site">
+      {{schedule.site?.name}}
+    </div>
     <div class="item teacher-name" *ngIf="!context?.teacher">{{schedule.teacher?.name}}</div>
   </div>
 </div>

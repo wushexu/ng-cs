@@ -14,10 +14,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -38,9 +38,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatAutocompleteModule,
     MatInputModule,
     MatSelectModule,
-    MatDividerModule
-    // MatButtonToggleModule,
-
+    MatDividerModule,
+    MatTooltipModule
   ]
 })
 export class AppMaterialModule {

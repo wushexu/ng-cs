@@ -5,7 +5,7 @@ export class Dept {
   name: string;
 
   shortName?: string;
-  type?: string;
+  type?: string; // TYPE_NORMAL: N; TYPE_ELSE: E
 
   majors?: Major[];
 

@@ -1,4 +1,5 @@
 import {Major} from './major';
+import {Dept} from './dept';
 
 export class Class {
   id: number;
@@ -8,7 +9,10 @@ export class Class {
   classNo: number;
   size: number;
 
+  deptId?: number;
   majorId?: number;
+
+  dept?: Dept;
   major?: Major;
 
 }
