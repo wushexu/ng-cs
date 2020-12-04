@@ -47,6 +47,8 @@ import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-ch
 import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
 import { MainMenuComponent } from './common/menu/main-menu.component';
 import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
+import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';
+import {DeptSelectComponent} from './common/dept-select/dept-select.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import {IntegratedQueryComponent} from './schedule-page/integrated-query/integra
     TermScheduleChartComponent,
     ScheduleStatisComponent,
     MainMenuComponent,
-    IntegratedQueryComponent
+    IntegratedQueryComponent,
+    DeptMajorSelectComponent,
+    DeptSelectComponent
   ],
   providers: [
     ScheduleService,

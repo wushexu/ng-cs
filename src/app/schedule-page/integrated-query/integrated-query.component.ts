@@ -15,6 +15,8 @@ import {Schedule} from '../../model/schedule';
 import {DayScheduleSerial} from '../../model2/day-schedule-serial';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {GeneralScheduleComponent} from '../common/general-schedule.component';
+import {Dept} from '../../model/dept';
+import {Major} from '../../model/major';
 
 
 declare type OutputStyle = 'table' | 'calendar-chart';
@@ -32,6 +34,9 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   dayScheduleSerial: DayScheduleSerial;
 
   outputStyle: OutputStyle = 'table';
+
+  selectedDept: Dept;
+  selectedMajor: Major;
 
 
   constructor(private scheduleService: ScheduleService) {
@@ -168,5 +173,14 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
     // console.log(this.outputStyle);
   }
 
+  deptSelected(dept: Dept) {
+    this.selectedDept = dept;
+    console.log(dept);
+  }
+
+  majorSelected(major: Major) {
+    this.selectedMajor = major;
+    console.log(major);
+  }
 
 }
