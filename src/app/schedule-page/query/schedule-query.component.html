@@ -1,15 +1,15 @@
 <mat-toolbar color="secondary" class="not-print">
   <mat-toolbar-row>
-    <span>课表</span>
-    <!--<div class="ui text menu">
-      <div class="header item">课表</div>
-      <a routerLink="/day" class="item" routerLinkActive="active-link">单日课表</a>
-      <a routerLink="/week" class="item" routerLinkActive="active-link">单周课表</a>
-      <a routerLink="/month" class="item" routerLinkActive="active-link">单月课表</a>
-      <a routerLink="/term" class="item" routerLinkActive="active-link">学期课表</a>
-    </div>-->
+    <span>课表查询</span>
+
     <span class="spacer"></span>
-    <span *ngIf="perspectiveFixed" class="perspective-info">
+
+    <div class="ui text menu" *ngIf="!perspectiveFixed">
+      <!--<div class="header item">课表</div>-->
+      <a routerLink="/query" class="item" routerLinkActive="active-link">查询</a>
+      <a routerLink="/statis" class="item" routerLinkActive="active-link">统计</a>
+    </div>
+    <div class="perspective-info" *ngIf="perspectiveFixed">
       <span *ngIf="perspective==='class'&&selectedClass">
         班级：<span class="primary-color">{{selectedClass.name}}</span>
       </span>
@@ -19,7 +19,7 @@
       <span *ngIf="perspective==='classroom'&&selectedClassroom">
         教室：<span class="primary-color">{{selectedClassroom.name}}</span>
       </span>
-    </span>
+    </div>
     <!--<button type="button" mat-icon-button>
       <mat-icon aria-label="Menu">menu</mat-icon>
     </button>-->

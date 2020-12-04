@@ -1,13 +1,15 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {GeneralScheduleComponent} from './schedule-page/general/general-schedule.component';
+import {ScheduleQueryComponent} from './schedule-page/query/schedule-query.component';
+import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
 
 const routes: Routes = [
-  {path: '', component: GeneralScheduleComponent},
-  {path: 'cl/:class-idc', component: GeneralScheduleComponent},
-  {path: 'tc/:teacher-idc', component: GeneralScheduleComponent},
-  {path: 'cr/:classroom-id', component: GeneralScheduleComponent}
+  {path: 'query', component: ScheduleQueryComponent},
+  {path: 'cl/:class-idc', component: ScheduleQueryComponent},
+  {path: 'tc/:teacher-idc', component: ScheduleQueryComponent},
+  {path: 'cr/:classroom-id', component: ScheduleQueryComponent},
+  {path: 'statis', component: ScheduleStatisComponent}
 ];
 
 @NgModule({
