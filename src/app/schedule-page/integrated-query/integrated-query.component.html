@@ -22,6 +22,7 @@
       <mat-checkbox [(ngModel)]="majorDimEnabled">系部</mat-checkbox>
       <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
       <mat-checkbox [(ngModel)]="classroomDimEnabled">教室</mat-checkbox>
+      <mat-checkbox [(ngModel)]="courseDimEnabled">课程</mat-checkbox>
       <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
       <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
       <mat-checkbox [(ngModel)]="timeDimEnabled">时间</mat-checkbox>
@@ -49,6 +50,15 @@
       <div fxLayout fxLayoutAlign="start center" *ngIf="classroomDimEnabled" class="dimension-condition">
         <span class="primary-color dimension-label">教室</span>
         <app-classroom-select (selected)="classroomSelected($event)"></app-classroom-select>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="courseDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">课程</span>
+        <mat-checkbox [checked]="courseDim==='cate'" (change)="courseDim=$event.checked? 'cate':'course'">仅类别
+        </mat-checkbox>
+        <app-course-cate-select (selected)="courseCateSelected($event)"
+                                *ngIf="courseDim==='cate'"></app-course-cate-select>
+        <app-course-select (selected)="courseSelected($event)" *ngIf="courseDim==='course'"></app-course-select>
       </div>
 
       <div fxLayout fxLayoutAlign="start center" *ngIf="teacherDimEnabled" class="dimension-condition">

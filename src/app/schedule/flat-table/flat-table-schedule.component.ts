@@ -6,7 +6,6 @@ import {MatTable} from '@angular/material/table';
 
 import {ScheduleTableDatasource} from './schedule-table-datasource';
 import {Schedule} from '../../model/schedule';
-import {ScheduleContext} from '../../model2/schedule-context';
 import {FlatSchedules} from '../../model2/flat-schedules';
 
 @Component({
@@ -38,7 +37,6 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.flatSchedules) {
-      console.log(this.flatSchedules);
       if (this.flatSchedules) {
         this.dataSource.setData(this.flatSchedules.schedules);
       }

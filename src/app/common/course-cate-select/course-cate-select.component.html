@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>课程类别</mat-label>
+  <mat-select [(ngModel)]="selectedCate" (selectionChange)="cateSelected()">
+    <mat-option *ngFor="let cate of cates" [value]="cate">
+      {{cate||'无'}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1649,8 +1649,26 @@ export class TeacherCourseService {
 
   getCourses(): Observable<Course[]> {
 
-
-    return of([]);
+    return of([
+      {
+        code: '0130020',
+        name: '高等数学',
+        cate: '公共基础课',
+        style: '必修课',
+        examineMethod: '考试',
+        labByTheory: true,
+        locationType: '合班教室'
+      },
+      {
+        code: '0130021',
+        name: '大学英语',
+        cate: '公共基础课2',
+        style: '必修课',
+        examineMethod: '考试',
+        labByTheory: true,
+        locationType: '合班教室'
+      }
+    ]);
   }
 
 }

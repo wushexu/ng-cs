@@ -7,5 +7,4 @@ export class Course {
   examineMethod?: string;
   labByTheory?: boolean;
   locationType?: string;
-
 }

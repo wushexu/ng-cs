@@ -1,0 +1,23 @@
+<mat-form-field>
+  <mat-label>课程类别（筛选）</mat-label>
+  <mat-select [(ngModel)]="cateFilter" (selectionChange)="filterCourse()">
+    <mat-option [value]="null">（不限）</mat-option>
+    <mat-option *ngFor="let cate of cates" [value]="cate">
+      {{cate||'无'}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field class="classroom-autocomplete">
+  <input type="text" placeholder="课程名称" matInput [matAutocomplete]="auto"
+         [formControl]="nameControl">
+  <button mat-icon-button matSuffix (click)="clear()" [disabled]="!nameControl.value">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="courseNameFn"
+                    (optionSelected)="optionSelected($event)">
+    <mat-option *ngFor="let option of autoCompleteCourses" [value]="option">
+      {{courseNameFn(option)}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

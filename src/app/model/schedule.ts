@@ -18,7 +18,7 @@ export class Schedule {
 
   siteId?: number;
   classId?: number;
-  courseCode?: number;
+  courseCode?: string;
   teacherId?: number;
 
   site?: Site;

@@ -21,16 +21,15 @@ export class ScheduleTableDatasource extends DataSource<Schedule> {
     this.compareFieldMappers = {
       date: s => s.date,
       lessonIndex: s => s.timeStart,
-      class: s => s.theClass ? 0 : s.theClass.name,
-      classroom: s => s.site ? 0 : s.site.name,
-      course: s => s.course ? 0 : s.course.name,
-      teacher: s => s.teacher ? 0 : s.teacher.name,
+      class: s => s.theClass ? s.theClass.name : 0,
+      classroom: s => s.site ? s.site.name : 0,
+      course: s => s.course ? s.course.name : 0,
+      teacher: s => s.teacher ? s.teacher.name : 0
     };
   }
 
   setData(data: Schedule[]) {
     this.data = data;
-    console.log(data);
     this.dataSubject.next(data);
   }
 
