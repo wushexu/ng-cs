@@ -7,6 +7,7 @@ import {Teacher} from '../../model/teacher';
 import {Classroom} from '../../model/site';
 import {Week} from '../../model/week';
 import {Term} from '../../model/term';
+import {ScheduleContext} from '../../model2/schedule-context';
 
 
 export class GeneralScheduleComponent {
@@ -24,7 +25,9 @@ export class GeneralScheduleComponent {
   selectedWeek: Week;
   selectedTerm: Term;
 
-  setupTimeFilter(filter: ScheduleFilter): boolean {
+  setupTimeFilter(context: ScheduleContext): boolean {
+
+    const filter: ScheduleFilter = context.filter;
 
     const term = this.selectedTerm;
     switch (this.timeScope) {

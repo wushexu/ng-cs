@@ -14,7 +14,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {AppMaterialModule} from './app-material.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {TableMatComponent} from './week-schedule/table-mat.component';
+import {FlatTableScheduleComponent} from './schedule/flat-table/flat-table-schedule.component';
 import {MediaQueryStatusComponent} from './common/media/media-query-status.component';
 import {ScheduleService} from './service/schedule.service';
 import {LessonScheduleComponent} from './schedule/lesson/lesson-schedule.component';
@@ -50,6 +50,7 @@ import {IntegratedQueryComponent} from './schedule-page/integrated-query/integra
 import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';
 import {DeptSelectComponent} from './common/dept-select/dept-select.component';
 import {ClassYearSelectComponent} from './common/class-year-select/class-year-select.component';
+import {ScheduleDateLabelPipe} from './common/pipe/schedule-date-label.pipe';
 
 @NgModule({
   imports: [
@@ -65,7 +66,7 @@ import {ClassYearSelectComponent} from './common/class-year-select/class-year-se
   ],
   declarations: [
     AppComponent,
-    TableMatComponent,
+    FlatTableScheduleComponent,
     MediaQueryStatusComponent,
     LessonScheduleComponent,
     DayLessonsComponent,
@@ -75,6 +76,7 @@ import {ClassYearSelectComponent} from './common/class-year-select/class-year-se
     DateMdPipe,
     DateLabelPipe,
     WeekdayLabelPipe,
+    ScheduleDateLabelPipe,
     DayScheduleComponent,
     DayScheduleSerialComponent,
     MonthPickerComponent,
@@ -94,7 +96,8 @@ import {ClassYearSelectComponent} from './common/class-year-select/class-year-se
     IntegratedQueryComponent,
     DeptMajorSelectComponent,
     DeptSelectComponent,
-    ClassYearSelectComponent
+    ClassYearSelectComponent,
+    FlatTableScheduleComponent
   ],
   providers: [
     ScheduleService,

@@ -93,14 +93,16 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
 
   async execute() {
 
-    const filter: ScheduleFilter = this.setupFilter();
-    if (!filter) {
+    const context: ScheduleContext = this.setupContext();
+    if (!context) {
       return;
     }
 
+    const filter: ScheduleFilter = context.filter;
+
     const schedules = await this.scheduleService.querySchedules(filter).toPromise();
 
-    await this.setupSchedules(filter, schedules);
+    await this.setupSchedules(context, schedules);
 
     this.dayScheduleSerial = null;
     if (this.outputStyle === 'detail-table') {
@@ -109,45 +111,48 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
 
   }
 
-  setupFilter(): ScheduleFilter | null {
+  setupContext(): ScheduleContext | null {
 
-    const filter: ScheduleFilter = new ScheduleFilter();
+    const context = new ScheduleContext();
+    context.filter = new ScheduleFilter();
 
-    const ok1 = this.setupTimeFilter(filter);
+    const ok1 = this.setupTimeFilter(context);
     if (!ok1) {
       return null;
     }
 
-    const ok2 = this.setupPerspectiveFilter(filter);
+    const ok2 = this.setupPerspectiveFilter(context);
     if (!ok2) {
       return null;
     }
 
-    return filter;
+    return context;
   }
 
-  setupPerspectiveFilter(filter: ScheduleFilter): boolean {
+  setupPerspectiveFilter(context: ScheduleContext): boolean {
+    const filter: ScheduleFilter = context.filter;
+
     switch (this.perspective) {
       case 'class':
         if (!this.selectedClass) {
           return false;
         }
         filter.classId = this.selectedClass.id;
-        filter.context = {theClass: this.selectedClass};
+        context.theClass = this.selectedClass;
         return true;
       case 'teacher':
         if (!this.selectedTeacher) {
           return false;
         }
         filter.teacherId = this.selectedTeacher.id;
-        filter.context = {teacher: this.selectedTeacher};
+        context.teacher = this.selectedTeacher;
         return true;
       case 'classroom':
         if (!this.selectedClassroom) {
           return false;
         }
         filter.siteId = this.selectedClassroom.id;
-        filter.context = {site: this.selectedClassroom};
+        context.site = this.selectedClassroom;
         return true;
       default:
         return false;
@@ -159,8 +164,9 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
     return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
   }
 
-  async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
+  async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
+    const filter: ScheduleFilter = context.filter;
     console.log(filter);
 
     let titlePersPart = '';
@@ -181,12 +187,12 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
       case 'day':
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
         this.daySchedule = new DaySchedule(dateDim, schedules);
-        this.daySchedule.context = filter.context;
+        this.daySchedule.context = context;
         this.daySchedule.title = this.evalTitle(titlePersPart, dateDim.date);
         break;
       case 'week':
         this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
-        this.weekSchedule.context = filter.context;
+        this.weekSchedule.context = context;
         this.weekSchedule.title = this.evalTitle(titlePersPart, `第${this.selectedWeek.weekno}周`);
         break;
       case 'month':
@@ -194,14 +200,14 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
         const weeks = await this.termWeekService.getMonthWeeks(term, yearMonth).toPromise();
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
-        this.monthSchedule.context = filter.context;
+        this.monthSchedule.context = context;
         this.monthSchedule.title = this.evalTitle(titlePersPart, `${monthDim.year}年${monthDim.month}月`);
         break;
       case 'term':
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
         this.termSchedule = new TermSchedule(termDim, schedules);
-        this.termSchedule.context = filter.context;
+        this.termSchedule.context = context;
         this.termSchedule.title = this.evalTitle(titlePersPart, term.name);
         break;
     }

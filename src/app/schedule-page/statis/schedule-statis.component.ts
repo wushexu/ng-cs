@@ -40,45 +40,6 @@ export class ScheduleStatisComponent extends GeneralScheduleComponent implements
   }
 
   async execute() {
-
-    const filter: ScheduleFilter = this.setupFilter();
-    if (!filter) {
-      return;
-    }
-
-    const schedules = await this.scheduleService.querySchedules(filter).toPromise();
-
-    await this.setupSchedules(filter, schedules);
-
-
-  }
-
-  setupFilter(): ScheduleFilter | null {
-
-    const filter: ScheduleFilter = new ScheduleFilter();
-
-    const ok1 = this.setupTimeFilter(filter);
-    if (!ok1) {
-      return null;
-    }
-
-    // const ok2 = this.setupPerspectiveFilter(filter);
-    // if (!ok2) {
-    //   return null;
-    // }
-
-    return filter;
-  }
-
-
-  // evalTitle(titlePerspectivePart: string, titleTimeScopePart: string): string {
-  //   return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
-  // }
-
-  async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
-
-    console.log(filter);
-
     // TODO:
   }
 

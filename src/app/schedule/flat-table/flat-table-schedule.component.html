@@ -1,0 +1,55 @@
+<div *ngIf="showTitle&&flatSchedules?.title" class="schedule-table-title">
+  <h2 class="ui center aligned header">{{flatSchedules?.title}}</h2>
+</div>
+
+<div class="mat-elevation-z1">
+  <table mat-table class="full-width-table" matSort>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>日期</th>
+      <td mat-cell *matCellDef="let row">{{row | scheduleDate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="course">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>课程</th>
+      <td mat-cell *matCellDef="let row">{{row.course?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>班级</th>
+      <td mat-cell *matCellDef="let row">{{row.theClass?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="classroom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>教室</th>
+      <td mat-cell *matCellDef="let row">{{row.site?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>教师</th>
+      <td mat-cell *matCellDef="let row">{{row.teacher?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lessonIndex">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>节次</th>
+      <td mat-cell *matCellDef="let row">{{row.timeStart}}-{{row.timeEnd}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lessonDetail">
+      <th mat-header-cell *matHeaderCellDef>排课</th>
+      <td mat-cell *matCellDef="let row">
+        <app-lesson-schedule [schedule]="row" [context]="flatSchedules.context"></app-lesson-schedule>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="dataSource?.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="20"
+                 [pageSizeOptions]="[10, 20, 50, 100]">
+  </mat-paginator>
+</div>

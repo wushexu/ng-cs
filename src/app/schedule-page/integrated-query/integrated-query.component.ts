@@ -4,22 +4,14 @@ import * as moment from 'moment';
 
 import {MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
-import {DaySchedule} from '../../model2/day-schedule';
-import {DateDim} from '../../model/date-dim';
 import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
-import {WeekSchedule} from '../../model2/week-schedule';
-import {MonthSchedule} from '../../model2/month-schedule';
-import {TermSchedule} from '../../model2/term-schedule';
-import {ScopedDaySchedule} from '../../model2/scoped-day-schedule';
 import {Schedule} from '../../model/schedule';
-import {DayScheduleSerial} from '../../model2/day-schedule-serial';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {GeneralScheduleComponent} from '../common/general-schedule.component';
 import {Dept} from '../../model/dept';
 import {Major} from '../../model/major';
+import {FlatSchedules} from '../../model2/flat-schedules';
 
-
-declare type OutputStyle = 'table' | 'calendar-chart';
 
 @Component({
   selector: 'app-integrated-query',
@@ -28,23 +20,21 @@ declare type OutputStyle = 'table' | 'calendar-chart';
 })
 export class IntegratedQueryComponent extends GeneralScheduleComponent implements OnInit {
 
-  weekSchedule: WeekSchedule;
-  monthSchedule: MonthSchedule;
-  termSchedule: TermSchedule;
-  dayScheduleSerial: DayScheduleSerial;
+  flatSchedules: FlatSchedules;
 
   timeScope: TimeScope = 'day';
-  outputStyle: OutputStyle = 'table';
 
   selectedDept: Dept;
   selectedMajor: Major;
   selectedClassYear: number;
+  selectedLesson = 1;
 
   majorDimEnabled = false;
   classDimEnabled = false;
   classroomDimEnabled = false;
   teacherDimEnabled = false;
   timeDimEnabled = true;
+  lessonDimEnabled = false;
 
   majorDim: 'dept' | 'major' = 'dept';
   classDim: 'year' | 'class' = 'class';
@@ -63,126 +53,88 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
 
   async execute() {
 
-    const filter: ScheduleFilter = this.setupFilter();
-    if (!filter) {
+    const context: ScheduleContext = this.setupContext();
+    if (!context) {
       return;
     }
+
+    const filter: ScheduleFilter = context.filter;
 
     const schedules = await this.scheduleService.querySchedules(filter).toPromise();
 
-    await this.setupSchedules(filter, schedules);
-
+    await this.setupSchedules(context, schedules);
   }
 
-  setupFilter(): ScheduleFilter | null {
+  setupContext(): ScheduleContext | null {
+
+    const context = new ScheduleContext();
 
     const filter: ScheduleFilter = new ScheduleFilter();
+    context.filter = filter;
 
-    const ok1 = this.setupTimeFilter(filter);
-    if (!ok1) {
-      return null;
-    }
-
-    // const ok2 = this.setupPerspectiveFilter(filter);
-    // if (!ok2) {
-    //   return null;
-    // }
-
-    return filter;
-  }
-
-
-  evalTitle(titlePerspectivePart: string, titleTimeScopePart: string): string {
-    return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
-  }
-
-  async setupSchedules(filter: ScheduleFilter, schedules: Schedule[]) {
-
-    console.log(filter);
-
-  }
-
-  setupDayScheduleSerial() {
-
-    if (this.dayScheduleSerial) {
-      return;
-    }
-
-    let daySchedules: DaySchedule[];
-    let context: ScheduleContext;
-    let title: string;
-
-    switch (this.timeScope) {
-      case 'week':
-        if (!this.weekSchedule) {
-          return;
+    if (this.majorDimEnabled) {
+      if (this.majorDim === 'dept') {
+        if (this.selectedDept) {
+          filter.deptId = this.selectedDept.id;
+          context.dept = this.selectedDept;
         }
-        daySchedules = this.weekSchedule.daySchedulesWithLessons;
-        context = this.weekSchedule.context;
-        title = this.weekSchedule.title;
-        break;
-      case 'month':
-        if (!this.monthSchedule) {
-          return;
+      } else if (this.majorDim === 'major') {
+        if (this.selectedMajor) {
+          filter.majorId = this.selectedMajor.id;
+          context.major = this.selectedMajor;
         }
-        daySchedules = this.monthSchedule.daySchedulesWithLessons;
-        context = this.monthSchedule.context;
-        title = this.monthSchedule.title;
-        break;
-      case 'term':
-        if (!this.termSchedule) {
-          return;
-        }
-        daySchedules = this.termSchedule.daySchedulesWithLessons;
-        context = this.termSchedule.context;
-        title = this.termSchedule.title;
-        break;
-      default:
-        return;
+      }
     }
 
-    if (!daySchedules) {
-      this.dayScheduleSerial = null;
-      return;
+    if (this.classDimEnabled) {
+      if (this.classDim === 'year') {
+        filter.classYear = this.selectedClassYear;
+      } else if (this.classDim === 'class') {
+        filter.classId = this.selectedClass.id;
+        context.theClass = this.selectedClass;
+      }
     }
 
-    const scopedDaySchedules: ScopedDaySchedule[] = daySchedules
-      .map(ds => {
-        const sds = new ScopedDaySchedule();
-        const dateDim = ds.dateDim;
-        if (!dateDim.weekdayLabel) {
-          DateDim.setDateLabels(dateDim);
-        }
+    if (this.classroomDimEnabled) {
+      if (this.selectedClassroom) {
+        filter.siteId = this.selectedClassroom.id;
+        context.site = this.selectedClassroom;
+      }
+    }
 
-        sds.daySchedule = ds;
-        sds.scopeLabel = `${dateDim.date}（${dateDim.weekdayLabel}）`;
-        sds.scopeObj = dateDim;
-        return sds;
-      });
+    if (this.lessonDimEnabled) {
+      filter.lesson = this.selectedLesson;
+    }
 
-    this.dayScheduleSerial = {scopedDaySchedules, context, title};
+    if (this.teacherDimEnabled) {
+      if (this.selectedTeacher) {
+        filter.teacherId = this.selectedTeacher.id;
+        context.teacher = this.selectedTeacher;
+      }
+    }
+
+    if (this.timeDimEnabled) {
+      const ok1 = this.setupTimeFilter(context);
+      if (!ok1) {
+        return null;
+      }
+    }
+
+    return context;
   }
 
-  ensureOutputStyle(outputStyles: OutputStyle[]): void {
-    if (outputStyles.indexOf(this.outputStyle) === -1) {
-      this.outputStyle = outputStyles[0];
-    }
-  }
 
-  timeScopeSelected(timeScope: TimeScope) {
-    super.timeScopeSelected(timeScope);
-    switch (this.timeScope) {
-      case 'day':
-        this.outputStyle = 'table';
-        break;
-      case 'week':
-        this.outputStyle = 'table';
-        break;
-    }
-  }
+  async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
-  outputStyleChanged() {
-    // console.log(this.outputStyle);
+    console.log(context);
+
+    const flatSchedules = new FlatSchedules();
+    flatSchedules.schedules = schedules;
+    flatSchedules.context = context;
+
+    // TODO: title
+
+    this.flatSchedules = flatSchedules;
   }
 
   deptSelected(dept: Dept) {

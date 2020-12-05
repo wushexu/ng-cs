@@ -23,6 +23,7 @@
       <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
       <mat-checkbox [(ngModel)]="classroomDimEnabled">教室</mat-checkbox>
       <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
+      <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
       <mat-checkbox [(ngModel)]="timeDimEnabled">时间</mat-checkbox>
     </div>
 
@@ -55,6 +56,24 @@
         <app-teacher-select (selected)="teacherSelected($event)"></app-teacher-select>
       </div>
 
+      <div fxLayout fxLayoutAlign="start center" *ngIf="lessonDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">节次</span>
+        <mat-form-field class="lessons-select">
+          <mat-label>节次</mat-label>
+          <mat-select [(ngModel)]="selectedLesson">
+            <mat-optgroup label="上午">
+              <mat-option [value]="1">第一节（1-2）</mat-option>
+              <mat-option [value]="2">第二节（3-4）</mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="下午">
+              <mat-option [value]="3">第三节（5-6）</mat-option>
+              <mat-option [value]="4">第四节（7-8）</mat-option>
+              <mat-option [value]="5">第五节（9-10）</mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div fxLayout fxLayoutAlign="start center" *ngIf="timeDimEnabled" class="dimension-condition">
         <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
                              class="time-scope-menu"></app-time-scope-menu>
@@ -77,11 +96,6 @@
         <span class="spacer"></span>
 
         <div>
-          <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
-            <mat-radio-button value="table">默认表格</mat-radio-button>
-            <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">图表
-            </mat-radio-button>
-          </mat-radio-group>
 
           <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
 
@@ -99,6 +113,7 @@
 
   <div class="schedule-tables">
 
+    <app-flat-table-schedule [flatSchedules]="flatSchedules" [showTitle]="showTitle"></app-flat-table-schedule>
   </div>
 
   <div class="tables-bottom not-print">&nbsp;</div>

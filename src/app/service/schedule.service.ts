@@ -39,6 +39,8 @@ export class ScheduleService {
 
   querySchedules(params: ScheduleFilter): Observable<Schedule[]> {
 
+    console.log(params);
+
     if (!params) {
       // wrong
     }

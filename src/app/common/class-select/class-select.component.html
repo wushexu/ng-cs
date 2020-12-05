@@ -1,5 +1,5 @@
 <mat-form-field class="year-select">
-  <mat-label>（筛选）入学年</mat-label>
+  <mat-label>入学年（筛选）</mat-label>
   <mat-select [(ngModel)]="yearFilter" (selectionChange)="filterClass()">
     <mat-option [value]="null">（不限）</mat-option>
     <mat-option *ngFor="let year of years" [value]="year">{{year}}年</mat-option>
@@ -7,7 +7,7 @@
 </mat-form-field>
 
 <mat-form-field>
-  <mat-label>（筛选）系部/专业</mat-label>
+  <mat-label>系部/专业（筛选）</mat-label>
   <mat-select [(ngModel)]="majorFilter" (selectionChange)="filterClass()">
     <mat-option [value]="null">（不限）</mat-option>
     <mat-optgroup *ngFor="let dept of depts" [label]="dept.name">

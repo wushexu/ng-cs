@@ -1,6 +1,4 @@
 import {object} from 'underscore';
-import {Schedule} from '../model/schedule';
-import {ScheduleContext} from './schedule-context';
 
 export type Perspective = 'class' | 'teacher' | 'classroom';
 export type TimeScope = 'day' | 'week' | 'month' | 'term';
@@ -41,8 +39,31 @@ export class TimeScopeDef {
 }
 
 
-export class ScheduleFilter extends Schedule {
+export class ScheduleFilter {
 
-  context: ScheduleContext;
+  /* Schedule properties Begin */
+
+  termYear: number;
+  termMonth: number;
+
+  weekno: number;
+  dayOfWeek: number;
+  date: string;
+
+  timeStart: number;
+  // timeEnd: number;
+  trainingType: string; // N: 理论课；S: 校内实训；E: 企业实训
+
+  siteId?: number;
+  classId?: number;
+  courseCode?: number;
+  teacherId?: number;
+
+  /* Schedule properties End */
+
+  lesson: number; // 1-4
   yearMonth: string;
+  deptId: number;
+  majorId: number;
+  classYear: number;
 }
