@@ -25,7 +25,7 @@ export class CourseCateSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getCourses().subscribe(courses => {
-      this.cates = uniq(courses.map(r => r.cate))
+      this.cates = uniq(courses.map(r => r.cate).filter(y => y))
         .sort((a: string, b: string) => {
           const lenDiff = a.length - a.length;
           if (lenDiff !== 0) {

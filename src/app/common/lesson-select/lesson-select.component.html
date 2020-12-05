@@ -1,0 +1,14 @@
+<mat-form-field class="lessons-select">
+  <mat-label>节次</mat-label>
+  <mat-select [(ngModel)]="selectedLesson" (selectionChange)="lessonSelected()">
+    <mat-optgroup label="上午">
+      <mat-option [value]="1">第一节（1-2）</mat-option>
+      <mat-option [value]="2">第二节（3-4）</mat-option>
+    </mat-optgroup>
+    <mat-optgroup label="下午">
+      <mat-option [value]="3">第三节（5-6）</mat-option>
+      <mat-option [value]="4">第四节（7-8）</mat-option>
+      <mat-option [value]="5">第五节（9-10）</mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>

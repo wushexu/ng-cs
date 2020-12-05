@@ -23,6 +23,7 @@
       <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
       <mat-checkbox [(ngModel)]="classroomDimEnabled">教室</mat-checkbox>
       <mat-checkbox [(ngModel)]="courseDimEnabled">课程</mat-checkbox>
+      <mat-checkbox [(ngModel)]="trainingTypeDimEnabled">实训</mat-checkbox>
       <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
       <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
       <mat-checkbox [(ngModel)]="timeDimEnabled">时间</mat-checkbox>
@@ -61,6 +62,15 @@
         <app-course-select (selected)="courseSelected($event)" *ngIf="courseDim==='course'"></app-course-select>
       </div>
 
+      <div fxLayout fxLayoutAlign="start center" *ngIf="trainingTypeDimEnabled" class="dimension-condition training-type">
+        <span class="primary-color dimension-label">实训</span>
+        <mat-radio-group [(ngModel)]="selectedTrainingType">
+          <mat-radio-button value="">不限</mat-radio-button>
+          <mat-radio-button value="N">理论课</mat-radio-button>
+          <mat-radio-button value="S,E">实训课</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
       <div fxLayout fxLayoutAlign="start center" *ngIf="teacherDimEnabled" class="dimension-condition">
         <span class="primary-color dimension-label">教师</span>
         <app-teacher-select (selected)="teacherSelected($event)"></app-teacher-select>
@@ -68,20 +78,7 @@
 
       <div fxLayout fxLayoutAlign="start center" *ngIf="lessonDimEnabled" class="dimension-condition">
         <span class="primary-color dimension-label">节次</span>
-        <mat-form-field class="lessons-select">
-          <mat-label>节次</mat-label>
-          <mat-select [(ngModel)]="selectedLesson">
-            <mat-optgroup label="上午">
-              <mat-option [value]="1">第一节（1-2）</mat-option>
-              <mat-option [value]="2">第二节（3-4）</mat-option>
-            </mat-optgroup>
-            <mat-optgroup label="下午">
-              <mat-option [value]="3">第三节（5-6）</mat-option>
-              <mat-option [value]="4">第四节（7-8）</mat-option>
-              <mat-option [value]="5">第五节（9-10）</mat-option>
-            </mat-optgroup>
-          </mat-select>
-        </mat-form-field>
+        <app-lesson-select (selected)="lessonSelected($event)"></app-lesson-select>
       </div>
 
       <div fxLayout fxLayoutAlign="start center" *ngIf="timeDimEnabled" class="dimension-condition">

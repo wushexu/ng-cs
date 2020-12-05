@@ -31,14 +31,16 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   selectedLesson = 1;
   selectedCourse: Course;
   selectedCourseCate: string;
+  selectedTrainingType = '';
 
   majorDimEnabled = false;
   classDimEnabled = false;
   classroomDimEnabled = false;
   teacherDimEnabled = false;
-  courseDimEnabled = true;
+  courseDimEnabled = false;
   timeDimEnabled = true;
   lessonDimEnabled = false;
+  trainingTypeDimEnabled = false;
 
   majorDim: 'dept' | 'major' = 'dept';
   classDim: 'year' | 'class' = 'class';
@@ -118,6 +120,12 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
       }
     }
 
+    if (this.trainingTypeDimEnabled) {
+      if (this.selectedTrainingType) {
+        filter.trainingType = this.selectedTrainingType;
+      }
+    }
+
     if (this.lessonDimEnabled) {
       filter.lesson = this.selectedLesson;
     }
@@ -166,6 +174,11 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   classYearSelected(year: number) {
     this.selectedClassYear = year;
     console.log(year);
+  }
+
+  lessonSelected(lessonIndex: number) {
+    this.selectedLesson = lessonIndex;
+    console.log(lessonIndex);
   }
 
   courseSelected(course: Course) {

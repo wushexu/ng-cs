@@ -53,6 +53,7 @@ import {ClassYearSelectComponent} from './common/class-year-select/class-year-se
 import {ScheduleDateLabelPipe} from './common/pipe/schedule-date-label.pipe';
 import {CourseSelectComponent} from './common/course-select/course-select.component';
 import {CourseCateSelectComponent} from './common/course-cate-select/course-cate-select.component';
+import { LessonSelectComponent } from './common/lesson-select/lesson-select.component';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import {CourseCateSelectComponent} from './common/course-cate-select/course-cate
     ClassYearSelectComponent,
     FlatTableScheduleComponent,
     CourseSelectComponent,
-    CourseCateSelectComponent
+    CourseCateSelectComponent,
+    LessonSelectComponent
   ],
   providers: [
     ScheduleService,

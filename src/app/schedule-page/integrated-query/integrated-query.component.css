@@ -3,7 +3,7 @@
   font-size: 0.9em;
 }
 
-.mat-checkbox, .output-style-radio-group .mat-radio-button {
+.mat-checkbox, .dimension-condition .mat-radio-button {
   margin-right: 1em;
 }
 
@@ -29,4 +29,9 @@
 
 .dimension-condition {
   margin-right: 1em;
+}
+
+.dimension-condition.training-type {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
