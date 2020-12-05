@@ -26,4 +26,41 @@ export class Schedule {
   course?: Course;
   teacher?: Teacher;
 
+  static classTooltip(theClass: Class): string {
+    if (!theClass) {
+      return null;
+    }
+    const {dept, major} = theClass;
+
+    const tips = [];
+    if (dept) {
+      tips.push(`系部：${dept.name}`);
+    }
+    if (major) {
+      tips.push(`专业：${major.name}`);
+    }
+    return tips.join('\n');
+  }
+
+  static courseTooltip(course: Course): string {
+    if (!course) {
+      return '';
+    }
+
+    const tips = [];
+
+    if (course.style) {
+      tips.push(`课程性质：${course.style}`);
+    }
+    if (course.cate) {
+      tips.push(`课程类别：${course.cate}`);
+    }
+    if (course.examineMethod) {
+      tips.push(`考核方式：${course.examineMethod}`);
+    }
+    if (course.locationType) {
+      tips.push(`场地要求：${course.locationType}`);
+    }
+    return tips.join('\n');
+  }
 }

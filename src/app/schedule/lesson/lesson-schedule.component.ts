@@ -3,7 +3,7 @@ import {Component, Input} from '@angular/core';
 import {Schedule} from '../../model/schedule';
 import {ScheduleContext} from '../../model2/schedule-context';
 import {Course} from '../../model/course';
-import {Classroom} from '../../model/site';
+import {Site} from '../../model/site';
 
 @Component({
   selector: 'app-lesson-schedule',
@@ -17,48 +17,28 @@ export class LessonScheduleComponent {
 
   courseTooltip(): string {
     const sc = this.schedule;
-    const course: Course = sc.course;
-    if (!course) {
-      return '';
-    }
-    const tips = [];
 
+    let tooltip1 = '';
     if (sc.trainingType === 'S') {
-      tips.push('（实训）');
+      tooltip1 = '（实训）';
     } else if (sc.trainingType === 'E') {
-      tips.push('（企业实训）');
+      tooltip1 = '（企业实训）';
     }
-    if (course.style) {
-      tips.push(`课程性质：${course.style}`);
+
+    const course: Course = sc.course;
+    const tooltip2 = Schedule.courseTooltip(course);
+    if (!tooltip1 || !tooltip2) {
+      return tooltip1 || tooltip2;
     }
-    if (course.cate) {
-      tips.push(`课程类别：${course.cate}`);
-    }
-    if (course.examineMethod) {
-      tips.push(`考核方式：${course.examineMethod}`);
-    }
-    if (course.locationType) {
-      tips.push(`场地要求：${course.locationType}`);
-    }
-    return tips.join('\n');
+
+    return `${tooltip1}\n${tooltip2}`;
+  }
+
+  classTooltip() {
+    return Schedule.classTooltip(this.schedule.theClass);
   }
 
   classroomTooltip(): string {
-    const sc = this.schedule;
-    const room: Classroom = sc.site;
-    if (!room) {
-      return '';
-    }
-    const tips = [];
-    if (room.roomType) {
-      tips.push(`教室类别：${room.roomType}`);
-    }
-    if (room.capacity) {
-      tips.push(`座位数：${room.capacity}`);
-    }
-    if (room.multimedia) {
-      tips.push(`多媒体：是`);
-    }
-    return tips.join('\n');
+    return Site.tooltip(this.schedule.site);
   }
 }

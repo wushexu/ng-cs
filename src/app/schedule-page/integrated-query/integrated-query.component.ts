@@ -152,11 +152,47 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
 
     console.log(context);
 
+    const filter: ScheduleFilter = context.filter;
+
     const flatSchedules = new FlatSchedules();
     flatSchedules.schedules = schedules;
     flatSchedules.context = context;
 
-    // TODO: title
+    const titleParts: string[] = [];
+
+    if (context.dept) {
+      titleParts.push(`（系部）${context.dept.name}`);
+    }
+    if (context.major) {
+      titleParts.push(`（专业）${context.major.name}`);
+    }
+    if (context.theClass) {
+      titleParts.push(`（班级）${context.theClass.name}`);
+    }
+    if (context.teacher) {
+      titleParts.push(`（教师）${context.teacher.name}`);
+    }
+    if (context.site) {
+      titleParts.push(`（教室）${context.site.name}`);
+    }
+    if (context.course) {
+      titleParts.push(`（课程）${context.course.name}`);
+    }
+    if (filter.trainingType) {
+      const typeName = filter.trainingType === 'N' ? '理论课' : '实训课';
+      titleParts.push(typeName);
+    }
+
+    titleParts.push(this.evalTitleTimePart());
+
+    if (filter.lesson) {
+      const liCn = ['一', '二', '三', '四', '五'][context.filter.lesson - 1];
+      titleParts.push(`第${liCn}节`);
+    }
+
+    const titleMain = titleParts.join(' ');
+
+    flatSchedules.title = `${titleMain} 课表`;
 
     this.flatSchedules = flatSchedules;
   }

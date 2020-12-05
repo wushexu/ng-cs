@@ -82,6 +82,7 @@ export class DeptMajorClassService {
         name: '理化19-1',
         size: 40,
         year: 2019,
+        dept: dept1,
         major: major1
       },
       {
@@ -91,6 +92,7 @@ export class DeptMajorClassService {
         name: '理化19-2',
         size: 40,
         year: 2019,
+        dept: dept1,
         major: major1
       },
       {
@@ -100,6 +102,7 @@ export class DeptMajorClassService {
         name: '计算机1',
         size: 40,
         year: 2019,
+        dept: dept2,
         major: major2
       },
       {
@@ -109,6 +112,7 @@ export class DeptMajorClassService {
         name: '计算机2',
         size: 40,
         year: 2019,
+        dept: dept2,
         major: major2
       },
       {
@@ -118,6 +122,7 @@ export class DeptMajorClassService {
         name: '软工1',
         size: 40,
         year: 2019,
+        dept: dept2,
         major: major3
       },
       {
@@ -127,6 +132,7 @@ export class DeptMajorClassService {
         name: '软工2',
         size: 40,
         year: 2019,
+        dept: dept2,
         major: major3
       }
     ]);
@@ -140,7 +146,8 @@ export class DeptMajorClassService {
         name: '软工2',
         size: 40,
         year: 2019,
-        major: null
+        dept: dept1,
+        major: major1
       }
     );
   }

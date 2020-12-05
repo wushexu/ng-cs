@@ -8,6 +8,8 @@ import {Classroom} from '../../model/site';
 import {Week} from '../../model/week';
 import {Term} from '../../model/term';
 import {ScheduleContext} from '../../model2/schedule-context';
+import {DateDim} from '../../model/date-dim';
+import {MonthDim} from '../../model2/month-dim';
 
 
 export class GeneralScheduleComponent {
@@ -65,6 +67,24 @@ export class GeneralScheduleComponent {
       default:
         return false;
     }
+  }
+
+  evalTitleTimePart(): string {
+    const term = this.selectedTerm;
+    switch (this.timeScope) {
+      case 'day':
+        const dateDim = DateDim.fromMoment(this.selectedDate);
+        DateDim.setDateLabels(dateDim);
+        return `${dateDim.date}（${dateDim.weekdayLabel}）`;
+      case 'week':
+        return `第${this.selectedWeek.weekno}周`;
+      case 'month':
+        const monthDim: MonthDim = new MonthDim(this.selectedMonth, []);
+        return `${monthDim.year}年${monthDim.month}月`;
+      case 'term':
+        return term.name;
+    }
+    return '';
   }
 
   timeScopeSelected(timeScope: TimeScope) {

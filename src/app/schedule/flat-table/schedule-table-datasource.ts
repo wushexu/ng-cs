@@ -19,7 +19,8 @@ export class ScheduleTableDatasource extends DataSource<Schedule> {
     super();
 
     this.compareFieldMappers = {
-      date: s => s.date,
+      // date: s => s.date,
+      // trainingType: s => s.trainingType,
       lessonIndex: s => s.timeStart,
       class: s => s.theClass ? s.theClass.name : 0,
       classroom: s => s.site ? s.site.name : 0,
@@ -29,6 +30,7 @@ export class ScheduleTableDatasource extends DataSource<Schedule> {
   }
 
   setData(data: Schedule[]) {
+    console.log(data);
     this.data = data;
     this.dataSubject.next(data);
   }
@@ -61,11 +63,17 @@ export class ScheduleTableDatasource extends DataSource<Schedule> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
 
-      const fieldMapper = this.compareFieldMappers[this.sort.active];
-      if (!fieldMapper) {
+      const column = this.sort.active;
+      const fieldMapper = this.compareFieldMappers[column];
+      if (fieldMapper) {
+        return compare(fieldMapper(a), fieldMapper(b), isAsc);
+      }
+      const fieldA = a[column];
+      const fieldB = b[column];
+      if (typeof fieldA === 'undefined' || typeof fieldB === 'undefined') {
         return 0;
       }
-      return compare(fieldMapper(a), fieldMapper(b), isAsc);
+      return compare(fieldA, fieldB, isAsc);
     });
   }
 }

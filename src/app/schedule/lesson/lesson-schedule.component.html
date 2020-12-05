@@ -8,7 +8,12 @@
          *ngIf="!context?.course">
       {{schedule.course?.name}}
     </div>
-    <div class="item class-name" *ngIf="!context?.theClass">{{schedule.theClass?.name}}</div>
+    <div class="item class-name"
+         [matTooltip]="classTooltip()"
+         matTooltipShowDelay="200"
+         matTooltipHideDelay="200"
+         matTooltipClass="multi-lines-tooltip"
+         *ngIf="!context?.theClass">{{schedule.theClass?.name}}</div>
     <div class="item classroom-name"
          [matTooltip]="classroomTooltip()"
          matTooltipShowDelay="200"

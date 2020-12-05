@@ -67,6 +67,7 @@ export class ScheduleService {
       name: '理化19-1',
       size: 40,
       year: 2019,
+      dept,
       major
     };
 

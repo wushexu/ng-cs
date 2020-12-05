@@ -10,19 +10,22 @@
       <td mat-cell *matCellDef="let row">{{row | scheduleDate}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="course">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>课程</th>
-      <td mat-cell *matCellDef="let row">{{row.course?.name}}</td>
-    </ng-container>
-
     <ng-container matColumnDef="class">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>班级</th>
-      <td mat-cell *matCellDef="let row">{{row.theClass?.name}}</td>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="classTooltip(row.theClass)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.theClass?.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="classroom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>教室</th>
-      <td mat-cell *matCellDef="let row">{{row.site?.name}}</td>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="classroomTooltip(row.site)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.site?.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="teacher">
@@ -33,6 +36,25 @@
     <ng-container matColumnDef="lessonIndex">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>节次</th>
       <td mat-cell *matCellDef="let row">{{row.timeStart}}-{{row.timeEnd}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="course">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>课程</th>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="courseTooltip(row.course)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.course?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="trainingType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>实训</th>
+      <td mat-cell *matCellDef="let row" [class.training-class]="row.trainingType!=='N'">
+        {{row.trainingType === 'N' ? '理论课' :
+        (row.trainingType === 'S' ? '实训' :
+            (row.trainingType === 'E' ? '企业实训' : '')
+        )}}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="lessonDetail">

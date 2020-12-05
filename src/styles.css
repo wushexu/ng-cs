@@ -65,7 +65,7 @@ td .teacher-name {
   /*color: #2185D0;*/
 }
 
-td .training-class {
+td .training-class, td.training-class {
   border-right: rgba(33,133,208,.5) 2px solid;
 }
 

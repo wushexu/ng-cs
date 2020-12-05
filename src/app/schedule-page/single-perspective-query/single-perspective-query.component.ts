@@ -159,11 +159,6 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
     }
   }
 
-
-  evalTitle(titlePerspectivePart: string, titleTimeScopePart: string): string {
-    return `${titlePerspectivePart} ${titleTimeScopePart} 课表`;
-  }
-
   async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
     const filter: ScheduleFilter = context.filter;
@@ -182,18 +177,21 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
         break;
     }
 
+    const titleTimePart = this.evalTitleTimePart();
+    const title = `${titlePersPart} ${titleTimePart} 课表`;
+
     const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
         this.daySchedule = new DaySchedule(dateDim, schedules);
         this.daySchedule.context = context;
-        this.daySchedule.title = this.evalTitle(titlePersPart, dateDim.date);
+        this.daySchedule.title = title;
         break;
       case 'week':
         this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
         this.weekSchedule.context = context;
-        this.weekSchedule.title = this.evalTitle(titlePersPart, `第${this.selectedWeek.weekno}周`);
+        this.weekSchedule.title = title;
         break;
       case 'month':
         const yearMonth = this.selectedMonth;
@@ -201,14 +199,14 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
         this.monthSchedule.context = context;
-        this.monthSchedule.title = this.evalTitle(titlePersPart, `${monthDim.year}年${monthDim.month}月`);
+        this.monthSchedule.title = title;
         break;
       case 'term':
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
         this.termSchedule = new TermSchedule(termDim, schedules);
         this.termSchedule.context = context;
-        this.termSchedule.title = this.evalTitle(titlePersPart, term.name);
+        this.termSchedule.title = title;
         break;
     }
   }
