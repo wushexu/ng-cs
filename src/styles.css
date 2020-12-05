@@ -45,7 +45,7 @@ body {
 }
 
 td.has-lessons {
-  background-color: rgba(0,0,50,.01);
+  background-color: rgba(0, 0, 50, .01);
 }
 
 td .course-name {
@@ -66,7 +66,7 @@ td .teacher-name {
 }
 
 td .training-class, td.training-class {
-  border-right: rgba(33,133,208,.5) 2px solid;
+  border-right: rgba(33, 133, 208, .5) 2px solid;
 }
 
 .multi-lines-tooltip {
@@ -133,4 +133,16 @@ td.th {
   margin-left: 1em;
   margin-right: 1.5em;
   word-break: keep-all;
+}
+
+.ui.table th.mat-header-cell, .ui.table td.mat-cell, .ui.table td.mat-footer-cell {
+  border-bottom-style: none;
+}
+
+.ui.table .mat-header-cell {
+  font-size: 1em;
+}
+
+.mat-table.ui.table>thead>tr>th {
+  color: rgba(0,0,0,.7);
 }

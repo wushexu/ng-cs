@@ -17,7 +17,7 @@
 
   <div class="not-print">
 
-    <div class="dimensions-select" fxLayoutAlign="start center">
+    <div class="dimensions-select" fxLayout="row wrap" fxLayoutAlign="start center">
       <span class="primary-color title">筛选维度</span>
       <mat-checkbox [(ngModel)]="majorDimEnabled">系部</mat-checkbox>
       <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
@@ -31,7 +31,8 @@
 
     <mat-divider class="dimensions-divider"></mat-divider>
 
-    <div fxLayout="column">
+    <div fxLayout="column" class="dimension-conditions">
+
       <div fxLayout fxLayoutAlign="start center" *ngIf="majorDimEnabled" class="dimension-condition">
         <span class="primary-color dimension-label">系部</span>
         <mat-checkbox [checked]="majorDim==='major'" (change)="majorDim=$event.checked? 'major':'dept'">专业
@@ -96,23 +97,20 @@
         <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
       </div>
 
-      <!--<mat-divider class="dimensions-divider"></mat-divider>-->
+    </div>
 
-      <div fxLayout fxLayoutAlign="start center">
+    <div fxLayout fxLayoutAlign="start center">
 
-        <span class="spacer"></span>
+      <span class="spacer"></span>
 
-        <div>
+      <div>
+        <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
 
-          <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
-
-          <button mat-button color="primary" (click)="execute()">
-            <mat-icon>search</mat-icon>
-            查询
-          </button>
-        </div>
+        <button mat-button color="primary" (click)="execute()">
+          <mat-icon>search</mat-icon>
+          查询
+        </button>
       </div>
-
     </div>
 
     <mat-divider></mat-divider>
