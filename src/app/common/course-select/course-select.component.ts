@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
-import {sortBy, uniq} from 'underscore';
+import {uniq} from 'underscore';
 import {map, startWith} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 import {Course} from '../../model-api/course';
-import {TeacherCourseService} from '../../service/teacher-course.service';
+import {CourseService} from '../../service/course.service';
 
 @Component({
   selector: 'app-course-select',
@@ -27,7 +27,7 @@ export class CourseSelectComponent implements OnInit {
   filteredCourses: Course[];
   autoCompleteCourses: Course[];
 
-  constructor(private service: TeacherCourseService) {
+  constructor(private service: CourseService) {
   }
 
   ngOnInit(): void {

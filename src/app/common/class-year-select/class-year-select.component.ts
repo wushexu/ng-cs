@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {uniq, sortBy} from 'underscore';
 
-import {DeptMajorClassService} from '../../service/dept-major-class.service';
+import {ClassService} from '../../service/class.service';
 
 @Component({
   selector: 'app-class-year-select',
@@ -16,7 +16,7 @@ export class ClassYearSelectComponent implements OnInit {
 
   selectedYear: number;
 
-  constructor(private service: DeptMajorClassService) {
+  constructor(private service: ClassService) {
   }
 
   ngOnInit(): void {

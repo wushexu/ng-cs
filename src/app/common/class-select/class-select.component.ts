@@ -4,7 +4,7 @@ import {uniq, sortBy} from 'underscore';
 import {Dept} from '../../model-api/dept';
 import {Major} from '../../model-api/major';
 import {Class} from '../../model-api/class';
-import {DeptMajorClassService} from '../../service/dept-major-class.service';
+import {ClassService} from '../../service/class.service';
 
 @Component({
   selector: 'app-class-select',
@@ -27,7 +27,7 @@ export class ClassSelectComponent implements OnInit {
 
   selectedClass: Class;
 
-  constructor(private service: DeptMajorClassService) {
+  constructor(private service: ClassService) {
   }
 
   ngOnInit(): void {

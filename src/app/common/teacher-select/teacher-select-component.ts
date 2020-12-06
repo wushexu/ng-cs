@@ -5,7 +5,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 
-import {TeacherCourseService} from '../../service/teacher-course.service';
+import {TeacherService} from '../../service/teacher.service';
 import {Teacher} from '../../model-api/teacher';
 
 @Component({
@@ -22,8 +22,7 @@ export class TeacherSelectComponent implements OnInit {
   filteredTeachers: Observable<Teacher[]>;
 
 
-  constructor(protected teacherService: TeacherCourseService) {
-
+  constructor(protected teacherService: TeacherService) {
   }
 
   ngOnInit() {

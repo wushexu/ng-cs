@@ -1,87 +1,69 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {MatDialog} from '@angular/material/dialog';
-
-import {Observable, of} from 'rxjs';
+import {combineLatest, Observable, of} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
-import {Schedule} from '../model-api/schedule';
-import {Dept} from '../model-api/dept';
-import {Major} from '../model-api/major';
-import {Class} from '../model-api/class';
-import {Course} from '../model-api/course';
-import {Teacher} from '../model-api/teacher';
-import {Classroom, Site} from '../model-api/site';
+import {Site} from '../model-api/site';
+import {DeptMajorService} from './dept-major.service';
 
 
 @Injectable()
 export class ClassroomService {
 
-  // constructor(protected http: HttpClient,
-  //             protected dialog: MatDialog) {
-  //   super(http, dialog);
-  //   let apiBase = environment.apiBase || '';
-  //   this.baseUrl = `${apiBase}/profile`;
-  // }
+  classroomsBaseUrl: string;
+
+  $classrooms: Observable<Site[]>;
+
+  classroomsMap: Map<number, Site>;
+
+  constructor(protected http: HttpClient,
+              private deptMajorService: DeptMajorService) {
+    const base = environment.apiBase;
+    this.classroomsBaseUrl = `${base}/sites`;
+  }
 
   getClassrooms(): Observable<Site[]> {
 
-    const dept1: Dept = {
-      id: 1,
-      name: '工程技术系',
-      shortName: '工程系',
-      type: null
-    };
+    if (this.$classrooms) {
+      return this.$classrooms;
+    }
 
-    const dept2: Dept = {
-      id: 2,
-      name: '信息技术系',
-      shortName: '工程系',
-      type: null
-    };
+    const $classrooms = this.http.get<Site[]>(this.classroomsBaseUrl);
+    this.$classrooms = combineLatest([this.deptMajorService.getDepts(), $classrooms])
+      .pipe(
+        map(([depts, rooms]) => {
+          const roomsMap = new Map<number, Site>();
+          for (const room of rooms) {
+            roomsMap.set(room.id, room);
+            room.dept = depts.find(d => d.id === room.deptId);
+          }
+          this.classroomsMap = roomsMap;
+          return rooms;
+        }),
+        shareReplay()
+      );
 
-    return of([
-      {
-        id: 1,
-        capacity: 0,
-        code: '90194',
-        memo: null,
-        multimedia: '',
-        name: '信息223A',
-        name4training: '',
-        roomType: '标准教室',
-        shortName: null,
-        dept: dept2
-      },
-      {
-        id: 2,
-        capacity: 0,
-        code: '90195',
-        memo: null,
-        multimedia: '',
-        name: 'JX2-206',
-        name4training: '',
-        roomType: '合班教室',
-        shortName: null,
-        dept: dept1
-      }
-    ]);
+    return this.$classrooms;
   }
 
-  getClassroom(id: number): Observable<Classroom> {
-    return of({
-      id: 2,
-      capacity: 0,
-      code: '90195',
-      memo: null,
-      multimedia: '',
-      name: 'JX2-206',
-      name4training: '',
-      roomType: '合班教室',
-      shortName: null,
-      dept: null
-    });
+  getClassroomsMap(): Observable<Map<number, Site>> {
+    if (this.classroomsMap) {
+      return of(this.classroomsMap);
+    }
+
+    return this.getClassrooms()
+      .pipe(
+        map(rooms => this.classroomsMap)
+      );
+  }
+
+  getClassroom(id: number): Observable<Site> {
+    if (this.classroomsMap) {
+      return of(this.classroomsMap.get(id));
+    }
+    return this.http.get<Site>(`${this.classroomsBaseUrl}/${id}`);
   }
 
 }

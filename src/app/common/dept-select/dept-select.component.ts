@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {Dept} from '../../model-api/dept';
-import {DeptMajorClassService} from '../../service/dept-major-class.service';
+import {DeptMajorService} from '../../service/dept-major.service';
 
 @Component({
   selector: 'app-dept-select',
@@ -16,7 +16,7 @@ export class DeptSelectComponent implements OnInit {
 
   selectedDept: Dept;
 
-  constructor(private service: DeptMajorClassService) {
+  constructor(private service: DeptMajorService) {
   }
 
   ngOnInit(): void {

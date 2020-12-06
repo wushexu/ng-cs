@@ -1,12 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
 
-import {sortBy, uniq} from 'underscore';
-import {map, startWith} from 'rxjs/operators';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-
-import {Course} from '../../model-api/course';
-import {TeacherCourseService} from '../../service/teacher-course.service';
+import {uniq} from 'underscore';
+import {CourseService} from '../../service/course.service';
 
 @Component({
   selector: 'app-course-cate-select',
@@ -20,7 +15,7 @@ export class CourseCateSelectComponent implements OnInit {
   cates: string[];
   selectedCate: string;
 
-  constructor(private service: TeacherCourseService) {
+  constructor(private service: CourseService) {
   }
 
   ngOnInit(): void {

@@ -29,9 +29,9 @@ import {DayScheduleSerialComponent} from './schedule/day-serial/day-schedule-ser
 import {DATE_FORMATS, PaginatorIntl} from './config';
 import {MonthPickerComponent} from './common/month-picker/month-picker.component';
 import { ClassSelectComponent } from './common/class-select/class-select.component';
-import {DeptMajorClassService} from './service/dept-major-class.service';
+import {ClassService} from './service/class.service';
 import {TeacherSelectComponent} from './common/teacher-select/teacher-select-component';
-import {TeacherCourseService} from './service/teacher-course.service';
+import {TeacherService} from './service/teacher.service';
 import { ClassroomSelectComponent } from './common/classroom-select/classroom-select.component';
 import {ClassroomService} from './service/classroom.service';
 import {TermWeekService} from './service/term-week.service';
@@ -54,6 +54,8 @@ import {ScheduleDateLabelPipe} from './common/pipe/schedule-date-label.pipe';
 import {CourseSelectComponent} from './common/course-select/course-select.component';
 import {CourseCateSelectComponent} from './common/course-cate-select/course-cate-select.component';
 import { LessonSelectComponent } from './common/lesson-select/lesson-select.component';
+import {CourseService} from './service/course.service';
+import {DeptMajorService} from './service/dept-major.service';
 
 @NgModule({
   imports: [
@@ -107,8 +109,10 @@ import { LessonSelectComponent } from './common/lesson-select/lesson-select.comp
   ],
   providers: [
     ScheduleService,
-    DeptMajorClassService,
-    TeacherCourseService,
+    DeptMajorService,
+    ClassService,
+    TeacherService,
+    CourseService,
     ClassroomService,
     TermWeekService,
     {provide: MatPaginatorIntl, useValue: PaginatorIntl},

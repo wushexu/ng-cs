@@ -48,8 +48,13 @@ export class ClassroomSelectComponent implements OnInit {
 
       // this.filterClassroom();
       this.filteredClassrooms = [...rooms];
+
+      this.setupAutocomplete();
     });
 
+  }
+
+  setupAutocomplete() {
 
     this.nameControl.valueChanges
       .pipe(
@@ -63,7 +68,9 @@ export class ClassroomSelectComponent implements OnInit {
           const filtered: Classroom[] = [];
           let count = 0;
           for (const room of this.filteredClassrooms) {
-            if (!key || room.name.indexOf(key) >= 0 || room.code.indexOf(key) >= 0) {
+            if (!key ||
+              (room.name && room.name.indexOf(key) >= 0) ||
+              (room.code && room.code.indexOf(key) >= 0)) {
               filtered.push(room);
               count++;
               if (count >= size) {
@@ -78,7 +85,6 @@ export class ClassroomSelectComponent implements OnInit {
         this.autoCompleteClassrooms = rooms;
       });
   }
-
 
   filterClassroom() {
     if (!this.allClassrooms) {

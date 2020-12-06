@@ -1,148 +1,79 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-// import {MatDialog} from '@angular/material/dialog';
-
-import {Observable, of} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
 import {Schedule} from '../model-api/schedule';
-import {Dept} from '../model-api/dept';
-import {Major} from '../model-api/major';
 import {Class} from '../model-api/class';
 import {Course} from '../model-api/course';
 import {Teacher} from '../model-api/teacher';
 import {Site} from '../model-api/site';
-import {ClassroomService} from './classroom.service';
-import {DeptMajorClassService} from './dept-major-class.service';
-import {TeacherCourseService} from './teacher-course.service';
+import {ClassService} from './class.service';
 import {ScheduleFilter} from '../model-app/schedule-params';
+import {DeptMajorService} from './dept-major.service';
+import {TeacherService} from './teacher.service';
+import {ClassroomService} from './classroom.service';
+import {CourseService} from './course.service';
 
 
 @Injectable()
 export class ScheduleService {
 
+  schedulesBaseUrl: string;
+
   constructor(protected http: HttpClient,
-              // protected dialog: MatDialog,
-              protected deptMajorClassService: DeptMajorClassService
-  ) {
-    // super(http, dialog);
-    // let apiBase = environment.apiBase || '';
-    // this.baseUrl = `${apiBase}/profile`;
+              private deptMajorService: DeptMajorService,
+              private classService: ClassService,
+              private teacherService: TeacherService,
+              private classroomService: ClassroomService,
+              private courseService: CourseService) {
+    const base = environment.apiBase;
+    this.schedulesBaseUrl = `${base}/schedules`;
   }
 
-  // resetPassword(password: string, newPassword: string): Observable<OpResult> {
-  //   let url = `${this.baseUrl}/resetPassword`;
-  //   let form = {password, newPassword};
-  //   return super.postForResult(url, form);
-  // }
+  querySchedules(filter: ScheduleFilter): Observable<Schedule[]> {
 
-  querySchedules(params: ScheduleFilter): Observable<Schedule[]> {
+    console.log(filter);
 
-    console.log(params);
-
-    if (!params) {
-      // wrong
+    const params = [];
+    for (const name in filter) {
+      if (!filter.hasOwnProperty(name)) {
+        continue;
+      }
+      params.push(`${name}=${filter[name]}`);
     }
 
-    const dept: Dept = {
-      id: 1,
-      name: '工程技术系',
-      shortName: '工程系',
-      type: null
-    };
+    const url = this.schedulesBaseUrl + '?' + params.join('&');
+    console.log(url);
 
-    const major: Major = {
-      id: 1,
-      degree: '高职',
-      name: '理化测试与质检技术(无损检测技术)',
-      shortName: '理化',
-      dept
-    };
+    const $schedules = this.http.get<Schedule[]>(url);
 
-    const clazz: Class = {
-      id: 1,
-      classNo: 1,
-      degree: '高职',
-      name: '理化19-1',
-      size: 40,
-      year: 2019,
-      dept,
-      major
-    };
+    const $classesMap: Observable<Map<number, Class>> = this.classService.getClassesMap();
+    const $coursesMap: Observable<Map<string, Course>> = this.courseService.getCoursesMap();
+    const $teachersMap: Observable<Map<number, Teacher>> = this.teacherService.getTeachersMap();
+    const $sitesMap: Observable<Map<number, Site>> = this.classroomService.getClassroomsMap();
 
-    const course: Course = {
-      code: '2001367',
-      cate: '专业技能课',
-      examineMethod: '考查',
-      labByTheory: true,
-      locationType: '一体化教室',
-      name: '磁粉检测法1',
-      style: '必修课'
-    };
+    return combineLatest([$schedules, $classesMap, $coursesMap, $teachersMap, $sitesMap])
+      .pipe(
+        map(([
+               schedules,
+               classesMap,
+               coursesMap,
+               teachersMap,
+               sitesMap]) => {
 
-    const teacher: Teacher = {
-      id: 1,
-      code: '03006',
-      female: false,
-      mail: null,
-      name: '吕军',
-      phone: null
-    };
+          for (const schedule of schedules) {
+            schedule.theClass = classesMap.get(schedule.classId);
+            schedule.course = coursesMap.get(schedule.courseCode);
+            schedule.teacher = teachersMap.get(schedule.teacherId);
+            schedule.site = sitesMap.get(schedule.siteId);
+          }
 
-    const site: Site = {
-      id: 1,
-      capacity: 0,
-      code: '90194',
-      memo: null,
-      multimedia: '',
-      name: '信息223A',
-      name4Training: '',
-      roomType: '标准教室',
-      shortName: null,
-      dept
-    };
-
-    const schedule1: Schedule = {
-      id: 1,
-      date: '2020-10-12',
-      dayOfWeek: 1,
-      termMonth: 9,
-      termYear: 2020,
-      timeStart: 1,
-      timeEnd: 4,
-      trainingType: 'N',
-      weekno: 6,
-      site,
-      theClass: clazz,
-      course,
-      teacher,
-    };
-
-    const schedule2: Schedule = Object.assign({}, schedule1, {timeStart: 5, timeEnd: 6});
-    const schedule3: Schedule = Object.assign({}, schedule1, {timeStart: 7, timeEnd: 8});
-
-    const schedule4: Schedule = Object.assign({}, schedule1, {
-      date: '2020-10-14',
-      dayOfWeek: 3,
-      timeStart: 1,
-      timeEnd: 2,
-      trainingType: 'E'
-    });
-    const schedule5: Schedule = Object.assign({}, schedule4, {timeStart: 5, timeEnd: 8});
-
-    const schedule6: Schedule = Object.assign({}, schedule1, {
-      date: '2020-10-15',
-      dayOfWeek: 4,
-      timeStart: 1,
-      timeEnd: 2,
-      trainingType: 'S'
-    });
-    const schedule7: Schedule = Object.assign({}, schedule6, {timeStart: 5, timeEnd: 6});
-
-    const schedule8: Schedule = Object.assign({}, schedule1, {date: '2020-10-16', dayOfWeek: 5, timeStart: 1, timeEnd: 2});
-
-    return of([schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, schedule7, schedule8]);
+          return schedules;
+        })
+      );
   }
 
 }

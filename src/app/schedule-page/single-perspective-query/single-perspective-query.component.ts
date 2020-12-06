@@ -22,8 +22,8 @@ import {TermWeekService} from '../../service/term-week.service';
 import {Schedule} from '../../model-api/schedule';
 import {DayScheduleSerial} from '../../model-table-data/day-schedule-serial';
 import {ScheduleContext} from '../../model-app/schedule-context';
-import {TeacherCourseService} from '../../service/teacher-course.service';
-import {DeptMajorClassService} from '../../service/dept-major-class.service';
+import {TeacherService} from '../../service/teacher.service';
+import {ClassService} from '../../service/class.service';
 import {ClassroomService} from '../../service/classroom.service';
 import {BasicQuery} from '../common/basic-query';
 
@@ -49,8 +49,8 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
 
   constructor(private scheduleService: ScheduleService,
               private termWeekService: TermWeekService,
-              private deptMajorClassService: DeptMajorClassService,
-              private teacherCourseService: TeacherCourseService,
+              private classService: ClassService,
+              private teacherService: TeacherService,
               private classroomService: ClassroomService,
               private route: ActivatedRoute) {
     super();
@@ -63,7 +63,7 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
     this.route.paramMap.subscribe((params: ParamMap) => {
       console.log(params);
       if (params.has('class-idc')) {
-        this.deptMajorClassService.getClassByIdc(params.get('class-idc'))
+        this.classService.getClassByIdc(params.get('class-idc'))
           .subscribe((theClass: Class) => {
             this.perspective = 'class';
             this.perspectiveFixed = true;
@@ -72,7 +72,7 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
         return;
       }
       if (params.has('teacher-idc')) {
-        this.teacherCourseService.getTeacherByIdc(params.get('teacher-idc'))
+        this.teacherService.getTeacherByIdc(params.get('teacher-idc'))
           .subscribe((teacher: Teacher) => {
             this.perspective = 'teacher';
             this.perspectiveFixed = true;
