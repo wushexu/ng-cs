@@ -1,9 +1,10 @@
-import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
-import {ScheduleContext} from '../../model2/schedule-context';
+import {ScheduleFilter} from '../../model-app/schedule-params';
+import {TimeScope} from '../../model-app/schedule-query-def';
+import {ScheduleContext} from '../../model-app/schedule-context';
 import {BasicQuery} from './basic-query';
-import {Dept} from '../../model/dept';
-import {Major} from '../../model/major';
-import {Course} from '../../model/course';
+import {Dept} from '../../model-api/dept';
+import {Major} from '../../model-api/major';
+import {Course} from '../../model-api/course';
 
 
 export class CompleteQuery extends BasicQuery {

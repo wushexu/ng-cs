@@ -4,10 +4,11 @@ import * as moment from 'moment';
 
 import {MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
-import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
-import {Schedule} from '../../model/schedule';
+import {ScheduleFilter} from '../../model-app/schedule-params';
+import {TimeScope} from '../../model-app/schedule-query-def';
+import {Schedule} from '../../model-api/schedule';
 import {CompleteQuery} from '../common/complete-query';
-import {ScheduleContext} from '../../model2/schedule-context';
+import {ScheduleContext} from '../../model-app/schedule-context';
 
 
 declare type OutputStyle = 'table' | 'calendar-chart' | 'chart';
@@ -24,6 +25,19 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   // termSchedule: TermSchedule;
 
   outputStyle: OutputStyle = 'table';
+
+  groupByDept = false;
+  groupByMajor = false;
+  groupByClassYear = false;
+  groupByClass = false;
+  groupByClassroom = false;
+  groupByTeacher = false;
+  groupByCourse = false;
+  groupByLesson = false;
+  groupByTrainingType = false;
+  groupByTime = false;
+
+  timeGroupBy: 'date' | 'week' | 'month' | 'term' = 'date';
 
 
   constructor(private scheduleService: ScheduleService) {

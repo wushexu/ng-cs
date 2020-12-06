@@ -1,4 +1,4 @@
-import {ScheduleContext} from './schedule-context';
+import {ScheduleContext} from '../model-app/schedule-context';
 
 export class ScheduleDatasource {
 

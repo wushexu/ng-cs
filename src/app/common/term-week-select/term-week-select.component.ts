@@ -3,8 +3,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 
 import {TermWeekService} from '../../service/term-week.service';
-import {Term} from '../../model/term';
-import {Week} from '../../model/week';
+import {Term} from '../../model-api/term';
+import {Week} from '../../model-api/week';
 import {DATE_FORMAT} from '../../config';
 
 @Component({

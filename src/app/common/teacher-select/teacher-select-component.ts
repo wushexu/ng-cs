@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 
 import {TeacherCourseService} from '../../service/teacher-course.service';
-import {Teacher} from '../../model/teacher';
+import {Teacher} from '../../model-api/teacher';
 
 @Component({
   selector: 'app-teacher-select',

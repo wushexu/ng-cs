@@ -1,4 +1,4 @@
-import {Week} from '../model/week';
+import {Week} from '../model-api/week';
 
 export class MonthDim {
   yearMonth: string;

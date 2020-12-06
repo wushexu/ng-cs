@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import {DayScheduleSerial} from '../../model2/day-schedule-serial';
+import {DayScheduleSerial} from '../../model-table-data/day-schedule-serial';
 
 
 @Component({

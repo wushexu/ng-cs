@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Perspective, PerspectiveDef} from '../../model2/schedule-filter';
+import {Perspective, PerspectiveDef} from '../../model-app/schedule-query-def';
 
 @Component({
   selector: 'app-perspective-menu',

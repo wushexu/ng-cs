@@ -63,7 +63,8 @@
         <app-course-select (selected)="courseSelected($event)" *ngIf="courseDim==='course'"></app-course-select>
       </div>
 
-      <div fxLayout fxLayoutAlign="start center" *ngIf="trainingTypeDimEnabled" class="dimension-condition training-type">
+      <div fxLayout fxLayoutAlign="start center" *ngIf="trainingTypeDimEnabled"
+           class="dimension-condition training-type">
         <span class="primary-color dimension-label">实训</span>
         <mat-radio-group [(ngModel)]="selectedTrainingType">
           <mat-radio-button value="">不限</mat-radio-button>
@@ -99,22 +100,68 @@
 
     </div>
 
-    <div fxLayout fxLayoutAlign="start center">
 
+    <div class="dimensions-select statis-bar" fxLayout="row wrap" fxLayoutAlign="start">
+      <span class="primary-color title">统计维度</span>
+
+      <div fxLayout="column" fxLayoutAlign="start" class="group-by-dimensions">
+
+        <div class="group-by-dimensions-row">
+
+          <mat-checkbox [(ngModel)]="groupByDept">系部</mat-checkbox>
+          <mat-checkbox [(ngModel)]="groupByMajor">专业</mat-checkbox>
+
+          <span class="group-by-dimension-divider">&nbsp;</span>
+
+          <mat-checkbox [(ngModel)]="groupByClassYear">入学年</mat-checkbox>
+          <mat-checkbox [(ngModel)]="groupByClass">班级</mat-checkbox>
+        </div>
+
+        <div class="group-by-dimensions-row">
+
+          <mat-checkbox [(ngModel)]="groupByClassroom">教室</mat-checkbox>
+          <mat-checkbox [(ngModel)]="groupByTeacher">教师</mat-checkbox>
+
+          <span class="group-by-dimension-divider">&nbsp;</span>
+
+          <mat-checkbox [(ngModel)]="groupByCourse">课程</mat-checkbox>
+          <mat-checkbox [(ngModel)]="groupByTrainingType">实训</mat-checkbox>
+
+          <span class="group-by-dimension-divider">&nbsp;</span>
+
+          <mat-checkbox [(ngModel)]="groupByLesson">节次</mat-checkbox>
+        </div>
+
+        <div class="group-by-dimensions-row">
+
+          <mat-checkbox [(ngModel)]="groupByTime">时间</mat-checkbox>
+          <mat-radio-group [(ngModel)]="timeGroupBy" [disabled]="!groupByTime">
+            <mat-radio-button value="date">按日</mat-radio-button>
+            <mat-radio-button value="week">按周</mat-radio-button>
+            <mat-radio-button value="month">按月</mat-radio-button>
+            <mat-radio-button value="term">按学期</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+      </div>
+    </div>
+
+    <div fxLayout fxLayoutAlign="start center">
       <span class="spacer"></span>
 
       <div>
         <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
           <mat-radio-button value="table">表格</mat-radio-button>
-          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历</mat-radio-button>
+          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历
+          </mat-radio-button>
           <mat-radio-button value="chart">其他图表</mat-radio-button>
         </mat-radio-group>
 
         <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
 
         <button mat-button color="primary" (click)="execute()">
-          <mat-icon>search</mat-icon>
-          查询
+          <mat-icon>bar_chart</mat-icon>
+          统计
         </button>
       </div>
     </div>

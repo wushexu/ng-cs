@@ -1,4 +1,4 @@
-import {Schedule} from '../model/schedule';
+import {Schedule} from '../model-api/schedule';
 
 export interface Lesson {
   schedule?: Schedule;

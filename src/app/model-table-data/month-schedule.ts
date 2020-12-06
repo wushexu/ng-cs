@@ -1,8 +1,8 @@
 import {groupBy, flatten} from 'underscore';
 
-import {Schedule} from '../model/schedule';
+import {Schedule} from '../model-api/schedule';
 import {WeekSchedule} from './week-schedule';
-import {MonthDim} from './month-dim';
+import {MonthDim} from '../model-app/month-dim';
 import {DaySchedule} from './day-schedule';
 import {ScheduleDatasource} from './schedule-datasource';
 

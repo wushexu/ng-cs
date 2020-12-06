@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TimeScope, TimeScopeDef} from '../../model2/schedule-filter';
+import {TimeScope, TimeScopeDef} from '../../model-app/schedule-query-def';
 
 @Component({
   selector: 'app-time-scope-menu',

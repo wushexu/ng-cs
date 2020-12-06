@@ -4,8 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-import {Term} from '../model/term';
-import {Week} from '../model/week';
+import {Term} from '../model-api/term';
+import {Week} from '../model-api/week';
 
 
 @Injectable()

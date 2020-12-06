@@ -4,10 +4,10 @@ import * as moment from 'moment';
 
 import {DATE_FORMAT} from '../config';
 import {DaySchedule} from './day-schedule';
-import {Schedule} from '../model/schedule';
-import {Week} from '../model/week';
-import {DateDim} from '../model/date-dim';
-import {Lesson} from './lesson';
+import {Schedule} from '../model-api/schedule';
+import {Week} from '../model-api/week';
+import {DateDim} from '../model-api/date-dim';
+import {Lesson} from '../model-app/lesson';
 import {ScheduleDatasource} from './schedule-datasource';
 
 export class WeekSchedule extends ScheduleDatasource {

@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
 
-import {Schedule} from '../../model/schedule';
-import {ScheduleContext} from '../../model2/schedule-context';
-import {Course} from '../../model/course';
-import {Site} from '../../model/site';
+import {Schedule} from '../../model-api/schedule';
+import {ScheduleContext} from '../../model-app/schedule-context';
+import {Course} from '../../model-api/course';
+import {Site} from '../../model-api/site';
 
 @Component({
   selector: 'app-lesson-schedule',

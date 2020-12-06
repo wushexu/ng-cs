@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-import {DateDim} from '../../model/date-dim';
-import {Schedule} from '../../model/schedule';
+import {DateDim} from '../../model-api/date-dim';
+import {Schedule} from '../../model-api/schedule';
 
 
 @Pipe({name: 'scheduleDate'})

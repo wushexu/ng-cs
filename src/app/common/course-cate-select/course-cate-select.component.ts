@@ -5,7 +5,7 @@ import {sortBy, uniq} from 'underscore';
 import {map, startWith} from 'rxjs/operators';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
-import {Course} from '../../model/course';
+import {Course} from '../../model-api/course';
 import {TeacherCourseService} from '../../service/teacher-course.service';
 
 @Component({

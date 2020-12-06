@@ -3,7 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {map} from 'rxjs/operators';
 import {Observable, of as observableOf, merge, BehaviorSubject} from 'rxjs';
-import {Schedule} from '../../model/schedule';
+import {Schedule} from '../../model-api/schedule';
 
 
 export class ScheduleTableDatasource extends DataSource<Schedule> {

@@ -6,9 +6,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
 
 import {environment} from '../../environments/environment';
-import {Dept} from '../model/dept';
-import {Major} from '../model/major';
-import {Class} from '../model/class';
+import {Dept} from '../model-api/dept';
+import {Major} from '../model-api/major';
+import {Class} from '../model-api/class';
 
 
 const dept1: Dept = {

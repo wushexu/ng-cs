@@ -4,11 +4,11 @@ import * as echarts from 'echarts';
 import {EChartOption} from 'echarts';
 import Format = echarts.EChartOption.Tooltip.Format;
 
-import {ScheduleContext} from '../model2/schedule-context';
-import {DaySchedule} from '../model2/day-schedule';
-import {DateDim} from '../model/date-dim';
+import {ScheduleContext} from '../model-app/schedule-context';
+import {DaySchedule} from '../model-table-data/day-schedule';
+import {DateDim} from '../model-api/date-dim';
 import {DATE_FORMAT} from '../config';
-import {ScheduleDatasource} from '../model2/schedule-datasource';
+import {ScheduleDatasource} from '../model-table-data/schedule-datasource';
 
 export abstract class ScheduleCalendarChart {
 

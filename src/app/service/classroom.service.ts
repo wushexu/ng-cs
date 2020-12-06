@@ -6,13 +6,13 @@ import {MatDialog} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
 
 import {environment} from '../../environments/environment';
-import {Schedule} from '../model/schedule';
-import {Dept} from '../model/dept';
-import {Major} from '../model/major';
-import {Class} from '../model/class';
-import {Course} from '../model/course';
-import {Teacher} from '../model/teacher';
-import {Classroom, Site} from '../model/site';
+import {Schedule} from '../model-api/schedule';
+import {Dept} from '../model-api/dept';
+import {Major} from '../model-api/major';
+import {Class} from '../model-api/class';
+import {Course} from '../model-api/course';
+import {Teacher} from '../model-api/teacher';
+import {Classroom, Site} from '../model-api/site';
 
 
 @Injectable()

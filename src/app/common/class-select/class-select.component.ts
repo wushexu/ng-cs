@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {uniq, sortBy} from 'underscore';
 
-import {Dept} from '../../model/dept';
-import {Major} from '../../model/major';
-import {Class} from '../../model/class';
+import {Dept} from '../../model-api/dept';
+import {Major} from '../../model-api/major';
+import {Class} from '../../model-api/class';
 import {DeptMajorClassService} from '../../service/dept-major-class.service';
 
 @Component({

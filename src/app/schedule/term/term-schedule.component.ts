@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import {TermSchedule} from '../../model2/term-schedule';
+import {TermSchedule} from '../../model-table-data/term-schedule';
 
 @Component({
   selector: 'app-term-schedule',

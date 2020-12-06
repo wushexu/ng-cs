@@ -4,10 +4,10 @@ import * as moment from 'moment';
 
 import {MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
-import {ScheduleFilter} from '../../model2/schedule-filter';
-import {Schedule} from '../../model/schedule';
-import {ScheduleContext} from '../../model2/schedule-context';
-import {FlatSchedules} from '../../model2/flat-schedules';
+import {ScheduleFilter} from '../../model-app/schedule-params';
+import {Schedule} from '../../model-api/schedule';
+import {ScheduleContext} from '../../model-app/schedule-context';
+import {FlatSchedules} from '../../model-table-data/flat-schedules';
 import {CompleteQuery} from '../common/complete-query';
 
 
@@ -49,8 +49,6 @@ export class CompleteQueryComponent extends CompleteQuery implements OnInit {
   async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
     console.log(context);
-
-    const filter: ScheduleFilter = context.filter;
 
     const flatSchedules = new FlatSchedules();
     flatSchedules.schedules = schedules;

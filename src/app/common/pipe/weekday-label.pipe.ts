@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-import {DateDim} from '../../model/date-dim';
+import {DateDim} from '../../model-api/date-dim';
 
 
 @Pipe({name: 'weekdayLabel'})

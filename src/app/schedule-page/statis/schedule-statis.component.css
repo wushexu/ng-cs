@@ -1,3 +1,15 @@
-.mat-checkbox, .output-style-radio-group .mat-radio-button {
+.mat-checkbox, .mat-radio-group .mat-radio-button {
+  margin-right: 1em;
+}
+
+.statis-bar {
+  margin-top: 2em;
+}
+
+.group-by-dimensions-row:not(:first-child) {
+  margin-top: 1em;
+}
+
+.group-by-dimension-divider {
   margin-right: 1em;
 }

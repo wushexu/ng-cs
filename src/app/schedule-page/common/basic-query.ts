@@ -1,15 +1,16 @@
 import {Moment} from 'moment';
 
 import {DATE_FORMAT} from '../../config';
-import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
-import {Class} from '../../model/class';
-import {Teacher} from '../../model/teacher';
-import {Classroom} from '../../model/site';
-import {Week} from '../../model/week';
-import {Term} from '../../model/term';
-import {ScheduleContext} from '../../model2/schedule-context';
-import {DateDim} from '../../model/date-dim';
-import {MonthDim} from '../../model2/month-dim';
+import {ScheduleFilter} from '../../model-app/schedule-params';
+import {TimeScope} from '../../model-app/schedule-query-def';
+import {Class} from '../../model-api/class';
+import {Teacher} from '../../model-api/teacher';
+import {Classroom} from '../../model-api/site';
+import {Week} from '../../model-api/week';
+import {Term} from '../../model-api/term';
+import {ScheduleContext} from '../../model-app/schedule-context';
+import {DateDim} from '../../model-api/date-dim';
+import {MonthDim} from '../../model-app/month-dim';
 
 
 export class BasicQuery {

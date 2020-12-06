@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
-import {Dept} from '../../model/dept';
-import {Major} from '../../model/major';
+import {Dept} from '../../model-api/dept';
+import {Major} from '../../model-api/major';
 import {DeptMajorClassService} from '../../service/dept-major-class.service';
 
 @Component({

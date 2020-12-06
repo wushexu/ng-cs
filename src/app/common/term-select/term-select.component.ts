@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {TermWeekService} from '../../service/term-week.service';
-import {Term} from '../../model/term';
+import {Term} from '../../model-api/term';
 
 @Component({
   selector: 'app-term-select',

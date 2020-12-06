@@ -5,13 +5,13 @@ import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {ScheduleTableDatasource} from './schedule-table-datasource';
-import {Schedule} from '../../model/schedule';
-import {FlatSchedules} from '../../model2/flat-schedules';
-import {Course} from '../../model/course';
-import {Classroom, Site} from '../../model/site';
-import {ScheduleFilter} from '../../model2/schedule-filter';
-import {ScheduleContext} from '../../model2/schedule-context';
-import {Class} from '../../model/class';
+import {Schedule} from '../../model-api/schedule';
+import {FlatSchedules} from '../../model-table-data/flat-schedules';
+import {Course} from '../../model-api/course';
+import {Classroom, Site} from '../../model-api/site';
+import {ScheduleFilter} from '../../model-app/schedule-params';
+import {ScheduleContext} from '../../model-app/schedule-context';
+import {Class} from '../../model-api/class';
 
 @Component({
   selector: 'app-flat-table-schedule',

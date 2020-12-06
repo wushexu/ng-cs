@@ -1,9 +1,9 @@
 import {times} from 'underscore';
 
-import {Schedule} from '../model/schedule';
-import {Lesson} from './lesson';
-import {DateDim} from '../model/date-dim';
-import {ScheduleContext} from './schedule-context';
+import {Schedule} from '../model-api/schedule';
+import {Lesson} from '../model-app/lesson';
+import {DateDim} from '../model-api/date-dim';
+import {ScheduleContext} from '../model-app/schedule-context';
 import {ScheduleDatasource} from './schedule-datasource';
 
 export class DaySchedule extends ScheduleDatasource {

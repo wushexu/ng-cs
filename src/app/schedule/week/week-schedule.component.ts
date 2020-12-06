@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import {WeekSchedule} from '../../model2/week-schedule';
+import {WeekSchedule} from '../../model-table-data/week-schedule';
 
 @Component({
   selector: 'app-week-schedule',

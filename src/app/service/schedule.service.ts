@@ -6,17 +6,17 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 
 import {environment} from '../../environments/environment';
-import {Schedule} from '../model/schedule';
-import {Dept} from '../model/dept';
-import {Major} from '../model/major';
-import {Class} from '../model/class';
-import {Course} from '../model/course';
-import {Teacher} from '../model/teacher';
-import {Site} from '../model/site';
+import {Schedule} from '../model-api/schedule';
+import {Dept} from '../model-api/dept';
+import {Major} from '../model-api/major';
+import {Class} from '../model-api/class';
+import {Course} from '../model-api/course';
+import {Teacher} from '../model-api/teacher';
+import {Site} from '../model-api/site';
 import {ClassroomService} from './classroom.service';
 import {DeptMajorClassService} from './dept-major-class.service';
 import {TeacherCourseService} from './teacher-course.service';
-import {ScheduleFilter} from '../model2/schedule-filter';
+import {ScheduleFilter} from '../model-app/schedule-params';
 
 
 @Injectable()

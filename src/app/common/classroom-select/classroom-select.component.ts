@@ -5,8 +5,8 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {startWith, map} from 'rxjs/operators';
 import {sortBy, uniq} from 'underscore';
 
-import {Dept} from '../../model/dept';
-import {Classroom} from '../../model/site';
+import {Dept} from '../../model-api/dept';
+import {Classroom} from '../../model-api/site';
 import {ClassroomService} from '../../service/classroom.service';
 
 @Component({

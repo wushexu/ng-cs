@@ -3,10 +3,10 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, V
 import * as moment from 'moment';
 import * as echarts from 'echarts';
 
-import {DaySchedule} from '../../model2/day-schedule';
+import {DaySchedule} from '../../model-table-data/day-schedule';
 import {ScheduleCalendarChart} from '../../common/schedule-calendar-chart';
-import {TermSchedule} from '../../model2/term-schedule';
-import {ScheduleDatasource} from '../../model2/schedule-datasource';
+import {TermSchedule} from '../../model-table-data/term-schedule';
+import {ScheduleDatasource} from '../../model-table-data/schedule-datasource';
 
 @Component({
   selector: 'app-term-schedule-chart',

@@ -4,8 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-import {Course} from '../model/course';
-import {Teacher} from '../model/teacher';
+import {Course} from '../model-api/course';
+import {Teacher} from '../model-api/teacher';
 
 
 @Injectable()
