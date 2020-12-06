@@ -46,7 +46,7 @@ import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedu
 import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-chart.component';
 import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
 import { MainMenuComponent } from './common/menu/main-menu.component';
-import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
+import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';
 import {DeptSelectComponent} from './common/dept-select/dept-select.component';
 import {ClassYearSelectComponent} from './common/class-year-select/class-year-select.component';
@@ -96,7 +96,7 @@ import { LessonSelectComponent } from './common/lesson-select/lesson-select.comp
     TermScheduleChartComponent,
     ScheduleStatisComponent,
     MainMenuComponent,
-    IntegratedQueryComponent,
+    CompleteQueryComponent,
     DeptMajorSelectComponent,
     DeptSelectComponent,
     ClassYearSelectComponent,

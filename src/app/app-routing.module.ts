@@ -3,14 +3,14 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
 import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
-import {IntegratedQueryComponent} from './schedule-page/integrated-query/integrated-query.component';
+import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 
 const routes: Routes = [
   {path: 'query', component: SinglePerspectiveQueryComponent},
   {path: 'cl/:class-idc', component: SinglePerspectiveQueryComponent},
   {path: 'tc/:teacher-idc', component: SinglePerspectiveQueryComponent},
   {path: 'cr/:classroom-id', component: SinglePerspectiveQueryComponent},
-  {path: 'query-i', component: IntegratedQueryComponent},
+  {path: 'query-i', component: CompleteQueryComponent},
   {path: 'statis', component: ScheduleStatisComponent}
 ];
 

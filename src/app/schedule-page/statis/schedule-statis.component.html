@@ -17,61 +17,112 @@
 
   <div class="not-print">
 
-    <div fxLayout="column">
-      <div fxLayout fxLayoutAlign="start center">
+    <div class="dimensions-select" fxLayout="row wrap" fxLayoutAlign="start center">
+      <span class="primary-color title">筛选维度</span>
+      <mat-checkbox [(ngModel)]="majorDimEnabled">系部</mat-checkbox>
+      <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
+      <mat-checkbox [(ngModel)]="classroomDimEnabled">教室</mat-checkbox>
+      <mat-checkbox [(ngModel)]="courseDimEnabled">课程</mat-checkbox>
+      <mat-checkbox [(ngModel)]="trainingTypeDimEnabled">实训</mat-checkbox>
+      <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
+      <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
+      <mat-checkbox [(ngModel)]="timeDimEnabled">时间</mat-checkbox>
+    </div>
 
-        <!--<app-perspective-menu [perspective]="perspective" (selected)="perspectiveSelected($event)"
-                              class="perspective-menu"></app-perspective-menu>
+    <mat-divider class="dimensions-divider"></mat-divider>
 
-        <app-class-select (selected)="classSelected($event)" *ngIf="perspective==='class'"></app-class-select>
-        <app-teacher-select (selected)="teacherSelected($event)" *ngIf="perspective==='teacher'"></app-teacher-select>
-        <app-classroom-select (selected)="classroomSelected($event)"
-                              *ngIf="perspective==='classroom'"></app-classroom-select>-->
+    <div fxLayout="column" class="dimension-conditions">
 
+      <div fxLayout fxLayoutAlign="start center" *ngIf="majorDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">系部</span>
+        <mat-checkbox [checked]="majorDim==='major'" (change)="majorDim=$event.checked? 'major':'dept'">专业
+        </mat-checkbox>
+        <app-dept-select (selected)="deptSelected($event)" *ngIf="majorDim==='dept'"></app-dept-select>
+        <app-dept-major-select (selected)="majorSelected($event)" *ngIf="majorDim==='major'"></app-dept-major-select>
       </div>
 
-      <div fxLayout fxLayoutAlign="start center">
-
-        <div>
-          <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
-                               class="time-scope-menu"></app-time-scope-menu>
-
-          <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
-                           *ngIf="timeScope==='day'"></app-date-picker>
-
-          <app-term-week-select (selected)="weekSelected($event)" *ngIf="timeScope==='week'"></app-term-week-select>
-
-          <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
-                            *ngIf="timeScope==='month'"></app-month-picker>
-
-          <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
-        </div>
-
-        <span class="spacer"></span>
-
-        <div>
-          <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
-            <mat-radio-button value="table">表格</mat-radio-button>
-            <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历</mat-radio-button>
-            <mat-radio-button value="chart">其他图表</mat-radio-button>
-          </mat-radio-group>
-
-          <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
-
-          <button mat-button color="primary" (click)="execute()">
-            <mat-icon>bar_chart</mat-icon>
-            统计
-          </button>
-        </div>
+      <div fxLayout fxLayoutAlign="start center" *ngIf="classDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">班级</span>
+        <mat-checkbox [checked]="classDim==='year'" (change)="classDim=$event.checked? 'year':'class'">仅入学年
+        </mat-checkbox>
+        <app-class-year-select (selected)="classYearSelected($event)" *ngIf="classDim==='year'"></app-class-year-select>
+        <app-class-select (selected)="classSelected($event)" *ngIf="classDim==='class'"></app-class-select>
       </div>
 
+      <div fxLayout fxLayoutAlign="start center" *ngIf="classroomDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">教室</span>
+        <app-classroom-select (selected)="classroomSelected($event)"></app-classroom-select>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="courseDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">课程</span>
+        <mat-checkbox [checked]="courseDim==='cate'" (change)="courseDim=$event.checked? 'cate':'course'">仅类别
+        </mat-checkbox>
+        <app-course-cate-select (selected)="courseCateSelected($event)"
+                                *ngIf="courseDim==='cate'"></app-course-cate-select>
+        <app-course-select (selected)="courseSelected($event)" *ngIf="courseDim==='course'"></app-course-select>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="trainingTypeDimEnabled" class="dimension-condition training-type">
+        <span class="primary-color dimension-label">实训</span>
+        <mat-radio-group [(ngModel)]="selectedTrainingType">
+          <mat-radio-button value="">不限</mat-radio-button>
+          <mat-radio-button value="N">理论课</mat-radio-button>
+          <mat-radio-button value="S,E">实训课</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="teacherDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">教师</span>
+        <app-teacher-select (selected)="teacherSelected($event)"></app-teacher-select>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="lessonDimEnabled" class="dimension-condition">
+        <span class="primary-color dimension-label">节次</span>
+        <app-lesson-select (selected)="lessonSelected($event)"></app-lesson-select>
+      </div>
+
+      <div fxLayout fxLayoutAlign="start center" *ngIf="timeDimEnabled" class="dimension-condition">
+        <app-time-scope-menu [timeScope]="timeScope" (selected)="timeScopeSelected($event)"
+                             class="time-scope-menu"></app-time-scope-menu>
+
+        <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"
+                         *ngIf="timeScope==='day'"></app-date-picker>
+
+        <app-term-week-select (selected)="weekSelected($event)" *ngIf="timeScope==='week'"></app-term-week-select>
+
+        <app-month-picker [yearMonth]="selectedMonth" (selected)="monthSelected($event)"
+                          *ngIf="timeScope==='month'"></app-month-picker>
+
+        <app-term-select (selected)="termSelected($event)" *ngIf="timeScope==='term'"></app-term-select>
+      </div>
+
+    </div>
+
+    <div fxLayout fxLayoutAlign="start center">
+
+      <span class="spacer"></span>
+
+      <div>
+        <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
+          <mat-radio-button value="table">表格</mat-radio-button>
+          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历</mat-radio-button>
+          <mat-radio-button value="chart">其他图表</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
+
+        <button mat-button color="primary" (click)="execute()">
+          <mat-icon>search</mat-icon>
+          查询
+        </button>
+      </div>
     </div>
 
     <mat-divider></mat-divider>
   </div>
 
   <div class="schedule-tables">
-
 
   </div>
 

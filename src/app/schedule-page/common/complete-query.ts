@@ -1,27 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-
-import * as moment from 'moment';
-
-import {MONTH_PICKER_FORMAT} from '../../config';
-import {ScheduleService} from '../../service/schedule.service';
 import {ScheduleFilter, TimeScope} from '../../model2/schedule-filter';
-import {Schedule} from '../../model/schedule';
 import {ScheduleContext} from '../../model2/schedule-context';
-import {GeneralScheduleComponent} from '../common/general-schedule.component';
+import {BasicQuery} from './basic-query';
 import {Dept} from '../../model/dept';
 import {Major} from '../../model/major';
-import {FlatSchedules} from '../../model2/flat-schedules';
 import {Course} from '../../model/course';
 
 
-@Component({
-  selector: 'app-integrated-query',
-  templateUrl: './integrated-query.component.html',
-  styleUrls: ['./integrated-query.component.css']
-})
-export class IntegratedQueryComponent extends GeneralScheduleComponent implements OnInit {
-
-  flatSchedules: FlatSchedules;
+export class CompleteQuery extends BasicQuery {
 
   timeScope: TimeScope = 'day';
 
@@ -48,29 +33,10 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   // classroomDim: 'dept' | 'room';
   // teacherDim: 'teacher';
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor() {
     super();
   }
 
-  ngOnInit(): void {
-    this.selectedDate = moment();
-    this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
-
-  }
-
-  async execute() {
-
-    const context: ScheduleContext = this.setupContext();
-    if (!context) {
-      return;
-    }
-
-    const filter: ScheduleFilter = context.filter;
-
-    const schedules = await this.scheduleService.querySchedules(filter).toPromise();
-
-    await this.setupSchedules(context, schedules);
-  }
 
   setupContext(): ScheduleContext | null {
 
@@ -148,17 +114,18 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
   }
 
 
-  async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
+  evalTitleTimePart(titleParts: string[], context: ScheduleContext): void {
+    super.evalTitleTimePart(titleParts, context);
 
-    console.log(context);
+    if (context.filter.lesson) {
+      const liCn = ['一', '二', '三', '四', '五'][context.filter.lesson - 1];
+      titleParts.push(`第${liCn}节`);
+    }
+  }
+
+  evalTitleNonTimePart(titleParts: string[], context: ScheduleContext): void {
 
     const filter: ScheduleFilter = context.filter;
-
-    const flatSchedules = new FlatSchedules();
-    flatSchedules.schedules = schedules;
-    flatSchedules.context = context;
-
-    const titleParts: string[] = [];
 
     if (context.dept) {
       titleParts.push(`（系部）${context.dept.name}`);
@@ -182,20 +149,8 @@ export class IntegratedQueryComponent extends GeneralScheduleComponent implement
       const typeName = filter.trainingType === 'N' ? '理论课' : '实训课';
       titleParts.push(typeName);
     }
-
-    titleParts.push(this.evalTitleTimePart());
-
-    if (filter.lesson) {
-      const liCn = ['一', '二', '三', '四', '五'][context.filter.lesson - 1];
-      titleParts.push(`第${liCn}节`);
-    }
-
-    const titleMain = titleParts.join(' ');
-
-    flatSchedules.title = `${titleMain} 课表`;
-
-    this.flatSchedules = flatSchedules;
   }
+
 
   deptSelected(dept: Dept) {
     this.selectedDept = dept;

@@ -12,7 +12,7 @@ import {DateDim} from '../../model/date-dim';
 import {MonthDim} from '../../model2/month-dim';
 
 
-export class GeneralScheduleComponent {
+export class BasicQuery {
 
   showTitle = true;
 
@@ -69,22 +69,25 @@ export class GeneralScheduleComponent {
     }
   }
 
-  evalTitleTimePart(): string {
+  evalTitleTimePart(titleParts: string[], context: ScheduleContext): void {
     const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         const dateDim = DateDim.fromMoment(this.selectedDate);
         DateDim.setDateLabels(dateDim);
-        return `${dateDim.date}（${dateDim.weekdayLabel}）`;
+        titleParts.push(`${dateDim.date}（${dateDim.weekdayLabel}）`);
+        return;
       case 'week':
-        return `第${this.selectedWeek.weekno}周`;
+        titleParts.push(`第${this.selectedWeek.weekno}周`);
+        return;
       case 'month':
         const monthDim: MonthDim = new MonthDim(this.selectedMonth, []);
-        return `${monthDim.year}年${monthDim.month}月`;
+        titleParts.push(`${monthDim.year}年${monthDim.month}月`);
+        return;
       case 'term':
-        return term.name;
+        titleParts.push(term.name);
+        return;
     }
-    return '';
   }
 
   timeScopeSelected(timeScope: TimeScope) {

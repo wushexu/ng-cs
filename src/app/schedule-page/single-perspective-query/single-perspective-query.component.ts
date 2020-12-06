@@ -24,7 +24,7 @@ import {ScheduleContext} from '../../model2/schedule-context';
 import {TeacherCourseService} from '../../service/teacher-course.service';
 import {DeptMajorClassService} from '../../service/dept-major-class.service';
 import {ClassroomService} from '../../service/classroom.service';
-import {GeneralScheduleComponent} from '../common/general-schedule.component';
+import {BasicQuery} from '../common/basic-query';
 
 
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
@@ -34,7 +34,7 @@ declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
   templateUrl: './single-perspective-query.component.html',
   styleUrls: ['./single-perspective-query.component.css']
 })
-export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent implements OnInit {
+export class SinglePerspectiveQueryComponent extends BasicQuery implements OnInit {
 
   daySchedule: DaySchedule;
   weekSchedule: WeekSchedule;
@@ -177,8 +177,9 @@ export class SinglePerspectiveQueryComponent extends GeneralScheduleComponent im
         break;
     }
 
-    const titleTimePart = this.evalTitleTimePart();
-    const title = `${titlePersPart} ${titleTimePart} 课表`;
+    const titleParts: string[] = [];
+    this.evalTitleTimePart(titleParts, context);
+    const title = `${titlePersPart} ${titleParts.join(' ')} 课表`;
 
     const term = this.selectedTerm;
     switch (this.timeScope) {
