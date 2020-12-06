@@ -1,10 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {uniq, sortBy} from 'underscore';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {uniq} from 'underscore';
+
+import {combineLatest} from 'rxjs';
 
 import {Dept} from '../../model-api/dept';
 import {Major} from '../../model-api/major';
 import {Class} from '../../model-api/class';
 import {ClassService} from '../../service/class.service';
+import {DeptMajorService} from '../../service/dept-major.service';
 
 @Component({
   selector: 'app-class-select',
@@ -27,29 +30,19 @@ export class ClassSelectComponent implements OnInit {
 
   selectedClass: Class;
 
-  constructor(private service: ClassService) {
+  constructor(private classService: ClassService,
+              private deptMajorService: DeptMajorService) {
   }
 
   ngOnInit(): void {
-    this.service.getClasses().subscribe(classes => {
+    combineLatest([
+      this.classService.getClasses(),
+      this.deptMajorService.getDeptWithMajors(),
+      this.deptMajorService.getMajors()
+    ]).subscribe(([classes, depts, majors]) => {
       this.allClasses = classes;
-      this.majors = sortBy(uniq(classes.map(c => c.major).filter(m => m)), 'id');
-      this.depts = sortBy(uniq(this.majors.map(m => m.dept).filter(d => d)), 'id');
-
-      const deptMap: Map<number, Dept> = new Map<number, Dept>();
-      for (const dept of this.depts) {
-        dept.majors = [];
-        deptMap.set(dept.id, dept);
-      }
-
-      for (const major of this.majors) {
-        const dept = deptMap.get(major.dept.id);
-        if (dept) {
-          dept.majors.push(major);
-        } else {
-          console.error('Dept Not Found: ' + major.dept.id);
-        }
-      }
+      this.majors = majors;
+      this.depts = depts;
 
       this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
 

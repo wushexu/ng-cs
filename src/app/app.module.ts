@@ -44,7 +44,7 @@ import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu
 import {DateMdPipe} from './common/pipe/date-md.pipe';
 import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedule-chart.component';
 import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-chart.component';
-import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
+import {ScheduleStatisComponent} from './schedule-page/statistic/schedule-statis.component';
 import { MainMenuComponent } from './common/menu/main-menu.component';
 import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';

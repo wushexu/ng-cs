@@ -33,6 +33,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   groupByClassroom = false;
   groupByTeacher = false;
   groupByCourse = false;
+  groupByCourseCate = false;
   groupByLesson = false;
   groupByTrainingType = false;
   groupByTime = false;
@@ -80,6 +81,29 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
   }
 
+  clearGroupBys() {
+    this.groupByDept = false;
+    this.groupByMajor = false;
+    this.groupByClassYear = false;
+    this.groupByClass = false;
+    this.groupByClassroom = false;
+    this.groupByTeacher = false;
+    this.groupByCourse = false;
+    this.groupByCourseCate = false;
+    this.groupByLesson = false;
+    this.groupByTrainingType = false;
+    this.groupByTime = false;
+  }
+
+  groupByTeacherOnly() {
+    this.clearGroupBys();
+    this.groupByTeacher = true;
+  }
+
+  groupByClassroomOnly() {
+    this.clearGroupBys();
+    this.groupByClassroom = true;
+  }
 
   ensureOutputStyle(outputStyles: OutputStyle[]): void {
     if (outputStyles.indexOf(this.outputStyle) === -1) {

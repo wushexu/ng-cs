@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
-import {ScheduleStatisComponent} from './schedule-page/statis/schedule-statis.component';
+import {ScheduleStatisComponent} from './schedule-page/statistic/schedule-statis.component';
 import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 
 const routes: Routes = [

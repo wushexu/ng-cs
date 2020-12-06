@@ -43,8 +43,13 @@ export class CourseSelectComponent implements OnInit {
         });
 
       this.filteredCourses = [...courses];
+
+      this.setupAutocomplete();
     });
 
+  }
+
+  setupAutocomplete() {
 
     this.nameControl.valueChanges
       .pipe(
@@ -73,7 +78,6 @@ export class CourseSelectComponent implements OnInit {
         this.autoCompleteCourses = rooms;
       });
   }
-
 
   filterCourse() {
     if (!this.allCourses) {

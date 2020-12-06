@@ -25,7 +25,6 @@ export class ScheduleFilter {
   deptId?: number;
   majorId?: number;
   classYear?: number;
-
   courseCate?: string;
 }
 

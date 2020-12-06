@@ -10,6 +10,10 @@
   margin-top: 1em;
 }
 
+.group-by-dimensions-row .mat-stroked-button {
+  margin-right: 1em;
+}
+
 .group-by-dimension-divider {
   margin-right: 1em;
 }

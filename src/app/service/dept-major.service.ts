@@ -63,9 +63,8 @@ export class DeptMajorService {
           for (const dept of depts) {
             dept.majors = [];
           }
-
           for (const major of majors) {
-            const dept = this.deptsMap.get(major.id);
+            const dept = this.deptsMap.get(major.deptId);
             if (dept) {
               dept.majors.push(major);
             }

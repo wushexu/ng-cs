@@ -28,6 +28,9 @@ export class CourseCateSelectComponent implements OnInit {
           }
           return a.localeCompare(b);
         });
+
+      this.selectedCate = this.cates[0];
+      this.selected.emit(this.selectedCate);
     });
 
   }
