@@ -4,6 +4,7 @@ import {Schedule} from '../../model-api/schedule';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {Course} from '../../model-api/course';
 import {Site} from '../../model-api/site';
+import {Class} from '../../model-api/class';
 
 @Component({
   selector: 'app-lesson-schedule',
@@ -26,7 +27,7 @@ export class LessonScheduleComponent {
     }
 
     const course: Course = sc.course;
-    const tooltip2 = Schedule.courseTooltip(course);
+    const tooltip2 = Course.courseTooltip(course);
     if (!tooltip1 || !tooltip2) {
       return tooltip1 || tooltip2;
     }
@@ -35,7 +36,7 @@ export class LessonScheduleComponent {
   }
 
   classTooltip() {
-    return Schedule.classTooltip(this.schedule.theClass);
+    return Class.classTooltip(this.schedule.theClass);
   }
 
   classroomTooltip(): string {

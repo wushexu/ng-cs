@@ -10,6 +10,12 @@ import {DateDim} from '../model-api/date-dim';
 import {DATE_FORMAT} from '../config';
 import {ScheduleDatasource} from '../model-table-data/schedule-datasource';
 
+interface CalenderDateData {
+  dayOfMonth: number;
+  lessonsCount: number;
+  tooltip: string;
+}
+
 export abstract class ScheduleCalendarChart {
 
   showTitle = true;
@@ -18,9 +24,9 @@ export abstract class ScheduleCalendarChart {
   chartPaddingBottom = 30;
 
   chartWidth = this.cellSize * 9;
-  chartHeight = 500;
   // const cellRows = Math.ceil((startDate.day() - 1 + data.length) / 7);
   // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
+  chartHeight = 50 + this.cellSize + Math.ceil((7 - 1 + 31) / 7) * this.cellSize + this.chartPaddingBottom; // 570
 
   myChart: echarts.ECharts;
   viewInitialized = false;
@@ -84,12 +90,17 @@ export abstract class ScheduleCalendarChart {
 
     const visualMapMax = maxLessonSpansCount > 4 ? maxLessonSpansCount : 4;
 
-    const heatmapData: any[] = data.map(d => {
-      return {value: [d.dateDim.date, d.lessonSpansCount], daySchedule: d};
+    const context: ScheduleContext = this.scheduleDatasource.context;
+    const heatmapData: any[] = data.map(daySchedule => {
+      const dateData: CalenderDateData = {
+        dayOfMonth: daySchedule.dateDim.dayOfMonth,
+        lessonsCount: daySchedule.lessonSpansCount,
+        tooltip: DaySchedule.lessonsHtml(daySchedule, context)
+      };
+      return {value: [daySchedule.dateDim.date, daySchedule.lessonSpansCount], dateData};
     });
     const scatterData: any[] = heatmapData;
 
-    const component = this;
 
     const option1: EChartOption = {
       color: null,
@@ -100,9 +111,9 @@ export abstract class ScheduleCalendarChart {
       } : null,
       tooltip: {
         formatter(params: Format) {
-          const daySchedule = params.data.daySchedule as DaySchedule;
-          // console.log(daySchedule);
-          return DaySchedule.lessonsHtml(daySchedule, component.scheduleDatasource.context);
+          const dateData = params.data.dateData as CalenderDateData;
+          // console.log(dateData);
+          return dateData.tooltip;
         }
       },
       toolbox: {
@@ -160,8 +171,8 @@ export abstract class ScheduleCalendarChart {
           label: {
             show: true,
             formatter(params) {
-              const daySchedule = params.data.daySchedule as DaySchedule;
-              return '\n' + daySchedule.dateDim.dayOfMonth + '\n\n\n';
+              const dateData = params.data.dateData as CalenderDateData;
+              return '\n' + dateData.dayOfMonth + '\n\n\n';
             },
             color: '#000'
           },
@@ -174,8 +185,8 @@ export abstract class ScheduleCalendarChart {
           label: {
             show: true,
             formatter(params) {
-              const daySchedule = params.data.daySchedule as DaySchedule;
-              const lc = daySchedule.lessonSpansCount;
+              const dateData = params.data.dateData as CalenderDateData;
+              const lc = dateData.lessonsCount;
               if (lc === 0) {
                 return '';
               }
@@ -196,6 +207,7 @@ export abstract class ScheduleCalendarChart {
       ]
     };
 
+    console.log(option1);
     this.myChart.setOption(option1);
   }
 

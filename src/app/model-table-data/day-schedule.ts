@@ -1,5 +1,3 @@
-import {times} from 'underscore';
-
 import {Schedule} from '../model-api/schedule';
 import {Lesson} from '../model-app/lesson';
 import {DateDim} from '../model-api/date-dim';

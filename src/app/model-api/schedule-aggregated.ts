@@ -4,8 +4,7 @@ import {Class} from './class';
 import {Site} from './site';
 
 export class ScheduleAggregated {
-  termYear?: number;
-  termMonth?: number;
+  termId?: string;
 
   weekno?: number;
   dayOfWeek?: number;

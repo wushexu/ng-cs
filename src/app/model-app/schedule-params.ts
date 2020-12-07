@@ -2,8 +2,7 @@ export class ScheduleFilter {
 
   /* Schedule properties Begin */
 
-  termYear?: number;
-  termMonth?: number;
+  termId?: string;
 
   weekno?: number;
   dayOfWeek?: number;

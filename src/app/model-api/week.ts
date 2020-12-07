@@ -5,9 +5,7 @@ export class Week {
   firstDay: string;
   lastDay: string;
 
-  termYear?: number;
-  termMonth?: number;
-
+  termId: string;
   term?: Term;
 
 }

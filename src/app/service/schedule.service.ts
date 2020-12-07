@@ -71,6 +71,8 @@ export class ScheduleService {
             schedule.site = sitesMap.get(schedule.siteId);
           }
 
+          console.log('Count: ' + schedules.length);
+
           return schedules;
         })
       );

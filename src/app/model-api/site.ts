@@ -1,5 +1,4 @@
 import {Dept} from './dept';
-import {Schedule} from './schedule';
 
 export class Site {
   id: number;
