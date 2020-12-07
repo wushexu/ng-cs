@@ -32,7 +32,6 @@ export class BasicQuery {
 
     const filter: ScheduleFilter = context.filter;
 
-    const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         if (!this.selectedDate) {
@@ -44,11 +43,8 @@ export class BasicQuery {
         if (!this.selectedWeek) {
           return false;
         }
-        if (!term) {
-          return false;
-        }
-        filter.termYear = term.termYear;
-        filter.termMonth = term.termMonth;
+        // filter.termId = this.selectedWeek.termId;
+        filter.termId = this.selectedWeek.term.id;
         filter.weekno = this.selectedWeek.weekno;
         return true;
       case 'month':
@@ -59,11 +55,10 @@ export class BasicQuery {
         filter.yearMonth = this.selectedMonth;
         return true;
       case 'term':
-        if (!term) {
+        if (!this.selectedTerm) {
           return false;
         }
-        filter.termYear = term.termYear;
-        filter.termMonth = term.termMonth;
+        filter.termId = this.selectedTerm.id;
         return true;
       default:
         return false;
@@ -71,7 +66,6 @@ export class BasicQuery {
   }
 
   evalTitleTimePart(titleParts: string[], context: ScheduleContext): void {
-    const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         const dateDim = DateDim.fromMoment(this.selectedDate);
@@ -86,7 +80,7 @@ export class BasicQuery {
         titleParts.push(`${monthDim.year}年${monthDim.month}月`);
         return;
       case 'term':
-        titleParts.push(term.name);
+        titleParts.push(this.selectedTerm.name);
         return;
     }
   }

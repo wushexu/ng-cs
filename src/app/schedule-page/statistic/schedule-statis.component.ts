@@ -4,11 +4,13 @@ import * as moment from 'moment';
 
 import {MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
-import {ScheduleFilter} from '../../model-app/schedule-params';
+import {ScheduleFilter, StatisticParams} from '../../model-app/schedule-params';
 import {TimeScope} from '../../model-app/schedule-query-def';
-import {Schedule} from '../../model-api/schedule';
 import {CompleteQuery} from '../common/complete-query';
 import {ScheduleContext} from '../../model-app/schedule-context';
+import {ScheduleGrouping} from '../../model-app/schedule-grouping';
+import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
+import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis';
 
 
 declare type OutputStyle = 'table' | 'calendar-chart' | 'chart';
@@ -24,21 +26,11 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   // monthSchedule: MonthSchedule;
   // termSchedule: TermSchedule;
 
+  flatSchedulesStatis: FlatSchedulesStatis;
+
   outputStyle: OutputStyle = 'table';
 
-  groupByDept = false;
-  groupByMajor = false;
-  groupByClassYear = false;
-  groupByClass = false;
-  groupByClassroom = false;
-  groupByTeacher = false;
-  groupByCourse = false;
-  groupByCourseCate = false;
-  groupByLesson = false;
-  groupByTrainingType = false;
-  groupByTime = false;
-
-  timeGroupBy: 'date' | 'week' | 'month' | 'term' = 'date';
+  grouping: ScheduleGrouping = new ScheduleGrouping();
 
 
   constructor(private scheduleService: ScheduleService) {
@@ -53,6 +45,11 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
   async execute() {
 
+    if (!this.grouping.anySelected()) {
+      alert('请选择至少一个统计维度');
+      return;
+    }
+
     const context: ScheduleContext = this.setupContext();
     if (!context) {
       return;
@@ -60,15 +57,32 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
     const filter: ScheduleFilter = context.filter;
 
-    // const schedules = await this.scheduleService.querySchedules(filter).toPromise();
+    const groupBy = context.grouping.generateGroupBy();
+    const statisticParams: StatisticParams = new StatisticParams();
+    statisticParams.groupBy = groupBy;
 
-    // await this.setupSchedules(context, schedules);
+    const schedules = await this.scheduleService.statisticSchedules(filter, statisticParams).toPromise();
+
+    await this.setupSchedules(context, schedules);
   }
 
 
-  async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
+  setupContext(): ScheduleContext | null {
+    const context: ScheduleContext = super.setupContext();
+    if (context) {
+      context.grouping = this.grouping;
+    }
+
+    return context;
+  }
+
+  async setupSchedules(context: ScheduleContext, schedules: ScheduleAggregated[]) {
 
     console.log(context);
+
+    const schedulesStatis = new FlatSchedulesStatis();
+    schedulesStatis.schedules = schedules;
+    schedulesStatis.context = context;
 
     const titleParts: string[] = [];
 
@@ -77,32 +91,9 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
     const titleMain = titleParts.join(' ');
 
-    // flatSchedules.title = `${titleMain} 课表统计`;
+    schedulesStatis.title = `${titleMain} 课表统计`;
 
-  }
-
-  clearGroupBys() {
-    this.groupByDept = false;
-    this.groupByMajor = false;
-    this.groupByClassYear = false;
-    this.groupByClass = false;
-    this.groupByClassroom = false;
-    this.groupByTeacher = false;
-    this.groupByCourse = false;
-    this.groupByCourseCate = false;
-    this.groupByLesson = false;
-    this.groupByTrainingType = false;
-    this.groupByTime = false;
-  }
-
-  groupByTeacherOnly() {
-    this.clearGroupBys();
-    this.groupByTeacher = true;
-  }
-
-  groupByClassroomOnly() {
-    this.clearGroupBys();
-    this.groupByClassroom = true;
+    this.flatSchedulesStatis = schedulesStatis;
   }
 
   ensureOutputStyle(outputStyles: OutputStyle[]): void {

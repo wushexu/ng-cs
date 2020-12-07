@@ -30,7 +30,6 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   oriDisplayedColumns = ['date', 'class', 'classroom', 'teacher', 'lessonIndex', 'course', 'trainingType'];
 
-  // lessonDetail
   displayedColumns = this.oriDisplayedColumns;
 
   ngOnInit() {
@@ -44,11 +43,11 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
   }
 
   classTooltip(theClass: Class) {
-    return Schedule.classTooltip(theClass);
+    return Class.classTooltip(theClass);
   }
 
   courseTooltip(course: Course): string {
-    return Schedule.courseTooltip(course);
+    return Course.courseTooltip(course);
   }
 
   classroomTooltip(room: Classroom): string {

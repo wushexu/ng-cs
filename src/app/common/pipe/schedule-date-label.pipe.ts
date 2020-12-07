@@ -8,6 +8,9 @@ import {Schedule} from '../../model-api/schedule';
 export class ScheduleDateLabelPipe implements PipeTransform {
 
   transform(schedule: Schedule): string {
+    if (!schedule.date) {
+      return '';
+    }
     const dateDim = new DateDim(schedule.date, schedule.dayOfWeek);
     DateDim.setDateLabels(dateDim);
     return `${dateDim.dateLabel}（${dateDim.weekdayLabel}）`;

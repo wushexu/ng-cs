@@ -2,6 +2,8 @@ import {Course} from './course';
 import {Teacher} from './teacher';
 import {Class} from './class';
 import {Site} from './site';
+import {Dept} from './dept';
+import {Major} from './major';
 
 export class ScheduleAggregated {
   termId?: string;
@@ -36,6 +38,8 @@ export class ScheduleAggregated {
   // local
 
   site?: Site;
+  dept?: Dept;
+  major?: Major;
   theClass?: Class;
   course?: Course;
   teacher?: Teacher;

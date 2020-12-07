@@ -3,6 +3,8 @@ import * as moment from 'moment';
 
 import {DATE_FORMAT} from '../config';
 
+const WeekDaysZh = ['日', '一', '二', '三', '四', '五', '六'];
+
 export class DateDim {
 
   date: string;
@@ -33,10 +35,20 @@ export class DateDim {
   }
 
   static setDateLabels(dateDim: DateDim): void {
-    // const mom = moment(dateDim.date);
-    // dateDim.dateLabel = mom.format(...);
+    if (dateDim.dayOfWeek) {
+      dateDim.weekdayLabel = WeekDaysZh[dateDim.dayOfWeek % 7];
+    }
+    if (!dateDim.date) {
+      return;
+    }
+
     dateDim.dateLabel = dateDim.date;
-    dateDim.weekdayLabel = ['日', '一', '二', '三', '四', '五', '六'][dateDim.dayOfWeek % 7];
+
+    if (!dateDim.dayOfWeek) {
+      const mom = moment(dateDim.date);
+      dateDim.dayOfWeek = mom.day();
+      dateDim.weekdayLabel = WeekDaysZh[dateDim.dayOfWeek % 7];
+    }
   }
 
 }

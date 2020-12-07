@@ -7,10 +7,12 @@ import {Course} from '../model-api/course';
 import {Dept} from '../model-api/dept';
 import {Major} from '../model-api/major';
 import {ScheduleFilter} from './schedule-params';
+import {ScheduleGrouping} from './schedule-grouping';
 
 export class ScheduleContext {
 
   filter: ScheduleFilter;
+  grouping?: ScheduleGrouping;
 
   dept?: Dept;
   major?: Major;
@@ -18,6 +20,6 @@ export class ScheduleContext {
   course?: Course;
   teacher?: Teacher;
   site?: Site;
-  monthDim?: MonthDim;
+  // monthDim?: MonthDim;
   term?: Term;
 }

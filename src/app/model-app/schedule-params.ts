@@ -27,7 +27,7 @@ export class ScheduleFilter {
   courseCate?: string;
 }
 
-export class ScheduleStatisticParams extends ScheduleFilter {
+export class StatisticParams {
 
   groupBy: string;
 }

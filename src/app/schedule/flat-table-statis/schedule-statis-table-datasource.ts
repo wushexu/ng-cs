@@ -1,8 +1,8 @@
-import {Schedule} from '../../model-api/schedule';
 import {TableDatasource} from '../../common/table-datasource';
+import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 
 
-export class ScheduleTableDatasource extends TableDatasource<Schedule> {
+export class ScheduleStatisTableDatasource extends TableDatasource<ScheduleAggregated> {
 
   constructor() {
     super();

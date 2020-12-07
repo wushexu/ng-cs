@@ -108,38 +108,35 @@
 
         <div class="group-by-dimensions-row">
 
-          <mat-checkbox [(ngModel)]="groupByDept">系部</mat-checkbox>
-          <mat-checkbox [(ngModel)]="groupByMajor">专业</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByDept">系部</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByMajor">专业</mat-checkbox>
 
           <span class="group-by-dimension-divider">&nbsp;</span>
 
-          <mat-checkbox [(ngModel)]="groupByClassYear">入学年</mat-checkbox>
-          <mat-checkbox [(ngModel)]="groupByClass">班级</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByClassYear">入学年</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByClass">班级</mat-checkbox>
 
-          <span class="group-by-dimension-divider">&nbsp;</span>
-
-          <mat-checkbox [(ngModel)]="groupByLesson">节次</mat-checkbox>
         </div>
 
         <div class="group-by-dimensions-row">
 
-          <mat-checkbox [(ngModel)]="groupByClassroom">教室</mat-checkbox>
-          <mat-checkbox [(ngModel)]="groupByTeacher">教师</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByClassroom">教室</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByTeacher">教师</mat-checkbox>
 
           <span class="group-by-dimension-divider">&nbsp;</span>
 
-          <mat-checkbox [(ngModel)]="groupByCourseCate">课程类别</mat-checkbox>
-          <mat-checkbox [(ngModel)]="groupByCourse">课程</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByCourseCate">课程类别</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByCourse">课程</mat-checkbox>
 
           <span class="group-by-dimension-divider">&nbsp;</span>
 
-          <mat-checkbox [(ngModel)]="groupByTrainingType">实训</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByTrainingType">实训</mat-checkbox>
         </div>
 
         <div class="group-by-dimensions-row">
 
-          <mat-checkbox [(ngModel)]="groupByTime">时间</mat-checkbox>
-          <mat-radio-group [(ngModel)]="timeGroupBy" [disabled]="!groupByTime">
+          <mat-checkbox [(ngModel)]="grouping.groupByTime">时间</mat-checkbox>
+          <mat-radio-group [(ngModel)]="grouping.timeGroupBy" [disabled]="!grouping.groupByTime">
             <mat-radio-button value="date">按日</mat-radio-button>
             <mat-radio-button value="week">按周</mat-radio-button>
             <mat-radio-button value="month">按月</mat-radio-button>
@@ -148,9 +145,9 @@
         </div>
 
         <div class="group-by-dimensions-row">
-          <button mat-button (click)="clearGroupBys()">重置</button>
-          <button mat-button (click)="groupByTeacherOnly()">仅按教师</button>
-          <button mat-button (click)="groupByClassroomOnly()">仅按教室</button>
+          <button mat-button (click)="grouping.clearGroupBys()">重置</button>
+          <button mat-button (click)="grouping.groupByTeacherOnly()">仅按教师</button>
+          <button mat-button (click)="grouping.groupByClassroomOnly()">仅按教室</button>
         </div>
 
       </div>
@@ -180,6 +177,9 @@
   </div>
 
   <div class="schedule-tables">
+
+    <app-flat-table-schedule-statis [flatSchedules]="flatSchedulesStatis"
+                                    [showTitle]="showTitle"></app-flat-table-schedule-statis>
 
   </div>
 

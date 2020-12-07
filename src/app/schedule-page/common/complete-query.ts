@@ -43,7 +43,7 @@ export class CompleteQuery extends BasicQuery {
 
     const context = new ScheduleContext();
 
-    const filter: ScheduleFilter = new ScheduleFilter();
+    const filter = new ScheduleFilter();
     context.filter = filter;
 
     if (this.majorDimEnabled) {
@@ -116,7 +116,9 @@ export class CompleteQuery extends BasicQuery {
 
 
   evalTitleTimePart(titleParts: string[], context: ScheduleContext): void {
-    super.evalTitleTimePart(titleParts, context);
+    if (this.timeDimEnabled) {
+      super.evalTitleTimePart(titleParts, context);
+    }
 
     if (context.filter.lesson) {
       const liCn = ['一', '二', '三', '四', '五'][context.filter.lesson - 1];

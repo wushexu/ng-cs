@@ -35,7 +35,16 @@ export class TermWeekService {
       return of(term.weeks);
     }
     const url = `${this.weeksBaseUrl}?termYear=${term.termYear}&termMonth=${term.termMonth}`;
-    return this.http.get<Week[]>(url).pipe(tap(ws => term.weeks = ws));
+    // const url = `${this.weeksBaseUrl}?termId=${term.id}`;
+    return this.http.get<Week[]>(url)
+      .pipe(
+        tap(weeks => {
+          term.weeks = weeks;
+          for (const week of weeks) {
+            week.term = term;
+          }
+        })
+      );
   }
 
   getMonthWeeks(term: Term, yearMonth: string): Observable<Week[]> {

@@ -2,11 +2,41 @@
   <h2 class="ui center aligned header">{{flatSchedules?.title}}</h2>
 </div>
 
-<table mat-table class="full-width-table ui unstackable table" matSort>
+<table mat-table class="full-width-table ui unstackable table" matSort [hidden]="!flatSchedules">
 
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>日期</th>
     <td mat-cell *matCellDef="let row">{{row | scheduleDate}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="term">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>学期</th>
+    <td mat-cell *matCellDef="let row">{{row.termId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="weekno">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>学周</th>
+    <td mat-cell *matCellDef="let row">{{row.weekno}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="yearMonth">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>月份</th>
+    <td mat-cell *matCellDef="let row">{{row.yearMonth}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dept">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>系部</th>
+    <td mat-cell *matCellDef="let row">{{row.dept?.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="major">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>专业</th>
+    <td mat-cell *matCellDef="let row">{{row.major?.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="classYear">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>入学年</th>
+    <td mat-cell *matCellDef="let row">{{row.classYear}}</td>
   </ng-container>
 
   <ng-container matColumnDef="class">
@@ -32,9 +62,14 @@
     <td mat-cell *matCellDef="let row">{{row.teacher?.name}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="lessonIndex">
+  <ng-container matColumnDef="timeStart">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>节次</th>
     <td mat-cell *matCellDef="let row">{{row.timeStart}}-{{row.timeEnd}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="courseCate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>课程类别</th>
+    <td mat-cell *matCellDef="let row">{{row.courseCate}}</td>
   </ng-container>
 
   <ng-container matColumnDef="course">
@@ -54,6 +89,16 @@
           (row.trainingType === 'E' ? '企业实训' : '')
       )}}
     </td>
+  </ng-container>
+
+  <ng-container matColumnDef="recordCount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>排课次数</th>
+    <td mat-cell *matCellDef="let row">{{row.recordCount}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lessonCount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>节数</th>
+    <td mat-cell *matCellDef="let row">{{row.recordCount}}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
