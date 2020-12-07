@@ -22,11 +22,10 @@ declare type OutputStyle = 'table' | 'calendar-chart' | 'chart';
 })
 export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
-  // weekSchedule: WeekSchedule;
-  // monthSchedule: MonthSchedule;
-  // termSchedule: TermSchedule;
+  schedulesStatis: FlatSchedulesStatis;
 
-  flatSchedulesStatis: FlatSchedulesStatis;
+  monthStatis: FlatSchedulesStatis;
+  termStatis: FlatSchedulesStatis;
 
   outputStyle: OutputStyle = 'table';
 
@@ -93,7 +92,17 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
     schedulesStatis.title = `${titleMain} 课表统计`;
 
-    this.flatSchedulesStatis = schedulesStatis;
+    this.schedulesStatis = schedulesStatis;
+
+    if (this.timeScope === 'month') {
+      if (context.grouping.isGroupByDateOnly()) {
+        this.monthStatis = schedulesStatis;
+      }
+    } else if (this.timeScope === 'term') {
+      if (context.grouping.isGroupByDateOnly()) {
+        this.termStatis = schedulesStatis;
+      }
+    }
   }
 
   ensureOutputStyle(outputStyles: OutputStyle[]): void {

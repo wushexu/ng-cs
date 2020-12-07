@@ -43,9 +43,9 @@ export class BasicQuery {
         if (!this.selectedWeek) {
           return false;
         }
-        // filter.termId = this.selectedWeek.termId;
-        filter.termId = this.selectedWeek.term.id;
+        filter.termId = this.selectedWeek.termId;
         filter.weekno = this.selectedWeek.weekno;
+        context.week = this.selectedWeek;
         return true;
       case 'month':
         if (!this.selectedMonth) {
@@ -53,12 +53,14 @@ export class BasicQuery {
         }
         // YYYY-MM
         filter.yearMonth = this.selectedMonth;
+        context.yearMonth = this.selectedMonth;
         return true;
       case 'term':
         if (!this.selectedTerm) {
           return false;
         }
         filter.termId = this.selectedTerm.id;
+        context.term = this.selectedTerm;
         return true;
       default:
         return false;

@@ -1,0 +1,117 @@
+<div *ngIf="showTitle&&schedulesStatis?.title" class="schedule-table-title">
+  <h2 class="ui center aligned header">{{schedulesStatis?.title}}</h2>
+</div>
+
+<div [hidden]="!schedulesStatis">
+  <table mat-table class="full-width-table ui unstackable table" matSort>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>日期</th>
+      <td mat-cell *matCellDef="let row">{{row | scheduleDate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="term">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>学期</th>
+      <td mat-cell *matCellDef="let row">{{row.termId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weekno">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>学周</th>
+      <td mat-cell *matCellDef="let row">{{row.weekno}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="yearMonth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>月份</th>
+      <td mat-cell *matCellDef="let row">{{row.yearMonth}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dept">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>系部</th>
+      <td mat-cell *matCellDef="let row">{{row.dept?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="major">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>专业</th>
+      <td mat-cell *matCellDef="let row">{{row.major?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="classYear">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>入学年</th>
+      <td mat-cell *matCellDef="let row">{{row.classYear}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>班级</th>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="classTooltip(row.theClass)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.theClass?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="classroom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>教室</th>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="classroomTooltip(row.site)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.site?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>教师</th>
+      <td mat-cell *matCellDef="let row">{{row.teacher?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="timeStart">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>节次</th>
+      <td mat-cell *matCellDef="let row">{{row.timeStart}}-{{row.timeEnd}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseCate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>课程类别</th>
+      <td mat-cell *matCellDef="let row">{{row.courseCate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="course">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>课程</th>
+      <td mat-cell *matCellDef="let row"
+          [matTooltip]="courseTooltip(row.course)"
+          matTooltipShowDelay="200"
+          matTooltipHideDelay="200"
+          matTooltipClass="multi-lines-tooltip">{{row.course?.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="trainingType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>实训</th>
+      <td mat-cell *matCellDef="let row" [class.training-class]="row.trainingType!=='N'">
+        {{row.trainingType === 'N' ? '理论课' :
+        (row.trainingType === 'S' ? '实训' :
+            (row.trainingType === 'E' ? '企业实训' : '')
+        )}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="recordCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>排课次数</th>
+      <td mat-cell *matCellDef="let row">{{row.recordCount}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lessonCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>节数</th>
+      <td mat-cell *matCellDef="let row">{{row.recordCount}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="dataSource?.data.length"
+                 [pageIndex]="0"
+                 [pageSize]="20"
+                 [pageSizeOptions]="[10, 20, 50, 100]"
+                 class="mat-elevation-z1">
+  </mat-paginator>
+
+</div>

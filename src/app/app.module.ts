@@ -56,7 +56,9 @@ import {CourseCateSelectComponent} from './common/course-cate-select/course-cate
 import { LessonSelectComponent } from './common/lesson-select/lesson-select.component';
 import {CourseService} from './service/course.service';
 import {DeptMajorService} from './service/dept-major.service';
-import {FlatTableScheduleStatisComponent} from './schedule/flat-table-statis/flat-table-schedule-statis.component';
+import {FlatTableStatisComponent} from './schedule/flat-table-statis/flat-table-statis.component';
+import {MonthStatisChartComponent} from './schedule/month-statis-chart/month-statis-chart.component';
+import {TermStatisChartComponent} from './schedule/term-statis-chart/term-statis-chart.component';
 
 @NgModule({
   imports: [
@@ -107,7 +109,9 @@ import {FlatTableScheduleStatisComponent} from './schedule/flat-table-statis/fla
     CourseSelectComponent,
     CourseCateSelectComponent,
     LessonSelectComponent,
-    FlatTableScheduleStatisComponent
+    FlatTableStatisComponent,
+    MonthStatisChartComponent,
+    TermStatisChartComponent
   ],
   providers: [
     ScheduleService,

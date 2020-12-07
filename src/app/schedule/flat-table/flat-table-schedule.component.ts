@@ -34,6 +34,7 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   ngOnInit() {
     this.dataSource = new ScheduleTableDatasource();
+    this.setupData();
   }
 
   ngAfterViewInit() {
@@ -56,28 +57,35 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.flatSchedules) {
-      if (this.flatSchedules) {
-        const context: ScheduleContext = this.flatSchedules.context;
-        const filter: ScheduleFilter = context.filter;
-        this.displayedColumns = this.oriDisplayedColumns
-          .filter(column => {
-            switch (column) {
-              case 'date':
-                return !filter.date;
-              case 'class':
-                return !context.theClass;
-              case 'classroom':
-                return !context.site;
-              case 'teacher':
-                return !context.teacher;
-              case 'course':
-                return !context.course;
-            }
-            return true;
-          });
-
-        this.dataSource.setData(this.flatSchedules.schedules);
-      }
+      this.setupData();
     }
+  }
+
+  setupData() {
+
+    if (!this.flatSchedules || !this.dataSource) {
+      return;
+    }
+
+    const context: ScheduleContext = this.flatSchedules.context;
+    const filter: ScheduleFilter = context.filter;
+    this.displayedColumns = this.oriDisplayedColumns
+      .filter(column => {
+        switch (column) {
+          case 'date':
+            return !filter.date;
+          case 'class':
+            return !context.theClass;
+          case 'classroom':
+            return !context.site;
+          case 'teacher':
+            return !context.teacher;
+          case 'course':
+            return !context.course;
+        }
+        return true;
+      });
+
+    this.dataSource.setData(this.flatSchedules.schedules);
   }
 }

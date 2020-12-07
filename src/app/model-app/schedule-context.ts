@@ -1,13 +1,13 @@
 import {Class} from '../model-api/class';
 import {Teacher} from '../model-api/teacher';
 import {Site} from '../model-api/site';
-import {MonthDim} from './month-dim';
 import {Term} from '../model-api/term';
 import {Course} from '../model-api/course';
 import {Dept} from '../model-api/dept';
 import {Major} from '../model-api/major';
 import {ScheduleFilter} from './schedule-params';
 import {ScheduleGrouping} from './schedule-grouping';
+import {Week} from '../model-api/week';
 
 export class ScheduleContext {
 
@@ -20,6 +20,8 @@ export class ScheduleContext {
   course?: Course;
   teacher?: Teacher;
   site?: Site;
-  // monthDim?: MonthDim;
+
+  yearMonth?: string;
+  week?: Week;
   term?: Term;
 }

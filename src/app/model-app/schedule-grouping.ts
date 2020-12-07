@@ -1,3 +1,5 @@
+import {TimeScope} from './schedule-query-def';
+
 export class ScheduleGrouping {
 
   groupByDept = false;
@@ -12,7 +14,7 @@ export class ScheduleGrouping {
   groupByTrainingType = false;
   groupByTime = false;
 
-  timeGroupBy: 'date' | 'week' | 'month' | 'term' = 'date';
+  timeGroupBy: TimeScope = 'day';
 
   clearGroupBys() {
     this.groupByDept = false;
@@ -36,6 +38,26 @@ export class ScheduleGrouping {
   groupByClassroomOnly() {
     this.clearGroupBys();
     this.groupByClassroom = true;
+  }
+
+  groupByDateOnly() {
+    this.clearGroupBys();
+    this.groupByTime = true;
+    this.timeGroupBy = 'day';
+  }
+
+  isGroupByDateOnly(): boolean {
+    return !this.groupByDept
+      && !this.groupByMajor
+      && !this.groupByClassYear
+      && !this.groupByClass
+      && !this.groupByClassroom
+      && !this.groupByTeacher
+      && !this.groupByCourse
+      && !this.groupByCourseCate
+      && !this.groupByTrainingType
+      && this.groupByTime
+      && this.timeGroupBy === 'day';
   }
 
   generateGroupBy(): string {
@@ -72,7 +94,7 @@ export class ScheduleGrouping {
     }
     if (this.groupByTime) {
       const timeGroupBy = this.timeGroupBy;
-      if (timeGroupBy === 'date') {
+      if (timeGroupBy === 'day') {
         fields.push('date');
       } else if (timeGroupBy === 'week') {
         fields.push('termId');

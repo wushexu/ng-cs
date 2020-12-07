@@ -26,7 +26,7 @@
       <mat-checkbox [(ngModel)]="trainingTypeDimEnabled">实训</mat-checkbox>
       <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
       <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
-      <mat-checkbox [(ngModel)]="timeDimEnabled">时间</mat-checkbox>
+      <mat-checkbox [(ngModel)]="timeDimEnabled" disabled>时间</mat-checkbox>
     </div>
 
     <mat-divider class="dimensions-divider"></mat-divider>
@@ -137,7 +137,7 @@
 
           <mat-checkbox [(ngModel)]="grouping.groupByTime">时间</mat-checkbox>
           <mat-radio-group [(ngModel)]="grouping.timeGroupBy" [disabled]="!grouping.groupByTime">
-            <mat-radio-button value="date">按日</mat-radio-button>
+            <mat-radio-button value="day">按日</mat-radio-button>
             <mat-radio-button value="week">按周</mat-radio-button>
             <mat-radio-button value="month">按月</mat-radio-button>
             <mat-radio-button value="term">按学期</mat-radio-button>
@@ -148,6 +148,7 @@
           <button mat-button (click)="grouping.clearGroupBys()">重置</button>
           <button mat-button (click)="grouping.groupByTeacherOnly()">仅按教师</button>
           <button mat-button (click)="grouping.groupByClassroomOnly()">仅按教室</button>
+          <button mat-button (click)="grouping.groupByDateOnly()">仅按日期</button>
         </div>
 
       </div>
@@ -159,9 +160,19 @@
       <div>
         <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
           <mat-radio-button value="table">表格</mat-radio-button>
-          <mat-radio-button value="calendar-chart" [disabled]="timeScope==='day'||timeScope==='week'">日历
+          <mat-radio-button value="calendar-chart"
+                            [disabled]="(timeScope!=='month'&&timeScope!=='term')||!grouping.isGroupByDateOnly()"
+                            matTooltip="当仅按日期统计，且时间筛选为月/学期时，可以显示日历图表"
+                            matTooltipShowDelay="200"
+                            matTooltipHideDelay="200"
+                            matTooltipClass="multi-lines-tooltip">日历图表
           </mat-radio-button>
-          <mat-radio-button value="chart">其他图表</mat-radio-button>
+          <mat-radio-button value="chart"
+                            matTooltip="当不超过两个统计维度时，可以显示折线图、柱状图等"
+                            matTooltipShowDelay="200"
+                            matTooltipHideDelay="200"
+                            matTooltipClass="multi-lines-tooltip">其他图表
+          </mat-radio-button>
         </mat-radio-group>
 
         <mat-checkbox class="pad-right" [(ngModel)]="showTitle">标题</mat-checkbox>
@@ -178,8 +189,27 @@
 
   <div class="schedule-tables">
 
-    <app-flat-table-schedule-statis [flatSchedules]="flatSchedulesStatis"
-                                    [showTitle]="showTitle"></app-flat-table-schedule-statis>
+    <ng-template [ngIf]="outputStyle==='table'">
+      <app-flat-table-statis [schedulesStatis]="schedulesStatis" [showTitle]="showTitle"
+                             *ngIf="schedulesStatis"></app-flat-table-statis>
+    </ng-template>
+
+    <ng-template [ngIf]="outputStyle==='calendar-chart'">
+
+      <ng-template [ngIf]="timeScope==='month'">
+        <app-month-statis-chart [monthStatis]="monthStatis" [showTitle]="showTitle"
+                                *ngIf="monthStatis"></app-month-statis-chart>
+      </ng-template>
+
+      <ng-template [ngIf]="timeScope==='term'">
+        <app-term-statis-chart [termStatis]="termStatis" [showTitle]="showTitle"
+                               *ngIf="termStatis"></app-term-statis-chart>
+      </ng-template>
+
+    </ng-template>
+
+    <ng-template [ngIf]="outputStyle==='chart'">
+    </ng-template>
 
   </div>
 
