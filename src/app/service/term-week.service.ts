@@ -34,8 +34,7 @@ export class TermWeekService {
     if (term.weeks) {
       return of(term.weeks);
     }
-    const url = `${this.weeksBaseUrl}?termYear=${term.termYear}&termMonth=${term.termMonth}`;
-    // const url = `${this.weeksBaseUrl}?termId=${term.id}`;
+    const url = `${this.weeksBaseUrl}?termId=${term.id}`;
     return this.http.get<Week[]>(url)
       .pipe(
         tap(weeks => {

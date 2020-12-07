@@ -23,6 +23,7 @@ export class ClassYearSelectComponent implements OnInit {
     this.service.getClasses().subscribe(classes => {
       this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
       this.selectedYear = this.years[this.years.length - 1];
+      this.selected.emit(this.selectedYear);
     });
   }
 

@@ -11,6 +11,7 @@ import {ScheduleContext} from '../../model-app/schedule-context';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis';
+import {TermWeekService} from '../../service/term-week.service';
 
 
 declare type OutputStyle = 'table' | 'calendar-chart' | 'chart';
@@ -32,7 +33,8 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   grouping: ScheduleGrouping = new ScheduleGrouping();
 
 
-  constructor(private scheduleService: ScheduleService) {
+  constructor(private scheduleService: ScheduleService,
+              private termWeekService: TermWeekService) {
     super();
   }
 
@@ -100,6 +102,9 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
       }
     } else if (this.timeScope === 'term') {
       if (context.grouping.isGroupByDateOnly()) {
+        if (!context.term.weeks) {
+          context.term.weeks = await this.termWeekService.getTermWeeks(context.term).toPromise();
+        }
         this.termStatis = schedulesStatis;
       }
     }
