@@ -30,7 +30,7 @@ export class FlatTableStatisComponent implements AfterViewInit, OnInit, OnChange
 
   // 'date', 'term', 'weekno', 'yearMonth',
   // 'dept', 'major', 'classYear', 'class', 'classroom', 'teacher', 'timeStart',
-  // 'courseCate', 'course', 'trainingType',
+  // 'courseCate', 'course', 'courseType',
   // 'recordCount', 'lessonCount'
   oriDisplayedColumns = ['date', 'lessonCount'];
 
@@ -112,8 +112,8 @@ export class FlatTableStatisComponent implements AfterViewInit, OnInit, OnChange
     if (grouping.groupByCourse) {
       displayedColumns.push('course');
     }
-    if (grouping.groupByTrainingType) {
-      displayedColumns.push('trainingType');
+    if (grouping.groupByCourseType) {
+      displayedColumns.push('courseType');
     }
     // displayedColumns.push('recordCount');
     displayedColumns.push('lessonCount');

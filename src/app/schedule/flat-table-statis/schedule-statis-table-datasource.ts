@@ -9,6 +9,7 @@ export class ScheduleStatisTableDatasource extends TableDatasource<ScheduleAggre
 
     this.compareFieldMappers = {
       // date: s => s.date,
+      // courseType: s => s.courseType,
       // trainingType: s => s.trainingType,
       term: s => s.termId,
       lessonIndex: s => s.timeStart,

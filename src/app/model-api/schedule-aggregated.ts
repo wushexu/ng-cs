@@ -4,6 +4,7 @@ import {Class} from './class';
 import {Site} from './site';
 import {Dept} from './dept';
 import {Major} from './major';
+import {Term} from './term';
 
 export class ScheduleAggregated {
   termId?: string;
@@ -14,7 +15,8 @@ export class ScheduleAggregated {
 
   timeStart?: number;
   timeEnd?: number;
-  trainingType?: string; // N: 理论课；S: 校内实训；E: 企业实训
+  courseType: string;
+  trainingType?: string;
 
   siteId?: number;
   classId?: number;
@@ -37,6 +39,7 @@ export class ScheduleAggregated {
 
   // local
 
+  term?: Term;
   site?: Site;
   dept?: Dept;
   major?: Major;

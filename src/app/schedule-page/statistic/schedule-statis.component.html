@@ -23,7 +23,7 @@
       <mat-checkbox [(ngModel)]="classDimEnabled">班级</mat-checkbox>
       <mat-checkbox [(ngModel)]="classroomDimEnabled">教室</mat-checkbox>
       <mat-checkbox [(ngModel)]="courseDimEnabled">课程</mat-checkbox>
-      <mat-checkbox [(ngModel)]="trainingTypeDimEnabled">实训</mat-checkbox>
+      <mat-checkbox [(ngModel)]="courseTypeDimEnabled">实训</mat-checkbox>
       <mat-checkbox [(ngModel)]="teacherDimEnabled">教师</mat-checkbox>
       <mat-checkbox [(ngModel)]="lessonDimEnabled">节次</mat-checkbox>
       <mat-checkbox [(ngModel)]="timeDimEnabled" disabled>时间</mat-checkbox>
@@ -63,13 +63,13 @@
         <app-course-select (selected)="courseSelected($event)" *ngIf="courseDim==='course'"></app-course-select>
       </div>
 
-      <div fxLayout fxLayoutAlign="start center" *ngIf="trainingTypeDimEnabled"
+      <div fxLayout fxLayoutAlign="start center" *ngIf="courseTypeDimEnabled"
            class="dimension-condition training-type">
         <span class="primary-color dimension-label">实训</span>
-        <mat-radio-group [(ngModel)]="selectedTrainingType">
+        <mat-radio-group [(ngModel)]="selectedCourseType">
           <mat-radio-button value="">不限</mat-radio-button>
           <mat-radio-button value="N">理论课</mat-radio-button>
-          <mat-radio-button value="S,E">实训课</mat-radio-button>
+          <mat-radio-button value="T">实训课</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -130,7 +130,7 @@
 
           <span class="group-by-dimension-divider">&nbsp;</span>
 
-          <mat-checkbox [(ngModel)]="grouping.groupByTrainingType">实训</mat-checkbox>
+          <mat-checkbox [(ngModel)]="grouping.groupByCourseType">理论/实训</mat-checkbox>
         </div>
 
         <div class="group-by-dimensions-row">

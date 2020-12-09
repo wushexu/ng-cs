@@ -79,7 +79,7 @@ export class DaySchedule extends ScheduleDatasource {
     const lf = '<br>';
     let text = '';
     for (const {schedule} of daySchedule.noPlaceholderLessons) {
-      const {timeStart, timeEnd, course, theClass, site, teacher, trainingType} = schedule;
+      const {timeStart, timeEnd, course, theClass, site, teacher, courseType, trainingType} = schedule;
       const ampm = timeStart < 5 ? '（上午）' : '（下午）';
       text += `${ampm}${timeStart}-${timeEnd}${lf}`;
       if (!context.course && course) {
@@ -89,7 +89,7 @@ export class DaySchedule extends ScheduleDatasource {
         text += `${indent}${theClass.name}${lf}`;
       }
       if (!context.site) {
-        if (site || trainingType !== 'N') {
+        if (site || courseType === 'T') {
           let siteText = site ? site.name : '';
           if (trainingType === 'S') {
             siteText = '（实训）' + siteText;

@@ -1,5 +1,5 @@
 <div *ngIf="schedule" class="lesson-info" fxLayoutAlign="center center">
-  <div class="ui list" [class.training-class]="schedule.trainingType!=='N'">
+  <div class="ui list" [class.training-class]="schedule.courseType==='T'">
     <div class="item course-name"
          [matTooltip]="courseTooltip()"
          matTooltipShowDelay="200"

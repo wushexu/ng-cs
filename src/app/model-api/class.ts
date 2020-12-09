@@ -19,9 +19,12 @@ export class Class {
     if (!theClass) {
       return null;
     }
-    const {dept, major} = theClass;
+    const {size, dept, major} = theClass;
 
     const tips = [];
+    if (size > 0) {
+      tips.push(`人数：${size}`);
+    }
     if (dept) {
       tips.push(`系部：${dept.name}`);
     }

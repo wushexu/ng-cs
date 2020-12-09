@@ -28,7 +28,8 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   dataSource: ScheduleTableDatasource;
 
-  oriDisplayedColumns = ['date', 'class', 'classroom', 'teacher', 'lessonIndex', 'course', 'trainingType'];
+
+  oriDisplayedColumns = ['date', 'class', 'classroom', 'teacher', 'lessonIndex', 'course', 'courseType'];
 
   displayedColumns = this.oriDisplayedColumns;
 

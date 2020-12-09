@@ -127,6 +127,9 @@ export class ScheduleService {
                sitesMap]) => {
 
           for (const schedule of schedules) {
+            if (schedule.termId) {
+              //
+            }
             if (schedule.classId) {
               schedule.theClass = classesMap.get(schedule.classId);
             }

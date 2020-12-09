@@ -129,6 +129,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   }
 
   outputStyleChanged() {
+    this.schedulesStatis = null;
     // console.log(this.outputStyle);
   }
 

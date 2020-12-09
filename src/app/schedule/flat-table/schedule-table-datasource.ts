@@ -9,6 +9,7 @@ export class ScheduleTableDatasource extends TableDatasource<Schedule> {
 
     this.compareFieldMappers = {
       // date: s => s.date,
+      // courseType: s => s.courseType,
       // trainingType: s => s.trainingType,
       lessonIndex: s => s.timeStart,
       class: s => s.theClass ? s.theClass.name : 0,

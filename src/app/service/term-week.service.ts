@@ -46,6 +46,21 @@ export class TermWeekService {
       );
   }
 
+
+  findTermByMonth(yearMonth: string): Observable<Term> {
+    return this.getTerms().pipe(map(terms => {
+      return terms.find(term => {
+        // YYYY-MM-DD
+        if (!term.firstDay || !term.lastDay) {
+          return false;
+        }
+        const firstMonth = term.firstDay.substr(0, 7);
+        const lastMonth = term.lastDay.substr(0, 7);
+        return yearMonth >= firstMonth && yearMonth <= lastMonth;
+      });
+    }));
+  }
+
   getMonthWeeks(term: Term, yearMonth: string): Observable<Week[]> {
     return this.getTermWeeks(term).pipe(
       map(weeks => {

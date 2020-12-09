@@ -182,7 +182,6 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
     this.evalTitleTimePart(titleParts, context);
     const title = `${titlePersPart} ${titleParts.join(' ')} 课表`;
 
-    const term = this.selectedTerm;
     switch (this.timeScope) {
       case 'day':
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
@@ -197,13 +196,15 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
         break;
       case 'month':
         const yearMonth = this.selectedMonth;
-        const weeks = await this.termWeekService.getMonthWeeks(term, yearMonth).toPromise();
+        const term1 = await this.termWeekService.findTermByMonth(yearMonth).toPromise();
+        const weeks = await this.termWeekService.getMonthWeeks(term1, yearMonth).toPromise();
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
         this.monthSchedule = new MonthSchedule(monthDim, schedules);
         this.monthSchedule.context = context;
         this.monthSchedule.title = title;
         break;
       case 'term':
+        const term = this.selectedTerm;
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
         this.termSchedule = new TermSchedule(termDim, schedules);

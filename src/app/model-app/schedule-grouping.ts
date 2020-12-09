@@ -11,7 +11,7 @@ export class ScheduleGrouping {
   groupByCourse = false;
   groupByCourseCate = false;
   // groupByLesson = false;
-  groupByTrainingType = false;
+  groupByCourseType = false;
   groupByTime = false;
 
   timeGroupBy: TimeScope = 'day';
@@ -26,7 +26,7 @@ export class ScheduleGrouping {
     this.groupByCourse = false;
     this.groupByCourseCate = false;
     // this.groupByLesson = false;
-    this.groupByTrainingType = false;
+    this.groupByCourseType = false;
     this.groupByTime = false;
   }
 
@@ -55,7 +55,7 @@ export class ScheduleGrouping {
       && !this.groupByTeacher
       && !this.groupByCourse
       && !this.groupByCourseCate
-      && !this.groupByTrainingType
+      && !this.groupByCourseType
       && this.groupByTime
       && this.timeGroupBy === 'day';
   }
@@ -89,8 +89,8 @@ export class ScheduleGrouping {
     // if (this.groupByLesson) {
     //   fields.push('lesson');
     // }
-    if (this.groupByTrainingType) {
-      fields.push('trainingType');
+    if (this.groupByCourseType) {
+      fields.push('courseType');
     }
     if (this.groupByTime) {
       const timeGroupBy = this.timeGroupBy;

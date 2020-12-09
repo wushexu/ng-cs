@@ -17,7 +17,7 @@ export class CompleteQuery extends BasicQuery {
   selectedLesson = 1;
   selectedCourse: Course;
   selectedCourseCate: string;
-  selectedTrainingType = '';
+  selectedCourseType = '';
 
   majorDimEnabled = false;
   classDimEnabled = false;
@@ -26,7 +26,7 @@ export class CompleteQuery extends BasicQuery {
   courseDimEnabled = false;
   timeDimEnabled = true;
   lessonDimEnabled = false;
-  trainingTypeDimEnabled = false;
+  courseTypeDimEnabled = false;
 
   majorDim: 'dept' | 'major' = 'dept';
   classDim: 'year' | 'class' = 'class';
@@ -87,9 +87,9 @@ export class CompleteQuery extends BasicQuery {
       }
     }
 
-    if (this.trainingTypeDimEnabled) {
-      if (this.selectedTrainingType) {
-        filter.trainingType = this.selectedTrainingType;
+    if (this.courseTypeDimEnabled) {
+      if (this.selectedCourseType) {
+        filter.courseType = this.selectedCourseType;
       }
     }
 
@@ -148,8 +148,8 @@ export class CompleteQuery extends BasicQuery {
     if (context.course) {
       titleParts.push(`（课程）${context.course.name}`);
     }
-    if (filter.trainingType) {
-      const typeName = filter.trainingType === 'N' ? '理论课' : '实训课';
+    if (filter.courseType) {
+      const typeName = filter.courseType === 'N' ? '理论课' : '实训课';
       titleParts.push(typeName);
     }
   }

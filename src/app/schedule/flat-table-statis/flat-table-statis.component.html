@@ -1,8 +1,8 @@
-<div *ngIf="showTitle&&schedulesStatis?.title" class="schedule-table-title">
-  <h2 class="ui center aligned header">{{schedulesStatis?.title}}</h2>
-</div>
-
 <div [hidden]="!schedulesStatis">
+  <div *ngIf="showTitle&&schedulesStatis?.title" class="schedule-table-title">
+    <h2 class="ui center aligned header">{{schedulesStatis?.title}}</h2>
+  </div>
+
   <table mat-table class="full-width-table ui unstackable table" matSort>
 
     <ng-container matColumnDef="date">
@@ -82,13 +82,10 @@
           matTooltipClass="multi-lines-tooltip">{{row.course?.name}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="trainingType">
+    <ng-container matColumnDef="courseType">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>实训</th>
-      <td mat-cell *matCellDef="let row" [class.training-class]="row.trainingType!=='N'">
-        {{row.trainingType === 'N' ? '理论课' :
-        (row.trainingType === 'S' ? '实训' :
-            (row.trainingType === 'E' ? '企业实训' : '')
-        )}}
+      <td mat-cell *matCellDef="let row" [class.training-class]="row.courseType==='T'">
+        {{row.courseType === 'N' ? '理论课' : '实训课'}}
       </td>
     </ng-container>
 
