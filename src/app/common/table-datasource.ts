@@ -67,5 +67,9 @@ function compare(a: string | number, b: string | number, isAsc: boolean) {
   if (a === b) {
     return 0;
   }
+  if (typeof a === 'string' && typeof b === 'string') {
+    const r = a.localeCompare(b);
+    return isAsc ? r : -r;
+  }
   return isAsc ? (a < b ? -1 : 1) : (a < b ? 1 : -1);
 }

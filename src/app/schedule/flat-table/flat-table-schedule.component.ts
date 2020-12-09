@@ -29,9 +29,7 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
   dataSource: ScheduleTableDatasource;
 
 
-  oriDisplayedColumns = ['date', 'class', 'classroom', 'teacher', 'lessonIndex', 'course', 'courseType'];
-
-  displayedColumns = this.oriDisplayedColumns;
+  displayedColumns = [];
 
   ngOnInit() {
     this.dataSource = new ScheduleTableDatasource();
@@ -70,22 +68,34 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
     const context: ScheduleContext = this.flatSchedules.context;
     const filter: ScheduleFilter = context.filter;
-    this.displayedColumns = this.oriDisplayedColumns
-      .filter(column => {
-        switch (column) {
-          case 'date':
-            return !filter.date;
-          case 'class':
-            return !context.theClass;
-          case 'classroom':
-            return !context.site;
-          case 'teacher':
-            return !context.teacher;
-          case 'course':
-            return !context.course;
-        }
-        return true;
-      });
+
+    const displayedColumns = [];
+
+    if (!filter.date) {
+      displayedColumns.push('date');
+    }
+    if (!context.theClass) {
+      displayedColumns.push('class');
+      displayedColumns.push('classSize');
+    }
+    if (!context.site) {
+      displayedColumns.push('classroom');
+      displayedColumns.push('classroomCapacity');
+    }
+    if (!context.teacher) {
+      displayedColumns.push('teacher');
+    }
+    if (!context.course) {
+      displayedColumns.push('course');
+    }
+    if (!filter.lesson) {
+      displayedColumns.push('lessonIndex');
+    }
+    if (!filter.courseType) {
+      displayedColumns.push('courseType');
+    }
+
+    this.displayedColumns = displayedColumns;
 
     this.dataSource.setData(this.flatSchedules.schedules);
   }

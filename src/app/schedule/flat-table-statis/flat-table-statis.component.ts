@@ -28,11 +28,7 @@ export class FlatTableStatisComponent implements AfterViewInit, OnInit, OnChange
 
   dataSource: ScheduleStatisTableDatasource;
 
-  // 'date', 'term', 'weekno', 'yearMonth',
-  // 'dept', 'major', 'classYear', 'class', 'classroom', 'teacher', 'timeStart',
-  // 'courseCate', 'course', 'courseType',
-  // 'recordCount', 'lessonCount'
-  oriDisplayedColumns = ['date', 'lessonCount'];
+  oriDisplayedColumns = [];
 
   displayedColumns = this.oriDisplayedColumns;
 
@@ -99,9 +95,11 @@ export class FlatTableStatisComponent implements AfterViewInit, OnInit, OnChange
     }
     if (grouping.groupByClass) {
       displayedColumns.push('class');
+      displayedColumns.push('classSize');
     }
     if (grouping.groupByClassroom) {
       displayedColumns.push('classroom');
+      displayedColumns.push('classroomCapacity');
     }
     if (grouping.groupByTeacher) {
       displayedColumns.push('teacher');
