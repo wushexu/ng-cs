@@ -18,6 +18,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatInputModule,
     MatSelectModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule,
+    MatGridListModule
   ]
 })
 export class AppMaterialModule {

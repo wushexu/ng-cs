@@ -1,0 +1,86 @@
+<mat-toolbar color="secondary" class="not-print">
+  <mat-toolbar-row>
+    <span>课表统计</span>
+
+    <span class="spacer"></span>
+
+    <app-main-menu></app-main-menu>
+
+    <!--<button type="button" mat-icon-button>
+      <mat-icon aria-label="Menu">menu</mat-icon>
+    </button>-->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<div class="main-content">
+
+  <div fxLayout="row wrap" fxLayoutAlign="start center">
+
+    <div class="primary-color">2020年12月10日（星期四）（今日）</div>
+    <span class="spacer"></span>
+
+    <div>
+      <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"></app-date-picker>
+      <button mat-button color="primary">
+        <mat-icon>south_west</mat-icon>
+        统计
+      </button>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="grid-container">
+    <h3 class="mat-h3">全天</h3>
+    <mat-grid-list [cols]="gridCols" rowHeight="150px">
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="班级" [figure]="12"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="学生" [figure]="120"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="教师" [figure]="75"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="教室" [figure]="36"></app-summary-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+
+  <div class="grid-container">
+
+    <div fxLayout fxLayoutAlign="start center">
+
+      <h3 class="mat-h3">第一节</h3>
+
+      <span class="spacer"></span>
+
+      <div>
+        <app-lesson-select (selected)="lessonSelected($event)"></app-lesson-select>
+        <button mat-button color="primary">
+          <mat-icon>south_west</mat-icon>
+          统计
+        </button>
+      </div>
+    </div>
+
+    <mat-grid-list [cols]="gridCols" rowHeight="150px">
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="班级" [figure]="12"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="学生" [figure]="120"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="教师" [figure]="75"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="有课的" subject="教室" [figure]="36"></app-summary-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+</div>

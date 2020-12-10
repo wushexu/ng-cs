@@ -12,6 +12,7 @@
 @import "~fomantic-ui-css/components/menu.min.css";
 @import "~fomantic-ui-css/components/dropdown.min.css";
 /*@import "~fomantic-ui-css/components/text.min.css";*/
+@import "~fomantic-ui-css/components/statistic.min.css";
 
 html, body {
   height: 100%;

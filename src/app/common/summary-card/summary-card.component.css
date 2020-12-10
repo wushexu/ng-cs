@@ -1,0 +1,23 @@
+.summary-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, .12);
+  box-shadow: none;
+  /*border-radius: 4px;*/
+  background: #fff;
+}
+
+.summary-card:hover {
+  background: rgba(0, 0, 0, .01);
+}
+
+.summary-card .mat-card-header .mat-card-title {
+  font-size: 16px;
+}
+
+.summary-card-content {
+  text-align: center;
+}

@@ -1,0 +1,16 @@
+.grid-container {
+  /*margin: 20px;*/
+  margin-top: 2em;
+}
+
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.mat-divider {
+  /*margin-top: 1em;*/
+  margin-bottom: 2em;
+}
