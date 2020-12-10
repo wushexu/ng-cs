@@ -17,12 +17,12 @@
 
   <div fxLayout="row wrap" fxLayoutAlign="start center">
 
-    <div class="primary-color">2020年12月10日（星期四）（今日）</div>
+    <span class="date-label">{{dateLabel}}</span><span class="primary-color" *ngIf="isToday">（今日）</span>
     <span class="spacer"></span>
 
     <div>
       <app-date-picker [selectedDate]="selectedDate" (selected)="dateSelected($event)"></app-date-picker>
-      <button mat-button color="primary">
+      <button mat-button color="primary" (click)="updateDayStatistic()">
         <mat-icon>south_west</mat-icon>
         统计
       </button>
@@ -35,16 +35,24 @@
     <h3 class="mat-h3">全天</h3>
     <mat-grid-list [cols]="gridCols" rowHeight="150px">
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="班级" [figure]="12"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="班级" [figure]="daySummary.classCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="学生" [figure]="120"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="学生" [figure]="daySummary.studentCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="教师" [figure]="75"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="教师" [figure]="daySummary.teacherCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="教室" [figure]="36"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="教室" [figure]="daySummary.classroomCount"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="课程数（" subject="理论" supplement="）"
+                          [figure]="daySummary.theoryCourseCount"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="课程数（" subject="实训" supplement="）"
+                          [figure]="daySummary.trainingCourseCount"></app-summary-card>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
@@ -54,33 +62,43 @@
 
     <div fxLayout fxLayoutAlign="start center">
 
-      <h3 class="mat-h3">第一节</h3>
+      <h3 class="mat-h3">{{lessonLabel}}</h3>
 
       <span class="spacer"></span>
 
       <div>
         <app-lesson-select (selected)="lessonSelected($event)"></app-lesson-select>
-        <button mat-button color="primary">
+        <button mat-button color="primary" (click)="updateLessonStatistic()">
           <mat-icon>south_west</mat-icon>
           统计
         </button>
       </div>
     </div>
 
-    <mat-grid-list [cols]="gridCols" rowHeight="150px">
+    <mat-grid-list [cols]="gridCols" rowHeight="150px" *ngIf="lessonSummary">
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="班级" [figure]="12"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="班级" [figure]="lessonSummary.classCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="学生" [figure]="120"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="学生" [figure]="lessonSummary.studentCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="教师" [figure]="75"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="教师" [figure]="lessonSummary.teacherCount"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-summary-card determiner="有课的" subject="教室" [figure]="36"></app-summary-card>
+        <app-summary-card determiner="有课的" subject="教室" [figure]="lessonSummary.classroomCount"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="课程数（" subject="理论" supplement="）"
+                          [figure]="lessonSummary.theoryCourseCount"></app-summary-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-summary-card determiner="课程数（" subject="实训" supplement="）"
+                          [figure]="lessonSummary.trainingCourseCount"></app-summary-card>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
+
+  <div class="tables-bottom not-print">&nbsp;</div>
 
 </div>

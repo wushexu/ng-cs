@@ -28,7 +28,6 @@ export class CompleteQueryComponent extends CompleteQuery implements OnInit {
   ngOnInit(): void {
     this.selectedDate = moment();
     this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
-
   }
 
   async execute() {

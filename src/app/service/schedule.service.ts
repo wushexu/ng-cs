@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -11,7 +10,7 @@ import {Course} from '../model-api/course';
 import {Teacher} from '../model-api/teacher';
 import {Site} from '../model-api/site';
 import {ClassService} from './class.service';
-import {ScheduleFilter, StatisticParams, SummaryStatisticParams} from '../model-app/schedule-params';
+import {ScheduleFilter, StatisticParams} from '../model-app/schedule-params';
 import {DeptMajorService} from './dept-major.service';
 import {TeacherService} from './teacher.service';
 import {ClassroomService} from './classroom.service';
@@ -26,7 +25,6 @@ export class ScheduleService {
 
   schedulesBaseUrl: string;
   statisBaseUrl: string;
-  summaryBaseUrl: string;
 
   constructor(protected http: HttpClient,
               private deptMajorService: DeptMajorService,
@@ -37,7 +35,6 @@ export class ScheduleService {
     const base = environment.apiBase;
     this.schedulesBaseUrl = `${base}/schedules`;
     this.statisBaseUrl = `${base}/schedules-statis`;
-    this.summaryBaseUrl = `${base}/schedules-summary-statis`;
   }
 
   query(filter: ScheduleFilter): Observable<Schedule[]> {
@@ -160,25 +157,6 @@ export class ScheduleService {
           return schedules;
         })
       );
-  }
-
-  summaryStatistic(filter: ScheduleFilter, summaryParams: SummaryStatisticParams): Observable<object> {
-
-    console.log(filter);
-
-    const params = [];
-    for (const name in filter) {
-      if (!filter.hasOwnProperty(name)) {
-        continue;
-      }
-      params.push(`${name}=${filter[name]}`);
-    }
-    params.push(`distinct=${summaryParams.distinct}`);
-
-    const url = this.summaryBaseUrl + '?' + params.join('&');
-    console.log(url);
-
-    return this.http.get<object>(url);
   }
 
 }

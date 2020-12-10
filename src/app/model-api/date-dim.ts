@@ -51,4 +51,9 @@ export class DateDim {
     }
   }
 
+  static fullDateLabel(mom: Moment): string {
+    const weekdayLabel = WeekDaysZh[mom.day() % 7];
+    return `${mom.year()}年${mom.month() + 1}月${mom.date()}日（周${weekdayLabel}）`;
+  }
+
 }

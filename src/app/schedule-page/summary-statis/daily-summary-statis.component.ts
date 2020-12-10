@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {Breakpoints, BreakpointObserver} from '@angular/cdk/layout';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import * as moment from 'moment';
 import {Moment} from 'moment';
+
+import {SummaryStatistic} from '../../model-app/summary-statistic';
+import {SummaryStatisticService} from '../../service/summary-statistic.service';
+import {DateDim} from '../../model-api/date-dim';
+import {DATE_FORMAT} from '../../config';
 
 @Component({
   selector: 'app-daily-summary-statis',
@@ -14,47 +19,92 @@ export class DailySummaryStatisComponent implements OnInit {
   selectedDate: Moment;
   selectedLesson = 1;
 
-  // '(max-width: 599px)'
+  dateLabel: string;
+  isToday: boolean;
+  lessonLabel: string;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  daySummary: SummaryStatistic = new SummaryStatistic();
+  lessonSummary: SummaryStatistic;
+
+  constructor(private breakpointObserver: BreakpointObserver,
+              private summaryService: SummaryStatisticService) {
   }
 
   ngOnInit() {
-    const breakPoints = [
-      '(max-width: 499px)', // '(max-width: 767px)'
-      '(max-width: 991px)',
-      '(max-width: 1199px)',
-      '(min-width: 1200px)'
-    ];
-    this.breakpointObserver.observe(breakPoints).subscribe(({matches, breakpoints}) => {
-      console.log(matches, breakpoints);
-      if (breakpoints[breakPoints[0]]) {
-        this.gridCols = 1;
+    const breakPointCols = new Map<string, number>([
+      ['(max-width: 499px)', 1], // '(max-width: 767px)'
+      ['(max-width: 991px)', 2],
+      ['(max-width: 1199px)', 3],
+      ['(min-width: 1200px)', 4]
+    ]);
+
+    this.breakpointObserver.observe(Array.from(breakPointCols.keys()))
+      .subscribe(({matches, breakpoints}) => {
+        console.log(matches, breakpoints);
+        for (const [br, col] of breakPointCols.entries()) {
+          if (breakpoints[br]) {
+            this.gridCols = col;
+            return;
+          }
+        }
+      });
+
+    this.selectedDate = moment();
+    this.updateDayStatistic();
+  }
+
+  updateDayStatistic() {
+    const date = this.selectedDate;
+    if (!date) {
+      return;
+    }
+
+    const dateStr = date.format(DATE_FORMAT);
+    this.summaryService.buildSummaryOfDate(dateStr)
+      .subscribe(summary => {
+        this.daySummary = summary;
+        const today = moment();
+        this.isToday = date.isSame(today, 'day');
+        this.dateLabel = DateDim.fullDateLabel(date);
+
+        if (this.lessonSummary) {
+          this.lessonSummary = null;
+          this.updateLessonStatistic(dateStr);
+        }
+      });
+
+  }
+
+  updateLessonStatistic(dateStr: string = null) {
+    const selectedLesson = this.selectedLesson;
+    if (!selectedLesson) {
+      return;
+    }
+    if (!dateStr) {
+      const date = this.selectedDate;
+      if (!date) {
         return;
       }
-      if (breakpoints[breakPoints[1]]) {
-        this.gridCols = 2;
-        return;
-      }
-      if (breakpoints[breakPoints[2]]) {
-        this.gridCols = 3;
-        return;
-      }
-      if (breakpoints[breakPoints[3]]) {
-        this.gridCols = 4;
-        return;
-      }
-    });
+      dateStr = date.format(DATE_FORMAT);
+    }
+    this.summaryService.buildSummaryOfLesson(dateStr, selectedLesson)
+      .subscribe(summary => {
+        this.lessonSummary = summary;
+        const indexZh = ['一', '二', '三', '四', '五'][selectedLesson - 1];
+        this.lessonLabel = `第${indexZh}节`;
+      });
   }
 
 
   dateSelected(date: Moment): void {
     this.selectedDate = date;
     console.log(date);
+    // this.updateDayStatistic();
   }
 
   lessonSelected(lessonIndex: number) {
     this.selectedLesson = lessonIndex;
     console.log(lessonIndex);
+    // this.updateLessonStatistic();
   }
 }

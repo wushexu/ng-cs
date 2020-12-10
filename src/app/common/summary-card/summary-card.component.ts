@@ -9,6 +9,7 @@ export class SummaryCardComponent implements OnInit {
 
   @Input() determiner: string;
   @Input() subject: string;
+  @Input() supplement = '数';
   @Input() figure: number;
 
   constructor() {

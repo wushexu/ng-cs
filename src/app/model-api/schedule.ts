@@ -11,8 +11,8 @@ export class Schedule {
   dayOfWeek: number;
   date: string;
 
-  timeStart: number;
-  timeEnd: number;
+  timeStart: number; // 1,3,5,7,9
+  timeEnd: number; // 2,4,6,8,10
   courseType: string; // N: 理论课；T: 实训课
   trainingType: string; // S: 校内实训；E: 企业实训
 

@@ -61,6 +61,7 @@ import {MonthStatisChartComponent} from './schedule/month-statis-chart/month-sta
 import {TermStatisChartComponent} from './schedule/term-statis-chart/term-statis-chart.component';
 import { DailySummaryStatisComponent } from './schedule-page/summary-statis/daily-summary-statis.component';
 import { SummaryCardComponent } from './common/summary-card/summary-card.component';
+import {SummaryStatisticService} from './service/summary-statistic.service';
 
 @NgModule({
   imports: [
@@ -120,6 +121,7 @@ import { SummaryCardComponent } from './common/summary-card/summary-card.compone
   entryComponents: [],
   providers: [
     ScheduleService,
+    SummaryStatisticService,
     DeptMajorService,
     ClassService,
     TeacherService,
