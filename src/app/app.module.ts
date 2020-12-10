@@ -56,12 +56,13 @@ import {CourseCateSelectComponent} from './common/course-cate-select/course-cate
 import {LessonSelectComponent} from './common/lesson-select/lesson-select.component';
 import {CourseService} from './service/course.service';
 import {DeptMajorService} from './service/dept-major.service';
-import {FlatTableStatisComponent} from './schedule/flat-table-statis/flat-table-statis.component';
+import {StatisticTableComponent} from './schedule/statistic-table/statistic-table.component';
 import {MonthStatisChartComponent} from './schedule/month-statis-chart/month-statis-chart.component';
 import {TermStatisChartComponent} from './schedule/term-statis-chart/term-statis-chart.component';
-import { DailySummaryStatisComponent } from './schedule-page/summary-statis/daily-summary-statis.component';
+import { DailySummaryStatisComponent } from './schedule-page/summary-statistic/daily-summary-statis.component';
 import { SummaryCardComponent } from './common/summary-card/summary-card.component';
 import {SummaryStatisticService} from './service/summary-statistic.service';
+import {StatisticTableDialogComponent} from './schedule/statistic-table/statistic-table-dialog.component';
 
 @NgModule({
   imports: [
@@ -112,13 +113,14 @@ import {SummaryStatisticService} from './service/summary-statistic.service';
     CourseSelectComponent,
     CourseCateSelectComponent,
     LessonSelectComponent,
-    FlatTableStatisComponent,
+    StatisticTableComponent,
     MonthStatisChartComponent,
     TermStatisChartComponent,
     DailySummaryStatisComponent,
-    SummaryCardComponent
+    SummaryCardComponent,
+    StatisticTableDialogComponent
   ],
-  entryComponents: [],
+  entryComponents: [StatisticTableDialogComponent],
   providers: [
     ScheduleService,
     SummaryStatisticService,

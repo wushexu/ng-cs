@@ -7,6 +7,11 @@ import {SummaryStatistic} from '../../model-app/summary-statistic';
 import {SummaryStatisticService} from '../../service/summary-statistic.service';
 import {DateDim} from '../../model-api/date-dim';
 import {DATE_FORMAT} from '../../config';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {StatisticTableDialogComponent} from '../../schedule/statistic-table/statistic-table-dialog.component';
+import {ScheduleGrouping} from '../../model-app/schedule-grouping';
+import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
+import {ScheduleFilter} from '../../model-app/schedule-params';
 
 @Component({
   selector: 'app-daily-summary-statis',
@@ -15,6 +20,13 @@ import {DATE_FORMAT} from '../../config';
 })
 export class DailySummaryStatisComponent implements OnInit {
   gridCols = 3;
+
+  classCardClass = 'lightblue';
+  studentCardClass = 'lightskyblue';
+  teacherCardClass = 'lightsteelblue';
+  classroomCardClass = 'lightyellow';
+  courseTheoryCardClass = 'lightgreen';
+  courseTrainingCardClass = 'lightcyan';
 
   selectedDate: Moment;
   selectedLesson = 1;
@@ -27,7 +39,8 @@ export class DailySummaryStatisComponent implements OnInit {
   lessonSummary: SummaryStatistic;
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private summaryService: SummaryStatisticService) {
+              private summaryService: SummaryStatisticService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -106,5 +119,26 @@ export class DailySummaryStatisComponent implements OnInit {
     this.selectedLesson = lessonIndex;
     console.log(lessonIndex);
     // this.updateLessonStatistic();
+  }
+
+  showSummaryDetailDialog() {
+    const schedulesStatis: SchedulesStatistic = {
+      schedules: [],
+      context: {
+        filter: new ScheduleFilter(),
+        grouping: new ScheduleGrouping()
+      }
+    };
+    this.dialog.open(
+      StatisticTableDialogComponent, {
+        width: '250px',
+        data: {title: 'sss', schedulesStatis}
+      });
+  }
+
+  showDetail(cate) {
+    if (cate === 'class') {
+      this.showSummaryDetailDialog();
+    }
   }
 }

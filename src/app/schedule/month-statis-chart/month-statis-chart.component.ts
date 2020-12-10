@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import * as echarts from 'echarts';
 
 import {StatisCalendarChart} from '../../common/statis-calendar-chart';
-import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis';
+import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 
 @Component({
   selector: 'app-month-statis-chart',
@@ -17,10 +17,10 @@ import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis'
 export class MonthStatisChartComponent extends StatisCalendarChart implements AfterViewInit, OnChanges {
   @ViewChild('chart') chartDiv: ElementRef;
 
-  @Input() monthStatis: FlatSchedulesStatis;
+  @Input() monthStatis: SchedulesStatistic;
   @Input() showTitle;
 
-  get scheduleDatasource(): FlatSchedulesStatis {
+  get scheduleDatasource(): SchedulesStatistic {
     return this.monthStatis;
   }
 

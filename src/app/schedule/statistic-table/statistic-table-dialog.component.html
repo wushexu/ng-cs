@@ -1,0 +1,16 @@
+<div mat-dialog-title fxLayout>
+  {{title}}
+  <span class="spacer"></span>
+</div>
+
+<mat-dialog-content>
+
+  <app-statistic-table [schedulesStatis]="schedulesStatis" [showTitle]="false" [paginating]="false"
+                       *ngIf="schedulesStatis"></app-statistic-table>
+
+</mat-dialog-content>
+
+<div mat-dialog-actions fxLayout>
+  <span class="spacer"></span>
+  <button mat-button mat-dialog-close>关闭</button>
+</div>

@@ -2,7 +2,7 @@ import {ScheduleCompareFieldMappers, TableDatasource} from '../../common/table-d
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 
 
-export class ScheduleStatisTableDatasource extends TableDatasource<ScheduleAggregated> {
+export class StatisticTableDatasource extends TableDatasource<ScheduleAggregated> {
 
   constructor() {
     super();

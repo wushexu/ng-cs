@@ -57,11 +57,6 @@ export class SummaryStatisticService {
       return summary;
     }
 
-    const classesMap: Map<number, Class> = this.classService.classesMap;
-    for (const schedule of schedules) {
-      schedule.theClass = classesMap.get(schedule.classId);
-    }
-
     summary.classCount = uniq(schedules.map(s => s.classId)).length;
     summary.studentCount = reduce(uniq(schedules.map(s => s.theClass)).map(c => c ? c.size : 0),
       (sum, size) => sum + size || 0, 0);
@@ -81,19 +76,10 @@ export class SummaryStatisticService {
       return of(cachedSummary);
     }
 
-    const url = `${this.scheduleService.schedulesBaseUrl}?date=${date}`;
-    console.log(url);
-
-    const $schedules = this.http.get<Schedule[]>(url);
-    const $classesMap: Observable<Map<number, Class>> = this.classService.getClassesMap();
-
-    return combineLatest([
-      $schedules,
-      $classesMap])
+    return this.scheduleService.query({date})
       .pipe(
-        map(([
-               schedules,
-               classesMap]) => {
+        map((
+          schedules) => {
 
           console.log('Count: ' + schedules.length);
           console.log(schedules);

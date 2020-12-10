@@ -23,7 +23,7 @@ export class TableDatasource<T> extends DataSource<T> {
   data: T[] = [];
   dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(this.data);
 
-  paginator: MatPaginator;
+  paginator?: MatPaginator;
   sort: MatSort;
 
   compareFieldMappers: { [column: string]: (s: T) => number | string };
@@ -37,12 +37,17 @@ export class TableDatasource<T> extends DataSource<T> {
   connect(): Observable<T[]> {
     const dataMutations = [
       this.dataSubject,
-      this.paginator.page,
+      this.paginator?.page,
       this.sort.sortChange
-    ];
+    ].filter(e => e);
 
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
+      const sortedData = this.getSortedData([...this.data]);
+      if (this.paginator) {
+        return this.getPagedData(sortedData);
+      } else {
+        return sortedData;
+      }
     }));
   }
 

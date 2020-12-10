@@ -190,8 +190,8 @@
   <div class="schedule-tables">
 
     <ng-template [ngIf]="outputStyle==='table'">
-      <app-flat-table-statis [schedulesStatis]="schedulesStatis" [showTitle]="showTitle"
-                             *ngIf="schedulesStatis"></app-flat-table-statis>
+      <app-statistic-table [schedulesStatis]="schedulesStatis" [showTitle]="showTitle"
+                           *ngIf="schedulesStatis"></app-statistic-table>
     </ng-template>
 
     <ng-template [ngIf]="outputStyle==='calendar-chart'">

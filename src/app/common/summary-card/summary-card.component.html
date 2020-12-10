@@ -1,11 +1,11 @@
-<mat-card class="summary-card">
+<mat-card class="summary-card" [ngClass]="cardClass">
   <mat-card-header>
     <mat-card-title>
       {{determiner}}<span class="primary-color">{{subject}}</span>{{supplement}}
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="summary-card-content">
-    <div class="ui statistic">
+    <div class="ui small statistic">
       <div class="value">
         {{figure | number}}
       </div>

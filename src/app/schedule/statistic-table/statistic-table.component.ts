@@ -4,36 +4,37 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
-import {ScheduleStatisTableDatasource} from './schedule-statis-table-datasource';
+import {StatisticTableDatasource} from './statistic-table-datasource';
 import {Course} from '../../model-api/course';
 import {Classroom, Site} from '../../model-api/site';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {Class} from '../../model-api/class';
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
-import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis';
+import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 
 @Component({
-  selector: 'app-flat-table-statis',
-  templateUrl: './flat-table-statis.component.html',
-  styleUrls: ['./flat-table-statis.component.css']
+  selector: 'app-statistic-table',
+  templateUrl: './statistic-table.component.html',
+  styleUrls: ['./statistic-table.component.css']
 })
-export class FlatTableStatisComponent implements AfterViewInit, OnInit, OnChanges {
+export class StatisticTableComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<ScheduleAggregated>;
 
-  @Input() schedulesStatis: FlatSchedulesStatis;
-  @Input() showTitle;
+  @Input() schedulesStatis: SchedulesStatistic;
+  @Input() showTitle: boolean;
+  @Input() paginating = true;
 
-  dataSource: ScheduleStatisTableDatasource;
+  dataSource: StatisticTableDatasource;
 
   oriDisplayedColumns = [];
 
   displayedColumns = this.oriDisplayedColumns;
 
   ngOnInit() {
-    this.dataSource = new ScheduleStatisTableDatasource();
+    this.dataSource = new StatisticTableDatasource();
     this.setupData();
   }
 

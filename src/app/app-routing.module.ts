@@ -4,7 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
 import {ScheduleStatisComponent} from './schedule-page/statistic/schedule-statis.component';
 import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
-import {DailySummaryStatisComponent} from './schedule-page/summary-statis/daily-summary-statis.component';
+import {DailySummaryStatisComponent} from './schedule-page/summary-statistic/daily-summary-statis.component';
 
 const routes: Routes = [
   {path: 'query', component: SinglePerspectiveQueryComponent},

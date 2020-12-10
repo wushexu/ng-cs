@@ -10,7 +10,7 @@ import {CompleteQuery} from '../common/complete-query';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
-import {FlatSchedulesStatis} from '../../model-table-data/flat-schedules-statis';
+import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 import {TermWeekService} from '../../service/term-week.service';
 
 
@@ -23,10 +23,10 @@ declare type OutputStyle = 'table' | 'calendar-chart' | 'chart';
 })
 export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
-  schedulesStatis: FlatSchedulesStatis;
+  schedulesStatis: SchedulesStatistic;
 
-  monthStatis: FlatSchedulesStatis;
-  termStatis: FlatSchedulesStatis;
+  monthStatis: SchedulesStatistic;
+  termStatis: SchedulesStatistic;
 
   outputStyle: OutputStyle = 'table';
 
@@ -81,7 +81,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
     console.log(context);
 
-    const schedulesStatis = new FlatSchedulesStatis();
+    const schedulesStatis = new SchedulesStatistic();
     schedulesStatis.schedules = schedules;
     schedulesStatis.context = context;
 

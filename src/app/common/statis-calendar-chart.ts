@@ -1,6 +1,6 @@
 import {DATE_FORMAT} from '../config';
 import {CalendarChart, CalenderDateData} from './calendar-chart';
-import {FlatSchedulesStatis} from '../model-table-data/flat-schedules-statis';
+import {SchedulesStatistic} from '../model-table-data/schedules-statistic';
 
 export interface DailySchedule {
   date: string;
@@ -9,7 +9,7 @@ export interface DailySchedule {
 
 export abstract class StatisCalendarChart extends CalendarChart {
 
-  abstract get scheduleDatasource(): FlatSchedulesStatis;
+  abstract get scheduleDatasource(): SchedulesStatistic;
 
 
   buildDataset(): any[] {
