@@ -5,6 +5,20 @@ import {map} from 'rxjs/operators';
 import {Observable, merge, BehaviorSubject} from 'rxjs';
 
 
+export const ScheduleCompareFieldMappers = {
+  term: s => s.termId,
+  lessonIndex: s => s.timeStart,
+  dept: s => s.dept ? s.dept.name : 0,
+  major: s => s.major ? s.major.name : 0,
+  class: s => s.theClass ? s.theClass.name : 0,
+  classSize: s => s.theClass ? s.theClass.size : 0,
+  classroom: s => s.site ? s.site.name : 0,
+  classroomCapacity: s => s.site ? s.site.capacity : 0,
+  course: s => s.course ? s.course.name : 0,
+  teacher: s => s.teacher ? s.teacher.name : 0
+};
+
+
 export class TableDatasource<T> extends DataSource<T> {
   data: T[] = [];
   dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(this.data);

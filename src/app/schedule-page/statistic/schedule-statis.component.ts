@@ -62,7 +62,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
     const statisticParams: StatisticParams = new StatisticParams();
     statisticParams.groupBy = groupBy;
 
-    const schedules = await this.scheduleService.statisticSchedules(filter, statisticParams).toPromise();
+    const schedules = await this.scheduleService.statistic(filter, statisticParams).toPromise();
 
     await this.setupSchedules(context, schedules);
   }

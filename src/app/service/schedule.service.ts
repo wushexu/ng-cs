@@ -11,7 +11,7 @@ import {Course} from '../model-api/course';
 import {Teacher} from '../model-api/teacher';
 import {Site} from '../model-api/site';
 import {ClassService} from './class.service';
-import {ScheduleFilter, StatisticParams} from '../model-app/schedule-params';
+import {ScheduleFilter, StatisticParams, SummaryStatisticParams} from '../model-app/schedule-params';
 import {DeptMajorService} from './dept-major.service';
 import {TeacherService} from './teacher.service';
 import {ClassroomService} from './classroom.service';
@@ -26,6 +26,7 @@ export class ScheduleService {
 
   schedulesBaseUrl: string;
   statisBaseUrl: string;
+  summaryBaseUrl: string;
 
   constructor(protected http: HttpClient,
               private deptMajorService: DeptMajorService,
@@ -36,9 +37,10 @@ export class ScheduleService {
     const base = environment.apiBase;
     this.schedulesBaseUrl = `${base}/schedules`;
     this.statisBaseUrl = `${base}/schedules-statis`;
+    this.summaryBaseUrl = `${base}/schedules-summary-statis`;
   }
 
-  querySchedules(filter: ScheduleFilter): Observable<Schedule[]> {
+  query(filter: ScheduleFilter): Observable<Schedule[]> {
 
     console.log(filter);
 
@@ -89,7 +91,7 @@ export class ScheduleService {
       );
   }
 
-  statisticSchedules(filter: ScheduleFilter, statisticParams: StatisticParams): Observable<ScheduleAggregated[]> {
+  statistic(filter: ScheduleFilter, statisticParams: StatisticParams): Observable<ScheduleAggregated[]> {
 
     console.log(filter);
 
@@ -158,6 +160,25 @@ export class ScheduleService {
           return schedules;
         })
       );
+  }
+
+  summaryStatistic(filter: ScheduleFilter, summaryParams: SummaryStatisticParams): Observable<object> {
+
+    console.log(filter);
+
+    const params = [];
+    for (const name in filter) {
+      if (!filter.hasOwnProperty(name)) {
+        continue;
+      }
+      params.push(`${name}=${filter[name]}`);
+    }
+    params.push(`distinct=${summaryParams.distinct}`);
+
+    const url = this.summaryBaseUrl + '?' + params.join('&');
+    console.log(url);
+
+    return this.http.get<object>(url);
   }
 
 }

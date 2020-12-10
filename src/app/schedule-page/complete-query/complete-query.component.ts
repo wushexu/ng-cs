@@ -40,7 +40,7 @@ export class CompleteQueryComponent extends CompleteQuery implements OnInit {
 
     const filter: ScheduleFilter = context.filter;
 
-    const schedules = await this.scheduleService.querySchedules(filter).toPromise();
+    const schedules = await this.scheduleService.query(filter).toPromise();
 
     await this.setupSchedules(context, schedules);
   }

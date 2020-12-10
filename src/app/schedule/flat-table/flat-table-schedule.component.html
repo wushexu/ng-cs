@@ -36,7 +36,9 @@
 
     <ng-container matColumnDef="classroomCapacity">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>教室座位数</th>
-      <td mat-cell *matCellDef="let row">{{row.site?.capacity}}个</td>
+      <td mat-cell *matCellDef="let row">
+        <ng-template [ngIf]="row.site?.capacity">{{row.site.capacity}}个</ng-template>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="teacher">

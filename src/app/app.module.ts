@@ -28,24 +28,24 @@ import {DayScheduleComponent} from './schedule/day/day-schedule.component';
 import {DayScheduleSerialComponent} from './schedule/day-serial/day-schedule-serial.component';
 import {DATE_FORMATS, PaginatorIntl} from './config';
 import {MonthPickerComponent} from './common/month-picker/month-picker.component';
-import { ClassSelectComponent } from './common/class-select/class-select.component';
+import {ClassSelectComponent} from './common/class-select/class-select.component';
 import {ClassService} from './service/class.service';
 import {TeacherSelectComponent} from './common/teacher-select/teacher-select-component';
 import {TeacherService} from './service/teacher.service';
-import { ClassroomSelectComponent } from './common/classroom-select/classroom-select.component';
+import {ClassroomSelectComponent} from './common/classroom-select/classroom-select.component';
 import {ClassroomService} from './service/classroom.service';
 import {TermWeekService} from './service/term-week.service';
-import { TermWeekSelectComponent } from './common/term-week-select/term-week-select.component';
+import {TermWeekSelectComponent} from './common/term-week-select/term-week-select.component';
 import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspective-query/single-perspective-query.component';
 import {TermSelectComponent} from './common/term-select/term-select.component';
-import { DatePickerComponent } from './common/date-picker/date-picker.component';
-import { PerspectiveMenuComponent } from './common/perspective-menu/perspective-menu.component';
-import { TimeScopeMenuComponent } from './common/time-scope-menu/time-scope-menu.component';
+import {DatePickerComponent} from './common/date-picker/date-picker.component';
+import {PerspectiveMenuComponent} from './common/perspective-menu/perspective-menu.component';
+import {TimeScopeMenuComponent} from './common/time-scope-menu/time-scope-menu.component';
 import {DateMdPipe} from './common/pipe/date-md.pipe';
-import { MonthScheduleChartComponent } from './schedule/month-chart/month-schedule-chart.component';
+import {MonthScheduleChartComponent} from './schedule/month-chart/month-schedule-chart.component';
 import {TermScheduleChartComponent} from './schedule/term-chart/term-schedule-chart.component';
 import {ScheduleStatisComponent} from './schedule-page/statistic/schedule-statis.component';
-import { MainMenuComponent } from './common/menu/main-menu.component';
+import {MainMenuComponent} from './common/menu/main-menu.component';
 import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 import {DeptMajorSelectComponent} from './common/dept-major-select/dept-major-select.component';
 import {DeptSelectComponent} from './common/dept-select/dept-select.component';
@@ -53,12 +53,14 @@ import {ClassYearSelectComponent} from './common/class-year-select/class-year-se
 import {ScheduleDateLabelPipe} from './common/pipe/schedule-date-label.pipe';
 import {CourseSelectComponent} from './common/course-select/course-select.component';
 import {CourseCateSelectComponent} from './common/course-cate-select/course-cate-select.component';
-import { LessonSelectComponent } from './common/lesson-select/lesson-select.component';
+import {LessonSelectComponent} from './common/lesson-select/lesson-select.component';
 import {CourseService} from './service/course.service';
 import {DeptMajorService} from './service/dept-major.service';
 import {FlatTableStatisComponent} from './schedule/flat-table-statis/flat-table-statis.component';
 import {MonthStatisChartComponent} from './schedule/month-statis-chart/month-statis-chart.component';
 import {TermStatisChartComponent} from './schedule/term-statis-chart/term-statis-chart.component';
+import { DailySummaryStatisComponent } from './schedule-page/summary-statis/daily-summary-statis.component';
+import { SummaryCardComponent } from './common/summary-card/summary-card.component';
 
 @NgModule({
   imports: [
@@ -111,8 +113,11 @@ import {TermStatisChartComponent} from './schedule/term-statis-chart/term-statis
     LessonSelectComponent,
     FlatTableStatisComponent,
     MonthStatisChartComponent,
-    TermStatisChartComponent
+    TermStatisChartComponent,
+    DailySummaryStatisComponent,
+    SummaryCardComponent
   ],
+  entryComponents: [],
   providers: [
     ScheduleService,
     DeptMajorService,

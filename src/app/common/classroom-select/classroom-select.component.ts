@@ -39,14 +39,13 @@ export class ClassroomSelectComponent implements OnInit {
       this.depts = sortBy(uniq(rooms.map(r => r.dept).filter(d => d)), 'id');
       this.roomTypes = uniq(rooms.map(r => r.roomType).filter(t => t))
         .sort((a: string, b: string) => {
-          const lenDiff = a.length - a.length;
+          const lenDiff = a.length - b.length;
           if (lenDiff !== 0) {
             return lenDiff;
           }
           return a.localeCompare(b);
         });
 
-      // this.filterClassroom();
       this.filteredClassrooms = [...rooms];
 
       this.setupAutocomplete();

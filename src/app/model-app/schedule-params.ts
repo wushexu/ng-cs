@@ -31,4 +31,11 @@ export class ScheduleFilter {
 export class StatisticParams {
 
   groupBy: string;
+  aggFields?: string; // recordCount,lessonCount, lessonTime
+}
+
+export class SummaryStatisticParams {
+
+  distinct: string;
+  aggFields?: string;
 }
