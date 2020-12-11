@@ -10,6 +10,7 @@ export class ScheduleFilter {
 
   timeStart?: number;
   // timeEnd?: number;
+  lessonSpan?: number;
   courseType?: string;
   trainingType?: string;
 

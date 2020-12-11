@@ -71,7 +71,7 @@ export class StatisticTableComponent implements AfterViewInit, OnInit, OnChanges
     const context: ScheduleContext = this.schedulesStatis.context;
     const grouping: ScheduleGrouping = context.grouping;
 
-    const displayedColumns = [];
+    const displayedColumns = ['index'];
     if (grouping.groupByTime) {
       const timeGroupBy = grouping.timeGroupBy;
       if (timeGroupBy === 'day') {

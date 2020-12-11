@@ -32,9 +32,8 @@ export class DaySchedule extends ScheduleDatasource {
 
     let lastLesson: Lesson = null;
     for (const schedule of schedules) {
-      const {timeStart, timeEnd} = schedule;
+      const {timeStart, lessonSpan: span} = schedule;
       const index = timeStart >> 1;
-      const span = (timeEnd - timeStart + 1) >> 1;
 
       const thisLesson: Lesson = {schedule, span, startIndex: index};
 

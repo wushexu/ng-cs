@@ -5,6 +5,13 @@
 
   <table mat-table class="ui unstackable table" matSort>
 
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let row; let index=index">
+        {{index + 1 + (paginator ? paginator.pageIndex * paginator.pageSize : 0)}}
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>日期</th>
       <td mat-cell *matCellDef="let row">{{row | scheduleDate}}</td>
@@ -50,8 +57,8 @@
     </ng-container>
 
     <ng-container matColumnDef="classSize">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>班级人数</th>
-      <td mat-cell *matCellDef="let row">{{row.theClass?.size}}人</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>学生人数</th>
+      <td mat-cell *matCellDef="let row">{{row.theClass?.size}}</td>
     </ng-container>
 
     <ng-container matColumnDef="classroom">
@@ -66,7 +73,7 @@
     <ng-container matColumnDef="classroomCapacity">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>教室座位数</th>
       <td mat-cell *matCellDef="let row">
-        <ng-template [ngIf]="row.site?.capacity">{{row.site.capacity}}个</ng-template>
+        <ng-template [ngIf]="row.site?.capacity">{{row.site.capacity}}</ng-template>
       </td>
     </ng-container>
 
@@ -108,7 +115,7 @@
 
     <ng-container matColumnDef="lessonCount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>节数</th>
-      <td mat-cell *matCellDef="let row">{{row.recordCount}}</td>
+      <td mat-cell *matCellDef="let row">{{row.lessonCount}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

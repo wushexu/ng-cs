@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {reduce, uniq} from 'underscore';
-import {combineLatest, Observable, of} from 'rxjs';
+import {groupBy, mapObject, pairs, reduce, uniq} from 'underscore';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
 import {Schedule} from '../model-api/schedule';
-import {Class} from '../model-api/class';
-import {ClassService} from './class.service';
 import {ScheduleFilter, SummaryStatisticParams} from '../model-app/schedule-params';
-import {DeptMajorService} from './dept-major.service';
 import {SummaryStatistic} from '../model-app/summary-statistic';
 import {ScheduleService} from './schedule.service';
+import {ScheduleAggregated} from '../model-api/schedule-aggregated';
 
+
+export declare type SummaryDrillType = 'class' | 'site' | 'teacher' | 'courseN' | 'courseT';
 
 @Injectable()
 export class SummaryStatisticService {
@@ -24,9 +24,7 @@ export class SummaryStatisticService {
   dailySchedulesForStatisticMap: Map<string, Schedule[]> = new Map<string, Schedule[]>();
 
   constructor(protected http: HttpClient,
-              private scheduleService: ScheduleService,
-              private deptMajorService: DeptMajorService,
-              private classService: ClassService) {
+              private scheduleService: ScheduleService) {
     const base = environment.apiBase;
     this.summaryBaseUrl = `${base}/schedules-summary-statis`;
   }
@@ -58,8 +56,7 @@ export class SummaryStatisticService {
     }
 
     summary.classCount = uniq(schedules.map(s => s.classId)).length;
-    summary.studentCount = reduce(uniq(schedules.map(s => s.theClass)).map(c => c ? c.size : 0),
-      (sum, size) => sum + size || 0, 0);
+    summary.studentCount = sum(uniq(schedules.map(s => s.theClass)).map(c => c?.size));
     summary.classroomCount = uniq(schedules.map(s => s.siteId)).length;
     summary.teacherCount = uniq(schedules.map(s => s.teacherId)).length;
     summary.theoryCourseCount = uniq(schedules.filter(s => s.courseType === 'N').map(s => s.courseCode)).length;
@@ -85,6 +82,7 @@ export class SummaryStatisticService {
           console.log(schedules);
 
           const summary = this.doBuildSummary(schedules);
+          summary.date = date;
 
           this.summaryStatisticMap.set(date, summary);
           this.dailySchedulesForStatisticMap.set(date, schedules);
@@ -111,6 +109,8 @@ export class SummaryStatisticService {
         const ts = lessonIndex * 2 - 1;
         const lessonSchedules = daySchedules.filter(s => s.timeStart <= ts && ts <= s.timeEnd);
         const summary = this.doBuildSummary(lessonSchedules);
+        summary.date = date;
+        summary.lesson = lessonIndex;
 
         this.summaryStatisticMap.set(cachedKey, summary);
 
@@ -119,4 +119,66 @@ export class SummaryStatisticService {
     );
   }
 
+  private sumFromDailySchedules(date: string,
+                                drillType: SummaryDrillType,
+                                daySchedules: Schedule[]): ScheduleAggregated[] {
+
+    let idField: string;
+    let objField: string;
+    if (drillType.startsWith('course')) {
+      idField = 'courseCode';
+      objField = 'course';
+      const courseType = drillType.substr(6); // N/T
+      daySchedules = daySchedules.filter(s => s.courseType === courseType);
+    } else {
+      idField = drillType + 'Id';
+      if (drillType === 'class') {
+        objField = 'theClass';
+      } else {
+        objField = drillType;
+      }
+    }
+
+    return pairs(groupBy(daySchedules, idField))
+      .map(([idValueStr, schedules]) => {
+        const obj = schedules[0][objField];
+        const lessonCount = sum(schedules.map(s => s.lessonSpan));
+        return {[objField]: obj, lessonCount};
+      });
+  }
+
+  drillSummaryOfDate(date: string, drillType: SummaryDrillType): Observable<ScheduleAggregated[]> {
+
+    return this.buildSummaryOfDate(date).pipe(
+      map(daySummary => {
+        console.log(daySummary);
+
+        const daySchedules: Schedule[] = this.dailySchedulesForStatisticMap.get(date) || [];
+
+        return this.sumFromDailySchedules(date, drillType, daySchedules);
+      })
+    );
+  }
+
+  drillSummaryOfLesson(date: string, lessonIndex: number, drillType: SummaryDrillType): Observable<ScheduleAggregated[]> {
+
+    return this.buildSummaryOfDate(date).pipe(
+      map(daySummary => {
+        console.log(daySummary);
+
+        const daySchedules: Schedule[] = this.dailySchedulesForStatisticMap.get(date) || [];
+        // lessonIndex: 1-5,
+        const ts = lessonIndex * 2 - 1;
+        const lessonSchedules = daySchedules.filter(s => s.timeStart <= ts && ts <= s.timeEnd);
+
+        return this.sumFromDailySchedules(date, drillType, lessonSchedules);
+      })
+    );
+  }
+
+}
+
+function sum(array) {
+  return reduce(array,
+    (acc, cur) => acc + cur || 0, 0);
 }

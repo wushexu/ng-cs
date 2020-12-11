@@ -69,7 +69,7 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
     const context: ScheduleContext = this.flatSchedules.context;
     const filter: ScheduleFilter = context.filter;
 
-    const displayedColumns = [];
+    const displayedColumns = ['index'];
 
     if (!filter.date) {
       displayedColumns.push('date');
@@ -89,7 +89,7 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
       displayedColumns.push('course');
     }
     if (!filter.lesson) {
-      displayedColumns.push('lessonIndex');
+      displayedColumns.push('timeStart');
     }
     if (!filter.courseType) {
       displayedColumns.push('courseType');

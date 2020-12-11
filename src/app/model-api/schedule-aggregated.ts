@@ -15,7 +15,8 @@ export class ScheduleAggregated {
 
   timeStart?: number;
   timeEnd?: number;
-  courseType: string;
+  lessonSpan?: number;
+  courseType?: string;
   trainingType?: string;
 
   siteId?: number;

@@ -1,5 +1,6 @@
 export class SummaryStatistic {
-  scope: string;
+  date: string; // 2020-12-12
+  lesson?: number; // 1-5
 
   // 有课的班级数
   classCount = 0;

@@ -7,7 +7,6 @@ import {Observable, merge, BehaviorSubject} from 'rxjs';
 
 export const ScheduleCompareFieldMappers = {
   term: s => s.termId,
-  lessonIndex: s => s.timeStart,
   dept: s => s.dept ? s.dept.name : 0,
   major: s => s.major ? s.major.name : 0,
   class: s => s.theClass ? s.theClass.name : 0,

@@ -9,14 +9,11 @@ import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 })
 export class StatisticTableDialogComponent {
 
-  title: string;
   schedulesStatis: SchedulesStatistic;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {
-    title: string;
     schedulesStatis: SchedulesStatistic
   }) {
-    this.title = data.title;
     this.schedulesStatis = data.schedulesStatis;
   }
 

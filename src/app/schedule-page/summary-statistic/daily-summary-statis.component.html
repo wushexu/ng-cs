@@ -36,29 +36,29 @@
     <mat-grid-list [cols]="gridCols" rowHeight="150px">
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="班级" [figure]="daySummary.classCount"
-                          [cardClass]="classCardClass" (click)="showDetail('class')"></app-summary-card>
+                          [cardClass]="classCardClass" (click)="drillSummary('class')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="学生" [figure]="daySummary.studentCount"
-                          [cardClass]="studentCardClass"></app-summary-card>
+                          [cardClass]="studentCardClass" (click)="drillSummary('class')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="教师" [figure]="daySummary.teacherCount"
-                          [cardClass]="teacherCardClass"></app-summary-card>
+                          [cardClass]="teacherCardClass" (click)="drillSummary('teacher')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="教室" [figure]="daySummary.classroomCount"
-                          [cardClass]="classroomCardClass"></app-summary-card>
+                          [cardClass]="classroomCardClass" (click)="drillSummary('site')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="课程数（" subject="理论" supplement="）"
                           [figure]="daySummary.theoryCourseCount"
-                          [cardClass]="courseTheoryCardClass"></app-summary-card>
+                          [cardClass]="courseTheoryCardClass" (click)="drillSummary('courseN')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="课程数（" subject="实训" supplement="）"
                           [figure]="daySummary.trainingCourseCount"
-                          [cardClass]="courseTrainingCardClass"></app-summary-card>
+                          [cardClass]="courseTrainingCardClass" (click)="drillSummary('courseT')"></app-summary-card>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
@@ -84,29 +84,31 @@
     <mat-grid-list [cols]="gridCols" rowHeight="150px" *ngIf="lessonSummary">
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="班级" [figure]="lessonSummary.classCount"
-                          [cardClass]="classCardClass"></app-summary-card>
+                          [cardClass]="classCardClass" (click)="drillSummary('class','lesson')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="学生" [figure]="lessonSummary.studentCount"
-                          [cardClass]="studentCardClass"></app-summary-card>
+                          [cardClass]="studentCardClass" (click)="drillSummary('class','lesson')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="教师" [figure]="lessonSummary.teacherCount"
-                          [cardClass]="teacherCardClass"></app-summary-card>
+                          [cardClass]="teacherCardClass" (click)="drillSummary('teacher','lesson')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="有课的" subject="教室" [figure]="lessonSummary.classroomCount"
-                          [cardClass]="classroomCardClass"></app-summary-card>
+                          [cardClass]="classroomCardClass" (click)="drillSummary('site','lesson')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="课程数（" subject="理论" supplement="）"
                           [figure]="lessonSummary.theoryCourseCount"
-                          [cardClass]="courseTheoryCardClass"></app-summary-card>
+                          [cardClass]="courseTheoryCardClass"
+                          (click)="drillSummary('courseN','lesson')"></app-summary-card>
       </mat-grid-tile>
       <mat-grid-tile>
         <app-summary-card determiner="课程数（" subject="实训" supplement="）"
                           [figure]="lessonSummary.trainingCourseCount"
-                          [cardClass]="courseTrainingCardClass"></app-summary-card>
+                          [cardClass]="courseTrainingCardClass"
+                          (click)="drillSummary('courseT','lesson')"></app-summary-card>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

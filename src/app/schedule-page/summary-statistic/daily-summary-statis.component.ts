@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 
 import {SummaryStatistic} from '../../model-app/summary-statistic';
-import {SummaryStatisticService} from '../../service/summary-statistic.service';
+import {SummaryDrillType, SummaryStatisticService} from '../../service/summary-statistic.service';
 import {DateDim} from '../../model-api/date-dim';
 import {DATE_FORMAT} from '../../config';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -12,6 +12,9 @@ import {StatisticTableDialogComponent} from '../../schedule/statistic-table/stat
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 import {ScheduleFilter} from '../../model-app/schedule-params';
+import {ScheduleContext} from '../../model-app/schedule-context';
+import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
+import {Schedule} from '../../model-api/schedule';
 
 @Component({
   selector: 'app-daily-summary-statis',
@@ -26,7 +29,7 @@ export class DailySummaryStatisComponent implements OnInit {
   teacherCardClass = 'lightsteelblue';
   classroomCardClass = 'lightyellow';
   courseTheoryCardClass = 'lightgreen';
-  courseTrainingCardClass = 'lightcyan';
+  courseTrainingCardClass = 'lightpink';
 
   selectedDate: Moment;
   selectedLesson = 1;
@@ -103,8 +106,7 @@ export class DailySummaryStatisComponent implements OnInit {
     this.summaryService.buildSummaryOfLesson(dateStr, selectedLesson)
       .subscribe(summary => {
         this.lessonSummary = summary;
-        const indexZh = ['一', '二', '三', '四', '五'][selectedLesson - 1];
-        this.lessonLabel = `第${indexZh}节`;
+        this.lessonLabel = Schedule.getLessonLabel(selectedLesson);
       });
   }
 
@@ -121,24 +123,65 @@ export class DailySummaryStatisComponent implements OnInit {
     // this.updateLessonStatistic();
   }
 
-  showSummaryDetailDialog() {
-    const schedulesStatis: SchedulesStatistic = {
-      schedules: [],
-      context: {
-        filter: new ScheduleFilter(),
-        grouping: new ScheduleGrouping()
-      }
-    };
+  async drillSummary(drillType: SummaryDrillType, scope: 'day' | 'lesson' = 'day') {
+    const summary: SummaryStatistic = scope === 'day' ? this.daySummary : this.lessonSummary;
+    if (!summary) {
+      return;
+    }
+
+    const dateStr = summary.date;
+    const service = this.summaryService;
+
+    const obs = scope === 'day' ?
+      service.drillSummaryOfDate(dateStr, drillType)
+      : service.drillSummaryOfLesson(dateStr, summary.lesson, drillType);
+    const schedules: ScheduleAggregated[] = await obs.toPromise();
+    console.log(schedules);
+
+    const context = new ScheduleContext();
+    const filter = new ScheduleFilter();
+    const grouping = new ScheduleGrouping();
+    context.filter = filter;
+    context.grouping = grouping;
+
+    const schedulesStatis = new SchedulesStatistic();
+    schedulesStatis.context = context;
+
+    schedulesStatis.schedules = schedules;
+
+    let scopeName;
+
+    if (scope === 'day') {
+      scopeName = `本日（${dateStr}）`;
+    } else {
+      const lessonLabel = Schedule.getLessonLabel(summary.lesson);
+      scopeName = `本节（${dateStr} ${lessonLabel}）`;
+    }
+
+    let title: string;
+
+    if (drillType === 'class') {
+      grouping.groupByClass = true;
+      title = scopeName + '有课的班级/学生';
+    } else if (drillType === 'site') {
+      grouping.groupByClassroom = true;
+      title = scopeName + '有课的教室';
+    } else if (drillType === 'teacher') {
+      grouping.groupByTeacher = true;
+      title = scopeName + '有课的教师';
+    } else if (drillType === 'courseN') {
+      grouping.groupByCourse = true;
+      title = scopeName + '课程（理论）';
+    } else if (drillType === 'courseT') {
+      grouping.groupByCourse = true;
+      title = scopeName + '课程（实训）';
+    }
+    schedulesStatis.title = title;
+
     this.dialog.open(
       StatisticTableDialogComponent, {
-        width: '250px',
-        data: {title: 'sss', schedulesStatis}
+        width: '450px',
+        data: {schedulesStatis}
       });
-  }
-
-  showDetail(cate) {
-    if (cate === 'class') {
-      this.showSummaryDetailDialog();
-    }
   }
 }

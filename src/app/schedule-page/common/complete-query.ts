@@ -5,6 +5,7 @@ import {BasicQuery} from './basic-query';
 import {Dept} from '../../model-api/dept';
 import {Major} from '../../model-api/major';
 import {Course} from '../../model-api/course';
+import {Schedule} from '../../model-api/schedule';
 
 
 export class CompleteQuery extends BasicQuery {
@@ -121,7 +122,7 @@ export class CompleteQuery extends BasicQuery {
     }
 
     if (context.filter.lesson) {
-      const liCn = ['一', '二', '三', '四', '五'][context.filter.lesson - 1];
+      const liCn = Schedule.getLessonLabel(context.filter.lesson);
       titleParts.push(`第${liCn}节`);
     }
   }
