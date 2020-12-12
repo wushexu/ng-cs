@@ -1,0 +1,15 @@
+.title {
+  color: #3f51b5
+}
+
+.inline-number-input {
+  width: 4em;
+}
+
+.color-select-field, .chart-type-field {
+  width: 6em;
+}
+
+.config-row > div {
+  margin-right: 1em;
+}

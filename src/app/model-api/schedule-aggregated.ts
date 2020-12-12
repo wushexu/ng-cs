@@ -27,10 +27,11 @@ export class ScheduleAggregated {
   //
 
   // lesson?: number; // 1-4
-  // yearMonth?: string;
+  yearMonth?: string;
   deptId?: number;
   majorId?: number;
   classYear?: number;
+  courseCate?: string;
 
   // agg(sum) fields
 

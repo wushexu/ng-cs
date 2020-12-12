@@ -16,8 +16,8 @@ export abstract class ChartConfig {
   lightBackgroundColor = '#FAFAFA'; // #FAFAFA, white
   darkBackgroundColor = '#333'; // #404040, #333, black
 
-  chartTitle = '';
-  chartSubTitle = '';
+  chartTitle: string = null;
+  chartSubTitle: string = null;
   chartLegend: any = null;
 
   get chartToolbox(): object {
@@ -76,7 +76,11 @@ export abstract class ChartConfig {
   buildOption(): EChartOption {
     const option: EChartOption = {
       color: this.chartColors,
-      title: {text: this.chartTitle, subtext: this.chartSubTitle},
+      title: this.chartTitle ?
+        {
+          text: this.chartTitle,
+          subtext: this.chartSubTitle
+        } : null,
       legend: this.chartLegend,
       toolbox: this.chartToolbox
     };

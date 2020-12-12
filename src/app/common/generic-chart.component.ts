@@ -4,10 +4,16 @@ import * as echarts from 'echarts';
 import {EChartOption} from 'echarts';
 
 import {ChartConfig} from './chart-config';
+import {Dimension} from '../model-app/schedule-cube';
 
+export interface ChartDimension {
+  name?: string;
+  type?: 'number' | 'float' | 'int' | 'ordinal' | 'time';
+  displayName?: string;
+}
 
 export interface Dataset {
-  dimensions: any[];
+  dimensions: ChartDimension[];
   source: any[];
 }
 
@@ -16,29 +22,29 @@ export abstract class GenericChartComponent extends ChartConfig implements After
   @ViewChild('chart') chartDiv: ElementRef;
 
   myChart: echarts.ECharts;
-  currentDataset: Dataset;
+  dataset: Dataset;
+
+  dimensions: Dimension[];
 
   ngAfterViewInit(): void {
 
     this.refreshChart();
   }
 
-  abstract buildDataset(dims): Dataset;
+  abstract buildDataset(): boolean;
 
   refreshChart(keepData: boolean = false): void {
     if (!this.chartDiv) {
       return;
     }
-    const dims = [];
 
-    let dataset;
-    if (keepData && this.currentDataset) {
-      dataset = this.currentDataset;
-    } else {
+    if (!keepData || !this.dataset) {
       // console.log(dataset.source.length);
       // console.log('result dimensions: ' + JSON.stringify(dataset.dimensions, null, 2));
-      dataset = this.buildDataset(dims);
-      this.currentDataset = dataset;
+      const ok = this.buildDataset();
+      if (!ok || !this.dataset) {
+        return;
+      }
     }
 
     if (this.myChart) {
@@ -49,24 +55,22 @@ export abstract class GenericChartComponent extends ChartConfig implements After
     const holder = this.chartDiv.nativeElement as HTMLDivElement;
     this.myChart = echarts.init(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
 
-    if (this.chartType === 'pie' && dims.length === 2) {
+    if (this.chartType === 'pie' && this.dimensions.length === 2) {
       // 两级饼图
-      this.buildTwoLayerPie(dims, dataset);
+      this.buildTwoLayerPie();
       return;
     }
 
-    this.buildChart(dims, dataset);
+    this.buildChart();
   }
 
-  buildTwoLayerPie(dims: string[], dataset: Dataset): void {
+  buildTwoLayerPie(): void {
 
-    const dim1Name = 'a';
-    const dim2Name = 'b';
-
+    const dimensions = this.dimensions;
     const innerData = [];
     const outerData = [];
-    const dim1 = dims[0];
-    for (const row of dataset.source) {
+    const dim1 = dimensions[0].name;
+    for (const row of this.dataset.source) {
       let sum = 0;
       for (const dimVal in row) {
         if (!row.hasOwnProperty(dimVal)) {
@@ -86,7 +90,7 @@ export abstract class GenericChartComponent extends ChartConfig implements After
     const option: EChartOption = Object.assign(this.buildOption(), {
         series: [
           {
-            name: dim1Name,
+            name: dimensions[0].displayName,
             type: 'pie',
             selectedMode: 'single',
             radius: [0, '30%'],
@@ -96,7 +100,7 @@ export abstract class GenericChartComponent extends ChartConfig implements After
             data: innerData
           },
           {
-            name: dim2Name,
+            name: dimensions[1].displayName,
             type: 'pie',
             radius: ['40%', '55%'],
             data: outerData
@@ -109,12 +113,13 @@ export abstract class GenericChartComponent extends ChartConfig implements After
   }
 
 
-  buildChart(dims: string[], dataset: Dataset): void {
+  buildChart(): void {
 
+    const dataset = this.dataset;
     const type = this.chartType;
     const series = [];
     const dsDims = dataset.dimensions;
-    if (dims.length > 1) {
+    if (this.dimensions.length > 1) {
       for (let di = 1; di < dsDims.length; di++) {
         const serie: any = {type, name: dsDims[di].displayName};
         if (this.chartTranspose && type !== 'pie') {

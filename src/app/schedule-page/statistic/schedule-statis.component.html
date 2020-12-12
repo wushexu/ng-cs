@@ -165,13 +165,13 @@
                             matTooltip="当仅按日期统计，且时间筛选为月/学期时，可以显示日历图表"
                             matTooltipShowDelay="200"
                             matTooltipHideDelay="200"
-                            matTooltipClass="multi-lines-tooltip">日历图表
+                            matTooltipClass="multi-lines-tooltip">日历
           </mat-radio-button>
           <mat-radio-button value="chart"
                             matTooltip="当不超过两个统计维度时，可以显示折线图、柱状图等"
                             matTooltipShowDelay="200"
                             matTooltipHideDelay="200"
-                            matTooltipClass="multi-lines-tooltip">其他图表
+                            matTooltipClass="multi-lines-tooltip">图表
           </mat-radio-button>
         </mat-radio-group>
 
@@ -209,6 +209,8 @@
     </ng-template>
 
     <ng-template [ngIf]="outputStyle==='chart'">
+      <app-statistic-chart [schedulesStatis]="schedulesStatis" [showTitle]="showTitle"
+                           *ngIf="schedulesStatis"></app-statistic-chart>
     </ng-template>
 
   </div>
