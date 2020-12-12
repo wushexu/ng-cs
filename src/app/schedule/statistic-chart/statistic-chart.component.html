@@ -6,7 +6,18 @@
       </div>
       <div>
         <mat-form-field class="chart-type-field">
-          <mat-label>类型</mat-label>
+          <mat-label>数据</mat-label>
+          <mat-select [(ngModel)]="topN" (selectionChange)="refreshChart()">
+            <mat-option [value]="0">全部</mat-option>
+            <mat-option [value]="10">Top 10</mat-option>
+            <mat-option [value]="50">Top 50</mat-option>
+            <mat-option [value]="100">Top 100</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="chart-type-field">
+          <mat-label>图表类型</mat-label>
           <mat-select [(ngModel)]="chartType" (selectionChange)="redrawChart()">
             <mat-option value="bar">柱状图</mat-option>
             <mat-option value="line">折线图</mat-option>
@@ -58,7 +69,7 @@
       <div class="slide-toggle">
         <mat-slide-toggle [(ngModel)]="chartDarkTheme" color="primary" labelPosition="before"
                           (change)="redrawChart()">
-          深色主题
+          深色背景
         </mat-slide-toggle>
       </div>
     </div>

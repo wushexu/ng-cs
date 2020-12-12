@@ -7,7 +7,7 @@ import {SummaryStatistic} from '../../model-app/summary-statistic';
 import {SummaryDrillType, SummaryStatisticService} from '../../service/summary-statistic.service';
 import {DateDim} from '../../model-api/date-dim';
 import {DATE_FORMAT} from '../../config';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {StatisticTableDialogComponent} from '../../schedule/statistic-table/statistic-table-dialog.component';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';

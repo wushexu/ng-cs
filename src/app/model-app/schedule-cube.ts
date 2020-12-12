@@ -128,7 +128,7 @@ export function prepareData(schedules: ScheduleAggregated[], grouping: ScheduleG
       d.course = s.course?.name;
     } else {
       if (grouping.groupByCourseCate) {
-        d.courseCate = s.courseCate || '-';
+        d.courseCate = s.courseCate;
       }
     }
 

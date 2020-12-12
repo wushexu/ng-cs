@@ -71,7 +71,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   setupContext(): ScheduleContext | null {
     const context: ScheduleContext = super.setupContext();
     if (context) {
-      context.grouping = this.grouping;
+      context.grouping = Object.assign(new ScheduleGrouping(), this.grouping);
     }
 
     return context;
@@ -129,7 +129,7 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
   }
 
   outputStyleChanged() {
-    this.schedulesStatis = null;
+    // this.schedulesStatis = null;
     // console.log(this.outputStyle);
   }
 

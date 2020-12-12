@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
-import {groupBy} from 'underscore';
+import {groupBy, sortBy} from 'underscore';
 
 import {ChartDimension, GenericChartComponent} from '../../common/generic-chart.component';
 import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
@@ -24,6 +24,8 @@ export class StatisticChartComponent extends GenericChartComponent implements On
   chartHeight = 600;
   transparentBackground = false;
 
+  topN = 0;
+
   ngOnInit(): void {
   }
 
@@ -34,7 +36,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
       return false;
     }
 
-    const schedules: ScheduleAggregated[] = statis.schedules;
+    let schedules: ScheduleAggregated[] = statis.schedules;
     const context: ScheduleContext = statis.context;
     const grouping: ScheduleGrouping = context.grouping;
 
@@ -49,6 +51,13 @@ export class StatisticChartComponent extends GenericChartComponent implements On
     const dimension1: Dimension = DimensionsMap[dimensionNames[0]];
 
     const measure = LessonCountMeasure;
+
+    if (this.topN) {
+      schedules = sortBy(schedules, measure.name).reverse();
+      if (schedules.length > this.topN) {
+        schedules = schedules.slice(0, this.topN);
+      }
+    }
 
     let data = prepareData(schedules, grouping);
 

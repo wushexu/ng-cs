@@ -17,3 +17,8 @@
 .group-by-dimension-divider {
   margin-right: 1em;
 }
+
+.statistic-chart {
+  display: block;
+  margin-top: -1em;
+}
