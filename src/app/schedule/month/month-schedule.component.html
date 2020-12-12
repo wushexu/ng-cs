@@ -17,8 +17,9 @@
         <div>第{{ws.week.weekno}}周</div>
         <div>（{{ws.week.firstDay | dateMd}} ~ {{ws.week.lastDay | dateMd}}）</div>
       </td>
-      <td *ngFor="let daySchedule of ws.daySchedules" [class.has-lessons]="daySchedule.lessonSpansCount>0">
-        <app-day-lessons [daySchedule]="daySchedule" fxLayoutAlign="center"></app-day-lessons>
+      <td *ngFor="let daySchedule of ws.daySchedules" [class.has-lessons]="daySchedule.lessonSpansCount>0"
+          class="top aligned">
+        <app-day-lessons [daySchedule]="daySchedule"></app-day-lessons><!-- fxLayoutAlign="center"-->
       </td>
     </tr>
     </tbody>

@@ -58,6 +58,9 @@ export class StatisticTableComponent implements AfterViewInit, OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.schedulesStatis) {
+      if (this.paginator) {
+        this.paginator.pageIndex = 0;
+      }
       this.setupData();
     }
   }

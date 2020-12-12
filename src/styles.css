@@ -51,7 +51,7 @@ td.has-lessons {
 
 td .course-name {
   /*color: #21BA45;*/
-  /*color: #2185D0;*/
+  color: #2185D0;
 }
 
 td .class-name {
@@ -66,8 +66,13 @@ td .teacher-name {
   /*color: #2185D0;*/
 }
 
-td .training-class, td.training-class {
-  border-right: rgba(33, 133, 208, .5) 2px solid;
+div.training-class, td.training-class {
+  /*border-right: rgba(33, 133, 208, .5) 2px solid;*/
+  border-left: rgba(33, 186, 69, .5) 2px solid;
+}
+
+div.training-class {
+  padding-left: 4px !important;
 }
 
 .multi-lines-tooltip {

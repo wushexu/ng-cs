@@ -56,6 +56,9 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.flatSchedules) {
+      if (this.paginator) {
+        this.paginator.pageIndex = 0;
+      }
       this.setupData();
     }
   }

@@ -1,3 +1,7 @@
 .lessons.list {
   text-align: left;
 }
+
+.lesson.item:not(:first-child) {
+  margin-top: 1em;
+}
