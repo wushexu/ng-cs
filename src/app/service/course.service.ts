@@ -6,6 +6,7 @@ import {map, shareReplay, tap} from 'rxjs/operators';
 
 import {Course} from '../model-api/course';
 import {environment} from '../../environments/environment';
+import {DATA_CACHE_TIME} from '../config';
 
 
 @Injectable()
@@ -20,6 +21,12 @@ export class CourseService {
   constructor(protected http: HttpClient) {
     const base = environment.apiBase;
     this.coursesBaseUrl = `${base}/courses`;
+
+    setInterval(() => {
+        this.$courses = null;
+        this.coursesMap = null;
+      },
+      DATA_CACHE_TIME);
   }
 
   getCourses(): Observable<Course[]> {

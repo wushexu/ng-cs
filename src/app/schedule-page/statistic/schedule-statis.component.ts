@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import * as moment from 'moment';
 
-import {MONTH_PICKER_FORMAT} from '../../config';
+import {DEBUG, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {ScheduleFilter, StatisticParams} from '../../model-app/schedule-params';
 import {TimeScope} from '../../model-app/schedule-query-def';
@@ -79,7 +79,9 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
 
   async setupSchedules(context: ScheduleContext, schedules: ScheduleAggregated[]) {
 
-    console.log(context);
+    if (DEBUG) {
+      console.log(context);
+    }
 
     const schedulesStatis = new SchedulesStatistic();
     schedulesStatis.schedules = schedules;

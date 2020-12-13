@@ -7,6 +7,7 @@ import {map, shareReplay, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {Dept} from '../model-api/dept';
 import {Major} from '../model-api/major';
+import {DATA_CACHE_TIME} from '../config';
 
 
 @Injectable()
@@ -27,6 +28,15 @@ export class DeptMajorService {
     const base = environment.apiBase;
     this.deptsBaseUrl = `${base}/depts`;
     this.majorsBaseUrl = `${base}/majors`;
+
+    setInterval(() => {
+        this.$depts = null;
+        this.$deptWithMajors = null;
+        this.$majors = null;
+        this.deptsMap = null;
+        this.majorsMap = null;
+      },
+      DATA_CACHE_TIME);
   }
 
 

@@ -3,7 +3,7 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 
 import * as moment from 'moment';
 
-import {MONTH_PICKER_FORMAT} from '../../config';
+import {DEBUG, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {DaySchedule} from '../../model-table-data/day-schedule';
 import {DateDim} from '../../model-api/date-dim';
@@ -26,6 +26,7 @@ import {TeacherService} from '../../service/teacher.service';
 import {ClassService} from '../../service/class.service';
 import {ClassroomService} from '../../service/classroom.service';
 import {BasicQuery} from '../common/basic-query';
+import {errorHandler} from '../../common/util';
 
 
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
@@ -61,35 +62,41 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
     this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log(params);
-      if (params.has('class-idc')) {
-        this.classService.getClassByIdc(params.get('class-idc'))
-          .subscribe((theClass: Class) => {
-            this.perspective = 'class';
-            this.perspectiveFixed = true;
-            this.selectedClass = theClass;
-          });
-        return;
-      }
-      if (params.has('teacher-idc')) {
-        this.teacherService.getTeacherByIdc(params.get('teacher-idc'))
-          .subscribe((teacher: Teacher) => {
-            this.perspective = 'teacher';
-            this.perspectiveFixed = true;
-            this.selectedTeacher = teacher;
-          });
-        return;
-      }
-      if (params.has('classroom-id')) {
-        this.classroomService.getClassroom(+params.get('classroom-id'))
-          .subscribe((classroom: Classroom) => {
-            this.perspective = 'classroom';
-            this.perspectiveFixed = true;
-            this.selectedClassroom = classroom;
-          });
-        return;
-      }
-    });
+        if (DEBUG) {
+          console.log(params);
+        }
+        if (params.has('class-idc')) {
+          this.classService.getClassByIdc(params.get('class-idc'))
+            .subscribe((theClass: Class) => {
+                this.perspective = 'class';
+                this.perspectiveFixed = true;
+                this.selectedClass = theClass;
+              },
+              errorHandler);
+          return;
+        }
+        if (params.has('teacher-idc')) {
+          this.teacherService.getTeacherByIdc(params.get('teacher-idc'))
+            .subscribe((teacher: Teacher) => {
+                this.perspective = 'teacher';
+                this.perspectiveFixed = true;
+                this.selectedTeacher = teacher;
+              },
+              errorHandler);
+          return;
+        }
+        if (params.has('classroom-id')) {
+          this.classroomService.getClassroom(+params.get('classroom-id'))
+            .subscribe((classroom: Classroom) => {
+                this.perspective = 'classroom';
+                this.perspectiveFixed = true;
+                this.selectedClassroom = classroom;
+              },
+              errorHandler);
+          return;
+        }
+      },
+      errorHandler);
   }
 
   async execute() {
@@ -163,7 +170,9 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
   async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
     const filter: ScheduleFilter = context.filter;
-    console.log(filter);
+    if (DEBUG) {
+      console.log(filter);
+    }
 
     let titlePersPart = '';
     switch (this.perspective) {
@@ -306,7 +315,9 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
 
   perspectiveSelected(perspective: Perspective) {
     this.perspective = perspective;
-    console.log(perspective);
+    if (DEBUG) {
+      console.log(perspective);
+    }
   }
 
 }

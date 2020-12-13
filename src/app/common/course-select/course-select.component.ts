@@ -7,6 +7,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 import {Course} from '../../model-api/course';
 import {CourseService} from '../../service/course.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-course-select',
@@ -75,8 +76,9 @@ export class CourseSelectComponent implements OnInit {
         })
       )
       .subscribe((rooms: Course[]) => {
-        this.autoCompleteCourses = rooms;
-      });
+          this.autoCompleteCourses = rooms;
+        },
+        errorHandler);
   }
 
   filterCourse() {

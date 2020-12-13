@@ -8,6 +8,9 @@ import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {Dimension, DimensionsMap, evalDimensions, LessonCountMeasure, prepareData} from '../../model-app/schedule-cube';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {DEBUG} from '../../config';
+import {errorHandler} from '../../common/util';
 
 
 @Component({
@@ -20,13 +23,41 @@ export class StatisticChartComponent extends GenericChartComponent implements On
   @Input() schedulesStatis: SchedulesStatistic;
   @Input() showTitle: boolean;
 
-  chartWidth = 1000;
+  chartWidth = 1100;
   chartHeight = 600;
   transparentBackground = false;
 
   topN = 0;
 
+  constructor(private breakpointObserver: BreakpointObserver) {
+    super();
+  }
+
   ngOnInit(): void {
+    const breakPointCols = new Map<string, number[]>([
+      ['(max-width: 499px)', [400, 300]],
+      ['(max-width: 599px)', [500, 300]],
+      ['(max-width: 767px)', [600, 400]],
+      ['(max-width: 991px)', [760, 400]],
+      ['(max-width: 1199px)', [920, 500]],
+      ['(min-width: 1200px)', [1120, 600]]
+    ]);
+
+    this.breakpointObserver.observe(Array.from(breakPointCols.keys()))
+      .subscribe(({matches, breakpoints}) => {
+          if (DEBUG) {
+            console.log(matches, breakpoints);
+          }
+          for (const [br, [w, h]] of breakPointCols.entries()) {
+            if (breakpoints[br]) {
+              this.chartWidth = w;
+              this.chartHeight = h;
+              this.redrawChart();
+              return;
+            }
+          }
+        },
+        errorHandler);
   }
 
   buildDataset(): boolean {
@@ -41,7 +72,9 @@ export class StatisticChartComponent extends GenericChartComponent implements On
     const grouping: ScheduleGrouping = context.grouping;
 
     const dimensionNames = evalDimensions(grouping);
-    console.log(`Dimensions: ${dimensionNames}`);
+    if (DEBUG) {
+      console.log(`Dimensions: ${dimensionNames}`);
+    }
     const dimensionsCount = dimensionNames.length;
     if (dimensionsCount === 0 || dimensionsCount > 2) {
       alert('请选择1-2个统计维度');
@@ -103,7 +136,6 @@ export class StatisticChartComponent extends GenericChartComponent implements On
       for (const dim2Val of dim2Values) {
         chartDimensions.push({name: dim2Val, displayName: dim2Val, type: 'int'});
       }
-      // console.log(data);
     }
 
     this.dataset = {source: data, dimensions: chartDimensions};

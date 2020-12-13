@@ -12,6 +12,7 @@ import {ScheduleFilter, SummaryStatisticParams} from '../model-app/schedule-para
 import {SummaryStatistic} from '../model-app/summary-statistic';
 import {ScheduleService} from './schedule.service';
 import {ScheduleAggregated} from '../model-api/schedule-aggregated';
+import {DATA_CACHE_TIME, DEBUG} from '../config';
 
 
 export declare type SummaryDrillType = 'class' | 'site' | 'teacher' | 'courseN' | 'courseT';
@@ -28,11 +29,19 @@ export class SummaryStatisticService {
               private scheduleService: ScheduleService) {
     const base = environment.apiBase;
     this.summaryBaseUrl = `${base}/schedules-summary-statis`;
+
+    setInterval(() => {
+        this.summaryStatisticMap.clear();
+        this.dailySchedulesForStatisticMap.clear();
+      },
+      DATA_CACHE_TIME);
   }
 
   requestSummary(filter: ScheduleFilter, summaryParams: SummaryStatisticParams): Observable<object> {
 
-    console.log(filter);
+    if (DEBUG) {
+      console.log(filter);
+    }
 
     const params = [];
     for (const name in filter) {
@@ -44,7 +53,9 @@ export class SummaryStatisticService {
     params.push(`distinct=${summaryParams.distinct}`);
 
     const url = this.summaryBaseUrl + '?' + params.join('&');
-    console.log(url);
+    if (DEBUG) {
+      console.log(url);
+    }
 
     return this.http.get<object>(url);
   }
@@ -79,8 +90,10 @@ export class SummaryStatisticService {
         map((
           schedules) => {
 
-          console.log('Count: ' + schedules.length);
-          console.log(schedules);
+          if (DEBUG) {
+            console.log('Count: ' + schedules.length);
+            // console.log(schedules);
+          }
 
           const summary = this.doBuildSummary(schedules);
           summary.date = date;
@@ -152,7 +165,9 @@ export class SummaryStatisticService {
 
     return this.buildSummaryOfDate(date).pipe(
       map(daySummary => {
-        console.log(daySummary);
+        if (DEBUG) {
+          console.log(daySummary);
+        }
 
         const daySchedules: Schedule[] = this.dailySchedulesForStatisticMap.get(date) || [];
 
@@ -165,7 +180,9 @@ export class SummaryStatisticService {
 
     return this.buildSummaryOfDate(date).pipe(
       map(daySummary => {
-        console.log(daySummary);
+        if (DEBUG) {
+          console.log(daySummary);
+        }
 
         const daySchedules: Schedule[] = this.dailySchedulesForStatisticMap.get(date) || [];
         // lessonIndex: 1-5,

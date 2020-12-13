@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {uniq, sortBy} from 'underscore';
+import {uniq} from 'underscore';
 
 import {ClassService} from '../../service/class.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-class-year-select',
@@ -20,11 +21,13 @@ export class ClassYearSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getClasses().subscribe(classes => {
-      this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
-      this.selectedYear = this.years[this.years.length - 1];
-      this.selected.emit(this.selectedYear);
-    });
+    this.service.getClasses()
+      .subscribe(classes => {
+          this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
+          this.selectedYear = this.years[this.years.length - 1];
+          this.selected.emit(this.selectedYear);
+        },
+        errorHandler);
   }
 
   yearSelected() {

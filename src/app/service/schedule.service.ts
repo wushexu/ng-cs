@@ -18,6 +18,7 @@ import {CourseService} from './course.service';
 import {ScheduleAggregated} from '../model-api/schedule-aggregated';
 import {Dept} from '../model-api/dept';
 import {Major} from '../model-api/major';
+import {DEBUG} from '../config';
 
 
 @Injectable()
@@ -39,7 +40,9 @@ export class ScheduleService {
 
   query(filter: ScheduleFilter): Observable<Schedule[]> {
 
-    console.log(filter);
+    if (DEBUG) {
+      console.log(filter);
+    }
 
     const params = [];
     for (const name in filter) {
@@ -50,7 +53,9 @@ export class ScheduleService {
     }
 
     const url = this.schedulesBaseUrl + '?' + params.join('&');
-    console.log(url);
+    if (DEBUG) {
+      console.log(url);
+    }
 
     const $schedules = this.http.get<Schedule[]>(url);
 
@@ -80,8 +85,10 @@ export class ScheduleService {
             schedule.site = sitesMap.get(schedule.siteId);
           }
 
-          console.log('Count: ' + schedules.length);
-          console.log(schedules);
+          if (DEBUG) {
+            console.log('Count: ' + schedules.length);
+            // console.log(schedules);
+          }
 
           return schedules;
         })
@@ -90,7 +97,9 @@ export class ScheduleService {
 
   statistic(filter: ScheduleFilter, statisticParams: StatisticParams): Observable<ScheduleAggregated[]> {
 
-    console.log(filter);
+    if (DEBUG) {
+      console.log(filter);
+    }
 
     const params = [];
     for (const name in filter) {
@@ -102,7 +111,9 @@ export class ScheduleService {
     params.push(`groupBy=${statisticParams.groupBy}`);
 
     const url = this.statisBaseUrl + '?' + params.join('&');
-    console.log(url);
+    if (DEBUG) {
+      console.log(url);
+    }
 
     const $schedules = this.http.get<ScheduleAggregated[]>(url);
 
@@ -151,8 +162,10 @@ export class ScheduleService {
             }
           }
 
-          console.log('Count: ' + schedules.length);
-          console.log(schedules);
+          if (DEBUG) {
+            console.log('Count: ' + schedules.length);
+            // console.log(schedules);
+          }
 
           return schedules;
         })

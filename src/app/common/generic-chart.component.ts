@@ -5,6 +5,7 @@ import {EChartOption} from 'echarts';
 
 import {ChartConfig} from './chart-config';
 import {Dimension} from '../model-app/schedule-cube';
+import {DEBUG} from '../config';
 
 export interface ChartDimension {
   name?: string;
@@ -158,8 +159,10 @@ export abstract class GenericChartComponent extends ChartConfig implements After
       }
     );
 
-    console.log(option);
-    // console.log(JSON.stringify(option, null, 2));
+    if (DEBUG) {
+      console.log(option);
+      // console.log(JSON.stringify(option, null, 2));
+    }
 
     this.myChart.setOption(option);
   }

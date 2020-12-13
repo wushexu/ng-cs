@@ -6,6 +6,7 @@ import {Dept} from '../../model-api/dept';
 import {Major} from '../../model-api/major';
 import {Course} from '../../model-api/course';
 import {Schedule} from '../../model-api/schedule';
+import {DEBUG} from '../../config';
 
 
 export class CompleteQuery extends BasicQuery {
@@ -158,32 +159,44 @@ export class CompleteQuery extends BasicQuery {
 
   deptSelected(dept: Dept) {
     this.selectedDept = dept;
-    console.log(dept);
+    if (DEBUG) {
+      console.log(dept);
+    }
   }
 
   majorSelected(major: Major) {
     this.selectedMajor = major;
-    console.log(major);
+    if (DEBUG) {
+      console.log(major);
+    }
   }
 
   classYearSelected(year: number) {
     this.selectedClassYear = year;
-    console.log(year);
+    if (DEBUG) {
+      console.log(year);
+    }
   }
 
   lessonSelected(lessonIndex: number) {
     this.selectedLesson = lessonIndex;
-    console.log(lessonIndex);
+    if (DEBUG) {
+      console.log(lessonIndex);
+    }
   }
 
   courseSelected(course: Course) {
     this.selectedCourse = course;
-    console.log(course);
+    if (DEBUG) {
+      console.log(course);
+    }
   }
 
   courseCateSelected(cate: string) {
     this.selectedCourseCate = cate;
-    console.log(cate);
+    if (DEBUG) {
+      console.log(cate);
+    }
   }
 
 }

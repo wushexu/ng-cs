@@ -8,6 +8,7 @@ import {Major} from '../../model-api/major';
 import {Class} from '../../model-api/class';
 import {ClassService} from '../../service/class.service';
 import {DeptMajorService} from '../../service/dept-major.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-class-select',
@@ -40,17 +41,18 @@ export class ClassSelectComponent implements OnInit {
       this.deptMajorService.getDeptWithMajors(),
       this.deptMajorService.getMajors()
     ]).subscribe(([classes, depts, majors]) => {
-      this.allClasses = classes;
-      this.majors = majors;
-      this.depts = depts;
+        this.allClasses = classes;
+        this.majors = majors;
+        this.depts = depts;
 
-      this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
+        this.years = uniq(classes.map(c => c.year).filter(y => y)).sort();
 
-      this.yearFilter = this.years[this.years.length - 1];
-      this.majorFilter = this.majors[0];
+        this.yearFilter = this.years[this.years.length - 1];
+        this.majorFilter = this.majors[0];
 
-      this.filterClass();
-    });
+        this.filterClass();
+      },
+      errorHandler);
   }
 
   filterClass() {

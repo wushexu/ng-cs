@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8080",
+    "target": "http://39.105.209.195/timetable",
     "changeOrigin": true
   }
 }

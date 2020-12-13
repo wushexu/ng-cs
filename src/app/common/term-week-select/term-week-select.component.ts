@@ -6,6 +6,7 @@ import {TermWeekService} from '../../service/term-week.service';
 import {Term} from '../../model-api/term';
 import {Week} from '../../model-api/week';
 import {DATE_FORMAT} from '../../config';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-term-week-select',
@@ -29,10 +30,11 @@ export class TermWeekSelectComponent implements OnInit {
 
     this.service.getTerms()
       .subscribe((terms: Term[]) => {
-        this.terms = terms;
-        this.selectedTerm = terms[terms.length - 1];
-        this.termChanged();
-      });
+          this.terms = terms;
+          this.selectedTerm = terms[terms.length - 1];
+          this.termChanged();
+        },
+        errorHandler);
   }
 
   termChanged() {
@@ -41,14 +43,15 @@ export class TermWeekSelectComponent implements OnInit {
     }
     this.service.getTermWeeks(this.selectedTerm)
       .subscribe((weeks: Week[]) => {
-        this.weeks = weeks;
-        const today = moment().format(DATE_FORMAT);
-        this.selectedWeek = weeks.find(w => today.localeCompare(w.lastDay) <= 0);
-        if (!this.selectedWeek) {
-          this.selectedWeek = this.weeks[this.weeks.length - 1];
-        }
-        this.selected.emit(this.selectedWeek);
-      });
+          this.weeks = weeks;
+          const today = moment().format(DATE_FORMAT);
+          this.selectedWeek = weeks.find(w => today.localeCompare(w.lastDay) <= 0);
+          if (!this.selectedWeek) {
+            this.selectedWeek = this.weeks[this.weeks.length - 1];
+          }
+          this.selected.emit(this.selectedWeek);
+        },
+        errorHandler);
   }
 
   weekSelected() {

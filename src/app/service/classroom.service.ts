@@ -7,6 +7,7 @@ import {map, shareReplay} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {Site} from '../model-api/site';
 import {DeptMajorService} from './dept-major.service';
+import {DATA_CACHE_TIME} from '../config';
 
 
 @Injectable()
@@ -22,6 +23,12 @@ export class ClassroomService {
               private deptMajorService: DeptMajorService) {
     const base = environment.apiBase;
     this.classroomsBaseUrl = `${base}/sites`;
+
+    setInterval(() => {
+        this.$classrooms = null;
+        this.classroomsMap = null;
+      },
+      DATA_CACHE_TIME);
   }
 
   getClassrooms(): Observable<Site[]> {

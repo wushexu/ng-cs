@@ -45,6 +45,14 @@ body {
   text-align: center;
 }
 
+tr.mat-header-row {
+  height: 48px !important;
+}
+
+tr.mat-row, tr.mat-footer-row {
+  height: 40px !important;
+}
+
 td.has-lessons {
   background-color: rgba(0, 0, 50, .02);
 }
@@ -141,7 +149,7 @@ td.th {
   word-break: keep-all;
 }
 
-.ui.table th.mat-header-cell, .ui.table td.mat-cell, .ui.table td.mat-footer-cell {
+.ui.table td.mat-cell, .ui.table td.mat-footer-cell {
   border-bottom-style: none;
 }
 
@@ -149,8 +157,18 @@ td.th {
   font-size: 1em;
 }
 
-.mat-table.ui.table>thead>tr>th {
-  color: rgba(0,0,0,.7);
+.ui.table thead, .ui.table tbody, .ui.table tfoot, .ui.table mat-header-row,
+.ui.table mat-row, .ui.table mat-footer-row, .ui.table [mat-header-row],
+.ui.table [mat-row], .ui.table [mat-footer-row], .ui.table .mat-table-sticky {
+  background: none;
+}
+
+.mat-table.ui.table > thead > tr > th {
+  color: rgba(0, 0, 0, .7);
+}
+
+.mat-paginator-container {
+  min-height: 48px;
 }
 
 .tables-bottom {

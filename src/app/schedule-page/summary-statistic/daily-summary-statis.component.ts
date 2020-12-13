@@ -6,7 +6,7 @@ import {Moment} from 'moment';
 import {SummaryStatistic} from '../../model-app/summary-statistic';
 import {SummaryDrillType, SummaryStatisticService} from '../../service/summary-statistic.service';
 import {DateDim} from '../../model-api/date-dim';
-import {DATE_FORMAT} from '../../config';
+import {DATE_FORMAT, DEBUG} from '../../config';
 import {MatDialog} from '@angular/material/dialog';
 import {StatisticTableDialogComponent} from '../../schedule/statistic-table/statistic-table-dialog.component';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
@@ -15,6 +15,7 @@ import {ScheduleFilter} from '../../model-app/schedule-params';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 import {Schedule} from '../../model-api/schedule';
+import {errorHandler} from '../../common/util';
 
 @Component({
   selector: 'app-daily-summary-statis',
@@ -56,14 +57,17 @@ export class DailySummaryStatisComponent implements OnInit {
 
     this.breakpointObserver.observe(Array.from(breakPointCols.keys()))
       .subscribe(({matches, breakpoints}) => {
-        console.log(matches, breakpoints);
-        for (const [br, col] of breakPointCols.entries()) {
-          if (breakpoints[br]) {
-            this.gridCols = col;
-            return;
+          if (DEBUG) {
+            console.log(matches, breakpoints);
           }
-        }
-      });
+          for (const [br, col] of breakPointCols.entries()) {
+            if (breakpoints[br]) {
+              this.gridCols = col;
+              return;
+            }
+          }
+        },
+        errorHandler);
 
     this.selectedDate = moment();
     this.updateDayStatistic();
@@ -78,16 +82,17 @@ export class DailySummaryStatisComponent implements OnInit {
     const dateStr = date.format(DATE_FORMAT);
     this.summaryService.buildSummaryOfDate(dateStr)
       .subscribe(summary => {
-        this.daySummary = summary;
-        const today = moment();
-        this.isToday = date.isSame(today, 'day');
-        this.dateLabel = DateDim.fullDateLabel(date);
+          this.daySummary = summary;
+          const today = moment();
+          this.isToday = date.isSame(today, 'day');
+          this.dateLabel = DateDim.fullDateLabel(date);
 
-        if (this.lessonSummary) {
-          this.lessonSummary = null;
-          this.updateLessonStatistic(dateStr);
-        }
-      });
+          if (this.lessonSummary) {
+            this.lessonSummary = null;
+            this.updateLessonStatistic(dateStr);
+          }
+        },
+        errorHandler);
 
   }
 
@@ -105,21 +110,26 @@ export class DailySummaryStatisComponent implements OnInit {
     }
     this.summaryService.buildSummaryOfLesson(dateStr, selectedLesson)
       .subscribe(summary => {
-        this.lessonSummary = summary;
-        this.lessonLabel = Schedule.getLessonLabel(selectedLesson);
-      });
+          this.lessonSummary = summary;
+          this.lessonLabel = Schedule.getLessonLabel(selectedLesson);
+        },
+        errorHandler);
   }
 
 
   dateSelected(date: Moment): void {
     this.selectedDate = date;
-    console.log(date);
+    if (DEBUG) {
+      console.log(date);
+    }
     // this.updateDayStatistic();
   }
 
   lessonSelected(lessonIndex: number) {
     this.selectedLesson = lessonIndex;
-    console.log(lessonIndex);
+    if (DEBUG) {
+      console.log(lessonIndex);
+    }
     // this.updateLessonStatistic();
   }
 
@@ -136,7 +146,6 @@ export class DailySummaryStatisComponent implements OnInit {
       service.drillSummaryOfDate(dateStr, drillType)
       : service.drillSummaryOfLesson(dateStr, summary.lesson, drillType);
     const schedules: ScheduleAggregated[] = await obs.toPromise();
-    console.log(schedules);
 
     const context = new ScheduleContext();
     const filter = new ScheduleFilter();

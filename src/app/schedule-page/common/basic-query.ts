@@ -1,6 +1,6 @@
 import {Moment} from 'moment';
 
-import {DATE_FORMAT} from '../../config';
+import {DATE_FORMAT, DEBUG} from '../../config';
 import {ScheduleFilter} from '../../model-app/schedule-params';
 import {TimeScope} from '../../model-app/schedule-query-def';
 import {Class} from '../../model-api/class';
@@ -89,32 +89,44 @@ export class BasicQuery {
 
   timeScopeSelected(timeScope: TimeScope) {
     this.timeScope = timeScope;
-    console.log(timeScope);
+    if (DEBUG) {
+      console.log(timeScope);
+    }
   }
 
   dateSelected(date: Moment): void {
     this.selectedDate = date;
-    console.log(date);
+    if (DEBUG) {
+      console.log(date);
+    }
   }
 
   monthSelected(yearMonth: string): void {
     this.selectedMonth = yearMonth;
-    console.log(yearMonth);
+    if (DEBUG) {
+      console.log(yearMonth);
+    }
   }
 
   classSelected(selectedClass: Class) {
     this.selectedClass = selectedClass;
-    console.log(selectedClass);
+    if (DEBUG) {
+      console.log(selectedClass);
+    }
   }
 
   teacherSelected(selectedTeacher: Teacher) {
     this.selectedTeacher = selectedTeacher;
-    console.log(selectedTeacher);
+    if (DEBUG) {
+      console.log(selectedTeacher);
+    }
   }
 
   classroomSelected(selectedClassroom: Classroom) {
     this.selectedClassroom = selectedClassroom;
-    console.log(selectedClassroom);
+    if (DEBUG) {
+      console.log(selectedClassroom);
+    }
   }
 
   weekSelected(selectedWeek: Week) {
@@ -122,12 +134,16 @@ export class BasicQuery {
     if (selectedWeek && selectedWeek.term) {
       this.selectedTerm = selectedWeek.term;
     }
-    console.log(selectedWeek);
+    if (DEBUG) {
+      console.log(selectedWeek);
+    }
   }
 
   termSelected(selectedTerm: Term) {
     this.selectedTerm = selectedTerm;
-    console.log(selectedTerm);
+    if (DEBUG) {
+      console.log(selectedTerm);
+    }
   }
 
 }

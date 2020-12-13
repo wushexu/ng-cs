@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {Dept} from '../../model-api/dept';
 import {DeptMajorService} from '../../service/dept-major.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-dept-select',
@@ -22,8 +23,9 @@ export class DeptSelectComponent implements OnInit {
   ngOnInit(): void {
     this.service.getDepts()
       .subscribe(depts => {
-        this.depts = depts;
-      });
+          this.depts = depts;
+        },
+        errorHandler);
   }
 
   deptSelected() {

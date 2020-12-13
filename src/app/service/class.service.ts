@@ -8,6 +8,7 @@ import {environment} from '../../environments/environment';
 import {Major} from '../model-api/major';
 import {Class} from '../model-api/class';
 import {DeptMajorService} from './dept-major.service';
+import {DATA_CACHE_TIME} from '../config';
 
 
 @Injectable()
@@ -23,6 +24,12 @@ export class ClassService {
               private deptMajorService: DeptMajorService) {
     const base = environment.apiBase;
     this.classesBaseUrl = `${base}/classes`;
+
+    setInterval(() => {
+        this.$classes = null;
+        this.classesMap = null;
+      },
+      DATA_CACHE_TIME);
   }
 
 

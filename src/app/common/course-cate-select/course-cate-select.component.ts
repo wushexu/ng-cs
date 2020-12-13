@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {uniq} from 'underscore';
 import {CourseService} from '../../service/course.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-course-cate-select',
@@ -20,19 +21,19 @@ export class CourseCateSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getCourses().subscribe(courses => {
-      this.cates = uniq(courses.map(r => r.cate).filter(y => y))
-        .sort((a: string, b: string) => {
-          const lenDiff = a.length - a.length;
-          if (lenDiff !== 0) {
-            return lenDiff;
-          }
-          return a.localeCompare(b);
-        });
+        this.cates = uniq(courses.map(r => r.cate).filter(y => y))
+          .sort((a: string, b: string) => {
+            const lenDiff = a.length - a.length;
+            if (lenDiff !== 0) {
+              return lenDiff;
+            }
+            return a.localeCompare(b);
+          });
 
-      this.selectedCate = this.cates[0];
-      this.selected.emit(this.selectedCate);
-    });
-
+        this.selectedCate = this.cates[0];
+        this.selected.emit(this.selectedCate);
+      },
+      errorHandler);
   }
 
   cateSelected() {

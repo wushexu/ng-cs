@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {TermWeekService} from '../../service/term-week.service';
 import {Term} from '../../model-api/term';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-term-select',
@@ -23,10 +24,11 @@ export class TermSelectComponent implements OnInit {
 
     this.service.getTerms()
       .subscribe((terms: Term[]) => {
-        this.terms = terms;
-        this.selectedTerm = terms[terms.length - 1];
-        this.selected.emit(this.selectedTerm);
-      });
+          this.terms = terms;
+          this.selectedTerm = terms[terms.length - 1];
+          this.selected.emit(this.selectedTerm);
+        },
+        errorHandler);
   }
 
   termSelected() {

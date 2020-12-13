@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import * as moment from 'moment';
 
-import {MONTH_PICKER_FORMAT} from '../../config';
+import {DEBUG, MONTH_PICKER_FORMAT} from '../../config';
 import {ScheduleService} from '../../service/schedule.service';
 import {ScheduleFilter} from '../../model-app/schedule-params';
 import {Schedule} from '../../model-api/schedule';
@@ -47,7 +47,9 @@ export class CompleteQueryComponent extends CompleteQuery implements OnInit {
 
   async setupSchedules(context: ScheduleContext, schedules: Schedule[]) {
 
-    console.log(context);
+    if (DEBUG) {
+      console.log(context);
+    }
 
     const flatSchedules = new FlatSchedules();
     flatSchedules.schedules = schedules;

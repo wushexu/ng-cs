@@ -7,6 +7,7 @@ import {map, shareReplay, tap} from 'rxjs/operators';
 import {Term} from '../model-api/term';
 import {Week} from '../model-api/week';
 import {environment} from '../../environments/environment';
+import {DATA_CACHE_TIME} from '../config';
 
 
 @Injectable()
@@ -21,6 +22,11 @@ export class TermWeekService {
     const base = environment.apiBase;
     this.termsBaseUrl = `${base}/terms`;
     this.weeksBaseUrl = `${base}/weeks`;
+
+    setInterval(() => {
+        this.$terms = null;
+      },
+      DATA_CACHE_TIME);
   }
 
   getTerms(): Observable<Term[]> {

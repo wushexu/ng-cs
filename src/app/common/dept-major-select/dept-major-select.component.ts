@@ -3,6 +3,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Dept} from '../../model-api/dept';
 import {Major} from '../../model-api/major';
 import {DeptMajorService} from '../../service/dept-major.service';
+import {errorHandler} from '../util';
 
 @Component({
   selector: 'app-dept-major-select',
@@ -23,8 +24,9 @@ export class DeptMajorSelectComponent implements OnInit {
   ngOnInit(): void {
     this.service.getDeptWithMajors()
       .subscribe(depts => {
-        this.depts = depts;
-      });
+          this.depts = depts;
+        },
+        errorHandler);
   }
 
   majorSelected() {
