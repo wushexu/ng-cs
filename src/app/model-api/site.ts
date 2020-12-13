@@ -16,10 +16,16 @@ export class Site {
   deptId?: number;
   dept?: Dept;
 
+  _tooltip?: string;
+
   static tooltip(room: Classroom): string {
     if (!room) {
       return '';
     }
+    if (room._tooltip) {
+      return room._tooltip;
+    }
+
     const tips = [];
     if (room.roomType) {
       tips.push(`教室类别：${room.roomType}`);
@@ -30,7 +36,9 @@ export class Site {
     if (room.multimedia) {
       tips.push(`多媒体：是`);
     }
-    return tips.join('\n');
+
+    room._tooltip = tips.join('\n');
+    return room._tooltip;
   }
 }
 

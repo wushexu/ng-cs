@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {groupBy, mapObject, pairs, reduce, uniq} from 'underscore';
+import {groupBy, pairs, uniq} from 'underscore';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
+import {sum} from '../common/util';
 import {Schedule} from '../model-api/schedule';
 import {ScheduleFilter, SummaryStatisticParams} from '../model-app/schedule-params';
 import {SummaryStatistic} from '../model-app/summary-statistic';
@@ -176,9 +177,4 @@ export class SummaryStatisticService {
     );
   }
 
-}
-
-function sum(array) {
-  return reduce(array,
-    (acc, cur) => acc + cur || 0, 0);
 }

@@ -1,5 +1,7 @@
 import {Major} from './major';
 import {Dept} from './dept';
+import {sum} from '../common/util';
+import {MergedClass} from '../model-app/merged-class';
 
 export class Class {
   id: number;
@@ -15,22 +17,56 @@ export class Class {
   dept?: Dept;
   major?: Major;
 
+  _tooltip?: string;
+
   static classTooltip(theClass: Class): string {
     if (!theClass) {
       return null;
     }
-    const {size, dept, major} = theClass;
+
+    if (theClass._tooltip) {
+      return theClass._tooltip;
+    }
 
     const tips = [];
-    if (size > 0) {
-      tips.push(`人数：${size}`);
+
+    if ((theClass as MergedClass)._merging) {
+      // 合班上课
+      const classM = theClass as MergedClass;
+      const {sameYearMajor, classes} = classM._merging;
+      const sizes = classes.map(c => c.size);
+      const totalSize = sum(sizes);
+      if (totalSize > 0) {
+        tips.push(`人数：${totalSize}（${sizes.join('+')}）`);
+      }
+      if (sameYearMajor) {
+        const {size, dept, major} = classM;
+        if (dept) {
+          tips.push(`系部：${dept.name}`);
+        }
+        if (major) {
+          tips.push(`专业：${major.name}`);
+        }
+      } else {
+        for (const cla of classes) {
+          tips.push(`班级：${cla.name}`);
+        }
+      }
+    } else {
+      const {size, dept, major} = theClass;
+      if (size > 0) {
+        tips.push(`人数：${size}`);
+      }
+      if (dept) {
+        tips.push(`系部：${dept.name}`);
+      }
+      if (major) {
+        tips.push(`专业：${major.name}`);
+      }
     }
-    if (dept) {
-      tips.push(`系部：${dept.name}`);
-    }
-    if (major) {
-      tips.push(`专业：${major.name}`);
-    }
-    return tips.join('\n');
+
+    theClass._tooltip = tips.join('\n');
+
+    return theClass._tooltip;
   }
 }

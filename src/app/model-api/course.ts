@@ -8,9 +8,15 @@ export class Course {
   labByTheory?: boolean;
   locationType?: string;
 
+  _tooltip?: string;
+
   static courseTooltip(course: Course): string {
     if (!course) {
       return '';
+    }
+
+    if (course._tooltip) {
+      return course._tooltip;
     }
 
     const tips = [];
@@ -27,6 +33,8 @@ export class Course {
     if (course.locationType) {
       tips.push(`场地要求：${course.locationType}`);
     }
-    return tips.join('\n');
+
+    course._tooltip = tips.join('\n');
+    return course._tooltip;
   }
 }

@@ -3,6 +3,7 @@ import {Lesson} from '../model-app/lesson';
 import {DateDim} from '../model-api/date-dim';
 import {ScheduleContext} from '../model-app/schedule-context';
 import {ScheduleDatasource} from './schedule-datasource';
+import {MergedClass} from '../model-app/merged-class';
 
 export class DaySchedule extends ScheduleDatasource {
 
@@ -42,8 +43,17 @@ export class DaySchedule extends ScheduleDatasource {
         if (lastSchedule) {
           // overlap
           if (timeStart === lastSchedule.timeStart) {
-            // TODO: merge
-            continue;
+            if (schedule.courseCode === lastSchedule.courseCode
+              && schedule.siteId === lastSchedule.siteId) {
+              if (schedule.classId !== lastSchedule.classId) {
+                // 合班上课
+                schedule.theClass = MergedClass.merge(lastSchedule.theClass, schedule.theClass);
+              } else {
+                continue;
+              }
+            } else {
+              continue;
+            }
           } else if (timeStart <= lastSchedule.timeEnd) {
             continue;
           }
