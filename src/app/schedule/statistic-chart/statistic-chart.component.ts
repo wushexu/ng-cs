@@ -27,7 +27,23 @@ export class StatisticChartComponent extends GenericChartComponent implements On
   chartHeight = 600;
   transparentBackground = false;
 
-  topN = 0;
+  topNOptions = [
+    {value: 0, label: '全部'},
+    {value: 10, label: 'Top 10'},
+    {value: 20, label: 'Top 20'},
+    {value: 50, label: 'Top 50'},
+    {value: 100, label: 'Top 100'}
+  ];
+  topNOption = this.topNOptions[0];
+
+  chartTypeOptions = [
+    {value: 'bar', label: '柱状图'},
+    {value: 'line', label: '折线图'},
+    {value: 'pie', label: '饼状图'},
+    {value: 'scatter', label: '散点图'}
+  ];
+  chartTypeOption = this.chartTypeOptions[0];
+  chartType = this.chartTypeOption.value;
 
   constructor(private breakpointObserver: BreakpointObserver) {
     super();
@@ -85,10 +101,11 @@ export class StatisticChartComponent extends GenericChartComponent implements On
 
     const measure = LessonCountMeasure;
 
-    if (this.topN) {
+    if (this.topNOption?.value) {
+      const topN = this.topNOption.value;
       schedules = sortBy(schedules, measure.name).reverse();
-      if (schedules.length > this.topN) {
-        schedules = schedules.slice(0, this.topN);
+      if (schedules.length > topN) {
+        schedules = schedules.slice(0, topN);
       }
     }
 
@@ -150,5 +167,21 @@ export class StatisticChartComponent extends GenericChartComponent implements On
     } else if (changes.showTitle) {
       this.refreshChart(true);
     }
+  }
+
+  topNSelected(topNOption) {
+    this.topNOption = topNOption;
+    this.refreshChart();
+  }
+
+  chartTypeSelected(ct) {
+    this.chartTypeOption = ct;
+    this.chartType = ct.value;
+    this.redrawChart();
+  }
+
+  beforeBuildChartOption() {
+    // this.chartLegend.type = 'scroll';
+    // this.showChartToolbox = false;
   }
 }

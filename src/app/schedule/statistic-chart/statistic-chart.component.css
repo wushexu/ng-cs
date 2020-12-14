@@ -2,6 +2,10 @@
   color: #3f51b5
 }
 
+.dropdown-menu {
+  min-height: 2em;
+}
+
 .inline-number-input {
   width: 4em;
 }

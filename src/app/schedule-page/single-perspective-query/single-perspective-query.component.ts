@@ -26,7 +26,7 @@ import {TeacherService} from '../../service/teacher.service';
 import {ClassService} from '../../service/class.service';
 import {ClassroomService} from '../../service/classroom.service';
 import {BasicQuery} from '../common/basic-query';
-import {errorHandler} from '../../common/util';
+import {errorHandler, handle404} from '../../common/util';
 
 
 declare type OutputStyle = 'table' | 'detail-table' | 'calendar-chart';
@@ -55,6 +55,16 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
               private classroomService: ClassroomService,
               private route: ActivatedRoute) {
     super();
+    route.data.subscribe(data => {
+      const perspective = data.perspective;
+      const perspectiveFixed = data.perspectiveFixed;
+      if (typeof perspective === 'string') {
+        this.perspective = perspective as Perspective;
+      }
+      if (typeof perspectiveFixed === 'boolean') {
+        this.perspectiveFixed = perspectiveFixed;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -66,33 +76,36 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
           console.log(params);
         }
         if (params.has('class-idc')) {
-          this.classService.getClassByIdc(params.get('class-idc'))
+          const idc = params.get('class-idc');
+          this.classService.getClassByIdc(idc)
             .subscribe((theClass: Class) => {
                 this.perspective = 'class';
                 this.perspectiveFixed = true;
                 this.selectedClass = theClass;
               },
-              errorHandler);
+              handle404('未找到班级 ' + idc));
           return;
         }
         if (params.has('teacher-idc')) {
-          this.teacherService.getTeacherByIdc(params.get('teacher-idc'))
+          const idc = params.get('teacher-idc');
+          this.teacherService.getTeacherByIdc(idc)
             .subscribe((teacher: Teacher) => {
                 this.perspective = 'teacher';
                 this.perspectiveFixed = true;
                 this.selectedTeacher = teacher;
               },
-              errorHandler);
+              handle404('未找到教师 ' + idc));
           return;
         }
         if (params.has('classroom-id')) {
-          this.classroomService.getClassroom(+params.get('classroom-id'))
+          const id = +params.get('classroom-id');
+          this.classroomService.getClassroom(id)
             .subscribe((classroom: Classroom) => {
                 this.perspective = 'classroom';
                 this.perspectiveFixed = true;
                 this.selectedClassroom = classroom;
               },
-              errorHandler);
+              handle404('未找到教室 ' + id));
           return;
         }
       },

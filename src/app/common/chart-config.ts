@@ -18,9 +18,15 @@ export abstract class ChartConfig {
 
   chartTitle: string = null;
   chartSubTitle: string = null;
-  chartLegend: any = null;
+  chartLegend: EChartOption.Legend = {
+    show: false
+  };
+  showChartToolbox = true;
 
   get chartToolbox(): object {
+    if (!this.showChartToolbox) {
+      return null;
+    }
     return {
       show: true,
       feature: {

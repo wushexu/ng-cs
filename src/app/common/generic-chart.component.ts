@@ -34,6 +34,14 @@ export abstract class GenericChartComponent extends ChartConfig implements After
 
   abstract buildDataset(): boolean;
 
+  beforeBuildChartOption() {
+
+  }
+
+  afterBuildChartOption(option: EChartOption) {
+
+  }
+
   refreshChart(keepData: boolean = false): void {
     if (!this.chartDiv) {
       return;
@@ -55,6 +63,8 @@ export abstract class GenericChartComponent extends ChartConfig implements After
 
     const holder = this.chartDiv.nativeElement as HTMLDivElement;
     this.myChart = echarts.init(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
+
+    this.beforeBuildChartOption();
 
     if (this.chartType === 'pie' && this.dimensions.length === 2) {
       // 两级饼图
@@ -110,6 +120,8 @@ export abstract class GenericChartComponent extends ChartConfig implements After
       }
     );
 
+    this.afterBuildChartOption(option);
+
     this.myChart.setOption(option);
   }
 
@@ -163,6 +175,8 @@ export abstract class GenericChartComponent extends ChartConfig implements After
       console.log(option);
       // console.log(JSON.stringify(option, null, 2));
     }
+
+    this.afterBuildChartOption(option);
 
     this.myChart.setOption(option);
   }

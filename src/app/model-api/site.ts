@@ -10,8 +10,10 @@ export class Site {
   roomType?: string;
   capacity?: number;
   multimedia?: string;
-  name4Training?: string;
-  memo?: string;
+  // name4Training?: string;
+  // memo?: string;
+  building?: string;
+  storey?: number;
 
   deptId?: number;
   dept?: Dept;

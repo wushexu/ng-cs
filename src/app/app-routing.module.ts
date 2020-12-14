@@ -8,9 +8,9 @@ import {DailySummaryStatisComponent} from './schedule-page/summary-statistic/dai
 
 const routes: Routes = [
   {path: 'query', component: SinglePerspectiveQueryComponent},
-  {path: 'query-cl/:class-idc', component: SinglePerspectiveQueryComponent},
-  {path: 'query-tc/:teacher-idc', component: SinglePerspectiveQueryComponent},
-  {path: 'query-cr/:classroom-id', component: SinglePerspectiveQueryComponent},
+  {path: 'query-cl/:class-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'class', perspectiveFixed: true}},
+  {path: 'query-tc/:teacher-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'teacher', perspectiveFixed: true}},
+  {path: 'query-cr/:classroom-id', component: SinglePerspectiveQueryComponent, data: {perspective: 'classroom', perspectiveFixed: true}},
   {path: 'query-g', component: CompleteQueryComponent},
   {path: 'statis-g', component: ScheduleStatisComponent},
   {path: 'statis', component: DailySummaryStatisComponent}
