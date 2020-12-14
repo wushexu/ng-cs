@@ -145,8 +145,11 @@ td.th {
 
 .dropdown-menu-selected-label {
   margin-left: 1em;
-  margin-right: 1.5em;
   word-break: keep-all;
+}
+
+.perspective-menu .dropdown-menu-selected-label, .time-scope-menu .dropdown-menu-selected-label {
+  margin-right: 1.5em;
 }
 
 .ui.table td.mat-cell, .ui.table td.mat-footer-cell {
