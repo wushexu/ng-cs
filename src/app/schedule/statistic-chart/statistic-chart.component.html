@@ -62,7 +62,11 @@
         &nbsp;&nbsp;
         <mat-slide-toggle [(ngModel)]="chartStack"
                           [disabled]="(chartType!=='bar'&&chartType!=='line')||dimensions?.length!==2"
-                          color="primary" labelPosition="before" (change)="redrawChart()">
+                          color="primary" labelPosition="before" (change)="redrawChart()"
+                          matTooltip="当有两个维度时，第二个维度可以堆叠显示"
+                          matTooltipShowDelay="200"
+                          matTooltipHideDelay="200"
+                          matTooltipClass="multi-lines-tooltip">
           堆叠
         </mat-slide-toggle>
         &nbsp;&nbsp;

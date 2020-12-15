@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 import {groupBy, sortBy} from 'underscore';
 
@@ -45,7 +45,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
   chartTypeOption = this.chartTypeOptions[0];
   chartType = this.chartTypeOption.value;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private cdr: ChangeDetectorRef) {
     super();
   }
 
@@ -98,6 +98,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
     }
 
     const dimension1: Dimension = DimensionsMap[dimensionNames[0]];
+    const dimension1Name = dimension1.name;
 
     const measure = LessonCountMeasure;
 
@@ -113,7 +114,11 @@ export class StatisticChartComponent extends GenericChartComponent implements On
 
     const chartDimensions: ChartDimension[] = [];
 
-    chartDimensions.push({name: dimension1.name, displayName: dimension1.displayName, type: 'ordinal'});
+    chartDimensions.push({
+      name: dimension1Name,
+      displayName: dimension1.displayName,
+      type: 'ordinal'
+    });
 
     if (dimensionsCount === 1) {
       chartDimensions.push({name: measure.name, displayName: measure.displayName, type: 'int'});
@@ -124,7 +129,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
       const dimension2: Dimension = DimensionsMap[dimensionNames[1]];
       this.dimensions = [dimension1, dimension2];
 
-      const dimField1 = dimension1.name;
+      const dimField1 = dimension1Name;
       const dimField2 = dimension2.name;
       const meaField = measure.name;
 
@@ -149,13 +154,20 @@ export class StatisticChartComponent extends GenericChartComponent implements On
         newData.push(newRow);
       }
       data = newData;
+      if (dimField1 === 'date') {
+        data = sortBy(data, dimField1);
+      }
 
-      for (const dim2Val of dim2Values) {
+      const values = Array.from(dim2Values).sort();
+      for (const dim2Val of values) {
         chartDimensions.push({name: dim2Val, displayName: dim2Val, type: 'int'});
       }
     }
 
     this.dataset = {source: data, dimensions: chartDimensions};
+
+    this.cdr.detectChanges();
+
     return true;
   }
 

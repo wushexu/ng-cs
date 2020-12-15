@@ -140,6 +140,15 @@ export abstract class GenericChartComponent extends ChartConfig implements After
         }
         series.push(serie);
       }
+
+      if (this.chartStack && (type === 'line' || type === 'bar')) {
+        series.forEach(serie => {
+          serie.stack = 'A';
+          if (type === 'line') {
+            serie.areaStyle = {};
+          }
+        });
+      }
     } else {
       const seriesName = dsDims[1].displayName;
       const serie: any = {type, name: seriesName};
@@ -148,14 +157,6 @@ export abstract class GenericChartComponent extends ChartConfig implements After
       }
       series.push(serie);
     }
-    series.forEach(serie => {
-      if (this.chartStack) {
-        serie.stack = 'A';
-        if (type === 'line') {
-          serie.areaStyle = {};
-        }
-      }
-    });
 
     // console.log(JSON.stringify(series, null, 2));
 
