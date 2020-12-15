@@ -150,9 +150,9 @@
 
         <div class="group-by-dimensions-row">
           <button mat-button (click)="grouping.clearGroupBys()">重置</button>
+          <button mat-button (click)="grouping.groupByDateOnly()">仅按日期</button>
           <button mat-button (click)="grouping.groupByTeacherOnly()">仅按教师</button>
           <button mat-button (click)="grouping.groupByClassroomOnly()">仅按教室</button>
-          <button mat-button (click)="grouping.groupByDateOnly()">仅按日期</button>
         </div>
 
       </div>
@@ -165,16 +165,16 @@
         <mat-radio-group [(ngModel)]="outputStyle" (change)="outputStyleChanged()" class="output-style-radio-group">
           <mat-radio-button value="table">表格</mat-radio-button>
           <mat-radio-button value="calendar-chart"
-                            [disabled]="(timeScope!=='month'&&timeScope!=='term')||!grouping.isGroupByDateOnly()"
+                            [disabled]="!canShowCalendarChart()"
                             matTooltip="当仅按日期统计，且时间筛选为月/学期时，可以显示日历图表"
-                            matTooltipShowDelay="200"
+                            matTooltipShowDelay="1000"
                             matTooltipHideDelay="200"
                             matTooltipClass="multi-lines-tooltip">日历
           </mat-radio-button>
           <mat-radio-button value="chart"
                             matTooltip="当不超过两个统计维度时，可以显示折线图、柱状图等。
                             如果选择了更细一级维度（如班级），上层维度将会被忽略（如系部/专业/入学年）"
-                            matTooltipShowDelay="200"
+                            matTooltipShowDelay="1000"
                             matTooltipHideDelay="200"
                             matTooltipClass="multi-lines-tooltip">图表
           </mat-radio-button>

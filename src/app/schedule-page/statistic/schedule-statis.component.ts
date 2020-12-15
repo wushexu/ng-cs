@@ -43,12 +43,23 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
     this.selectedMonth = this.selectedDate.format(MONTH_PICKER_FORMAT);
   }
 
+  canShowCalendarChart(): boolean {
+    return this.grouping.isGroupByDateOnly()
+      && (this.timeScope === 'month' || this.timeScope === 'term');
+  }
 
   async execute() {
 
     if (!this.grouping.anySelected()) {
       alert('请选择至少一个统计维度');
       return;
+    }
+
+    //
+    if (this.outputStyle === 'calendar-chart') {
+      if (!this.canShowCalendarChart()) {
+        this.outputStyle = 'table';
+      }
     }
 
     const context: ScheduleContext = this.setupContext();

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 
 import * as moment from 'moment';
-import * as echarts from 'echarts';
+import {init as echartsInit} from 'echarts';
 
 import {DaySchedule} from '../../model-table-data/day-schedule';
 import {ScheduleCalendarChart} from '../../common/schedule-calendar-chart';
@@ -52,7 +52,7 @@ export class TermScheduleChartComponent extends ScheduleCalendarChart implements
       this.myChart.dispose();
     }
     const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
-    this.myChart = echarts.init(holder);
+    this.myChart = echartsInit(holder);
   }
 
   ngAfterViewInit(): void {

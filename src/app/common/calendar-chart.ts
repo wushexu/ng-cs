@@ -75,6 +75,12 @@ export abstract class CalendarChart {
           const dateData = params.data.dateData as CalenderDateData;
           // console.log(dateData);
           return dateData.tooltip;
+        },
+        backgroundColor: 'rgba(50,50,50,0.7)',
+        // borderColor: '#333',
+        borderWidth: 0,
+        textStyle: {
+          color: '#fff'
         }
       },
       toolbox: {
@@ -82,6 +88,7 @@ export abstract class CalendarChart {
         feature: {
           saveAsImage: {
             show: true,
+            title: '图片',
             pixelRatio: 2
           }
         }

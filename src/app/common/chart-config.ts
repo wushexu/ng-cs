@@ -19,7 +19,12 @@ export abstract class ChartConfig {
   chartTitle: string = null;
   chartSubTitle: string = null;
   chartLegend: any = {
-    show: false
+    show: false,
+    type: 'scroll',
+    orient: 'vertical',
+    right: 10,
+    top: 40,
+    bottom: 20
   };
   showChartToolbox = true;
 
@@ -35,6 +40,7 @@ export abstract class ChartConfig {
         // restore: {show: true},
         saveAsImage: {
           show: true,
+          title: '图片',
           pixelRatio: 2,
           backgroundColor: this.chartDarkTheme ? this.darkBackgroundColor : this.lightBackgroundColor
         }
@@ -88,6 +94,9 @@ export abstract class ChartConfig {
           subtext: this.chartSubTitle
         } : null,
       legend: this.chartLegend,
+      tooltip: {
+        trigger: this.chartType === 'pie' ? 'item' : 'axis'
+      },
       toolbox: this.chartToolbox
     };
     if (this.transparentBackground) {

@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 
-import * as echarts from 'echarts';
-import {EChartsOption} from 'echarts';
+import {EChartsOption, init as echartsInit} from 'echarts';
 
 import {ChartConfig} from './chart-config';
 import {Dimension} from '../model-app/schedule-cube';
@@ -62,7 +61,7 @@ export abstract class GenericChartComponent extends ChartConfig implements After
     }
 
     const holder = this.chartDiv.nativeElement as HTMLDivElement;
-    this.myChart = echarts.init(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
+    this.myChart = echartsInit(holder, this.chartDarkTheme ? 'dark' : null/*, {renderer: 'svg'}*/); // light
 
     this.beforeBuildChartOption();
 
@@ -161,13 +160,18 @@ export abstract class GenericChartComponent extends ChartConfig implements After
     // console.log(JSON.stringify(series, null, 2));
 
     const option: EChartsOption = Object.assign(this.buildOption(), {
-        tooltip: {trigger: 'axis'},
         dataset,
         xAxis: {
-          type: this.chartTranspose ? 'value' : 'category'
+          type: this.chartTranspose ? 'value' : 'category',
+          axisLine: {
+            show: true
+          }
         },
         yAxis: {
-          type: this.chartTranspose ? 'category' : 'value'
+          type: this.chartTranspose ? 'category' : 'value',
+          axisLine: {
+            show: true
+          }
         },
         series
       }

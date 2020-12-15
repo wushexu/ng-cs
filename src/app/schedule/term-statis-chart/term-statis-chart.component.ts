@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import * as moment from 'moment';
-import * as echarts from 'echarts';
+import {init as echartsInit} from 'echarts';
 
 import {StatisCalendarChart} from '../../common/statis-calendar-chart';
 import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
@@ -54,7 +54,7 @@ export class TermStatisChartComponent extends StatisCalendarChart implements Aft
       this.myChart.dispose();
     }
     const holder: HTMLDivElement = this.chartDiv.nativeElement as HTMLDivElement;
-    this.myChart = echarts.init(holder);
+    this.myChart = echartsInit(holder);
   }
 
   ngAfterViewInit(): void {
