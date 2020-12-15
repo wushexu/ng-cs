@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 
 import * as echarts from 'echarts';
-import {EChartOption} from 'echarts';
+import {EChartsOption} from 'echarts';
 
 import {ChartConfig} from './chart-config';
 import {Dimension} from '../model-app/schedule-cube';
@@ -22,7 +22,7 @@ export interface Dataset {
 export abstract class GenericChartComponent extends ChartConfig implements AfterViewInit {
   @ViewChild('chart') chartDiv: ElementRef;
 
-  myChart: echarts.ECharts;
+  myChart: any;
   dataset: Dataset;
 
   dimensions: Dimension[];
@@ -38,7 +38,7 @@ export abstract class GenericChartComponent extends ChartConfig implements After
 
   }
 
-  afterBuildChartOption(option: EChartOption) {
+  afterBuildChartOption(option: EChartsOption) {
 
   }
 
@@ -98,7 +98,7 @@ export abstract class GenericChartComponent extends ChartConfig implements After
       innerData.push({name: row[dim1], value: sum});
     }
 
-    const option: EChartOption = Object.assign(this.buildOption(), {
+    const option: EChartsOption = Object.assign(this.buildOption(), {
         series: [
           {
             name: dimensions[0].displayName,
@@ -160,14 +160,15 @@ export abstract class GenericChartComponent extends ChartConfig implements After
 
     // console.log(JSON.stringify(series, null, 2));
 
-    const xAxis: EChartOption.XAxis = this.chartTranspose ? {type: 'value'} : {type: 'category'};
-    const yAxis: EChartOption.YAxis = this.chartTranspose ? {type: 'category'} : {type: 'value'};
-
-    const option: EChartOption = Object.assign(this.buildOption(), {
+    const option: EChartsOption = Object.assign(this.buildOption(), {
         tooltip: {trigger: 'axis'},
         dataset,
-        xAxis,
-        yAxis,
+        xAxis: {
+          type: this.chartTranspose ? 'value' : 'category'
+        },
+        yAxis: {
+          type: this.chartTranspose ? 'category' : 'value'
+        },
         series
       }
     );

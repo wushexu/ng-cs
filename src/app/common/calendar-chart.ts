@@ -1,10 +1,9 @@
 import {Moment} from 'moment';
 
-import * as echarts from 'echarts';
-import {EChartOption} from 'echarts';
-import Format = echarts.EChartOption.Tooltip.Format;
+import {EChartsOption} from 'echarts';
 
 import {ScheduleDatasource} from '../model-table-data/schedule-datasource';
+import {DEBUG} from '../config';
 
 export interface CalenderDateData {
   dayOfMonth: number;
@@ -24,7 +23,7 @@ export abstract class CalendarChart {
   // this.chartHeight = this.calendarTop + cellRows * this.cellSize + this.chartPaddingBottom;
   chartHeight = 50 + this.cellSize + Math.ceil((7 - 1 + 31) / 7) * this.cellSize + this.chartPaddingBottom; // 570
 
-  myChart: echarts.ECharts;
+  myChart: any;
   viewInitialized = false;
 
   abstract get scheduleDatasource(): ScheduleDatasource;
@@ -64,7 +63,7 @@ export abstract class CalendarChart {
       }
     }
 
-    const option1: EChartOption = {
+    const option1: EChartsOption = {
       color: null,
       title: this.showTitle && this.scheduleDatasource.title ? {
         text: this.scheduleDatasource.title,
@@ -72,7 +71,7 @@ export abstract class CalendarChart {
         left: 'center'
       } : null,
       tooltip: {
-        formatter(params: Format) {
+        formatter(params) {
           const dateData = params.data.dateData as CalenderDateData;
           // console.log(dateData);
           return dateData.tooltip;
@@ -169,7 +168,9 @@ export abstract class CalendarChart {
       ]
     };
 
-    console.log(option1);
+    if (DEBUG) {
+      console.log(option1);
+    }
     this.myChart.setOption(option1);
   }
 

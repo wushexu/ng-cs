@@ -1,4 +1,4 @@
-import {EChartOption} from 'echarts';
+import {EChartsOption} from 'echarts';
 
 export abstract class ChartConfig {
 
@@ -18,7 +18,7 @@ export abstract class ChartConfig {
 
   chartTitle: string = null;
   chartSubTitle: string = null;
-  chartLegend: EChartOption.Legend = {
+  chartLegend: any = {
     show: false
   };
   showChartToolbox = true;
@@ -79,8 +79,8 @@ export abstract class ChartConfig {
 
   abstract refreshChart(keepData): void;
 
-  buildOption(): EChartOption {
-    const option: EChartOption = {
+  buildOption(): EChartsOption {
+    const option: EChartsOption = {
       color: this.chartColors,
       title: this.chartTitle ?
         {
