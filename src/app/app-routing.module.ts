@@ -5,8 +5,10 @@ import {SinglePerspectiveQueryComponent} from './schedule-page/single-perspectiv
 import {ScheduleStatisComponent} from './schedule-page/statistic/schedule-statis.component';
 import {CompleteQueryComponent} from './schedule-page/complete-query/complete-query.component';
 import {DailySummaryStatisComponent} from './schedule-page/summary-statistic/daily-summary-statis.component';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
   {path: 'query', component: SinglePerspectiveQueryComponent},
   {path: 'query-cl/:class-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'class', perspectiveFixed: true}},
   {path: 'query-tc/:teacher-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'teacher', perspectiveFixed: true}},

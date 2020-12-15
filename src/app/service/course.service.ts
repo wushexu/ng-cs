@@ -39,6 +39,8 @@ export class CourseService {
               coursesMap.set(course.code, course);
             }
             this.coursesMap = coursesMap;
+
+            courses.sort((c1, c2) => c1.name.localeCompare(c2.name));
           }),
           shareReplay()
         );

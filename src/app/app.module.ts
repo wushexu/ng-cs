@@ -64,6 +64,7 @@ import { SummaryCardComponent } from './common/summary-card/summary-card.compone
 import {SummaryStatisticService} from './service/summary-statistic.service';
 import {StatisticTableDialogComponent} from './schedule/statistic-table/statistic-table-dialog.component';
 import {StatisticChartComponent} from './schedule/statistic-chart/statistic-chart.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [
@@ -120,7 +121,8 @@ import {StatisticChartComponent} from './schedule/statistic-chart/statistic-char
     DailySummaryStatisComponent,
     SummaryCardComponent,
     StatisticTableDialogComponent,
-    StatisticChartComponent
+    StatisticChartComponent,
+    HomeComponent
   ],
   entryComponents: [StatisticTableDialogComponent],
   providers: [

@@ -103,6 +103,9 @@ export class DeptMajorService {
             major.dept = this.deptsMap.get(major.deptId);
           }
           this.majorsMap = majorsMap;
+
+          majors.sort((c1, c2) => c1.name.localeCompare(c2.name));
+
           return majors;
         }),
         shareReplay()

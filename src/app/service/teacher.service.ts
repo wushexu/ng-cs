@@ -71,6 +71,8 @@ export class TeacherService {
               teachersMap.set(teacher.id, teacher);
             }
             this.teachersMap = teachersMap;
+
+            teachers.sort((c1, c2) => c1.name.localeCompare(c2.name));
           }),
           shareReplay()
         );
