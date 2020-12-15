@@ -21,6 +21,7 @@ const Dimensions: Dimension[] = [
   {name: 'major', displayName: '专业'},
   {name: 'classYear', displayName: '入学年'},
   {name: 'class', displayName: '班级'},
+  {name: 'lesson', displayName: '节次'},
   {name: 'classroom', displayName: '教室'},
   {name: 'teacher', displayName: '教师'},
   {name: 'courseCate', displayName: '课程类别'},
@@ -83,6 +84,10 @@ export function evalDimensions(grouping: ScheduleGrouping): string[] {
     dims.push('courseType');
   }
 
+  if (grouping.groupByLesson) {
+    dims.push('lesson');
+  }
+
   return dims;
 }
 
@@ -135,6 +140,11 @@ export function prepareData(schedules: ScheduleAggregated[], grouping: ScheduleG
     if (grouping.groupByCourseType) {
       d.courseType = s.courseType === 'N' ? '理论' : '实训';
     }
+
+    if (grouping.groupByLesson) {
+      d.lesson = s.lesson;
+    }
+
     d.lessonCount = s.lessonCount;
     return d;
   });

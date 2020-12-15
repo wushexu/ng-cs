@@ -43,17 +43,18 @@ export class DaySchedule extends ScheduleDatasource {
         if (lastSchedule) {
           // overlap
           if (timeStart === lastSchedule.timeStart) {
-            if (schedule.courseCode === lastSchedule.courseCode
-              && schedule.siteId === lastSchedule.siteId) {
-              if (schedule.classId !== lastSchedule.classId) {
-                // 合班上课
-                schedule.theClass = MergedClass.merge(lastSchedule.theClass, schedule.theClass);
-              } else {
-                continue;
-              }
-            } else {
-              continue;
-            }
+            // if (schedule.courseCode === lastSchedule.courseCode
+            //   && schedule.siteId === lastSchedule.siteId) {
+            //   if (schedule.classId !== lastSchedule.classId) {
+            //     // 合班上课
+            //     schedule.theClass = MergedClass.merge(lastSchedule.theClass, schedule.theClass);
+            //   } else {
+            //     continue;
+            //   }
+            // } else {
+            //   continue;
+            // }
+            continue;
           } else if (timeStart <= lastSchedule.timeEnd) {
             continue;
           }

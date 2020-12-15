@@ -21,7 +21,7 @@ export class ScheduleFilter {
 
   /* Schedule properties End */
 
-  lesson?: number; // 1-4
+  lesson?: number; // 1-5
   yearMonth?: string;
   deptId?: number;
   majorId?: number;

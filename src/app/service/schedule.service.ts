@@ -19,6 +19,8 @@ import {ScheduleAggregated} from '../model-api/schedule-aggregated';
 import {Dept} from '../model-api/dept';
 import {Major} from '../model-api/major';
 import {DEBUG} from '../config';
+import {MergedClass} from '../model-app/merged-class';
+import {MergedTeacher} from '../model-app/merged-teacher';
 
 
 @Injectable()
@@ -79,10 +81,11 @@ export class ScheduleService {
                sitesMap]) => {
 
           for (const schedule of schedules) {
-            schedule.theClass = classesMap.get(schedule.classId);
             schedule.course = coursesMap.get(schedule.courseCode);
-            schedule.teacher = teachersMap.get(schedule.teacherId);
             schedule.site = sitesMap.get(schedule.siteId);
+
+            this.processClass(schedule, classesMap);
+            this.processTeacher(schedule, teachersMap);
           }
 
           if (DEBUG) {
@@ -93,6 +96,44 @@ export class ScheduleService {
           return schedules;
         })
       );
+  }
+
+  private processClass(schedule: Schedule, classesMap: Map<number, Class>): void {
+
+    const classIds = schedule.classIds;
+    if (classIds && classIds.length > 0) {
+      if (classIds.length === 1) {
+        schedule.theClass = classesMap.get(classIds[0]);
+      } else {
+        const classes = classIds.map(id => classesMap.get(id)).filter(c => c);
+        if (classes.length === 1) {
+          schedule.theClass = classes[0];
+        } else if (classes.length > 1) {
+          schedule.theClass = MergedClass.mergeClasses(classes);
+        }
+      }
+    } else if (schedule.classId) {
+      schedule.theClass = classesMap.get(schedule.classId);
+    }
+  }
+
+  private processTeacher(schedule: Schedule, teachersMap: Map<number, Teacher>): void {
+
+    const teacherIds = schedule.teacherIds;
+    if (teacherIds && teacherIds.length > 0) {
+      if (teacherIds.length === 1) {
+        schedule.teacher = teachersMap.get(teacherIds[0]);
+      } else {
+        const teachers = teacherIds.map(id => teachersMap.get(id)).filter(c => c);
+        if (teachers.length === 1) {
+          schedule.teacher = teachers[0];
+        } else if (teachers.length > 1) {
+          schedule.teacher = MergedTeacher.mergeTeachers(teachers);
+        }
+      }
+    } else if (schedule.teacherId) {
+      schedule.teacher = teachersMap.get(schedule.teacherId);
+    }
   }
 
   statistic(filter: ScheduleFilter, statisticParams: StatisticParams): Observable<ScheduleAggregated[]> {

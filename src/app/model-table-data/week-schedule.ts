@@ -37,30 +37,30 @@ export class WeekSchedule extends ScheduleDatasource {
     });
 
     const mom0 = moment(week.firstDay, DATE_FORMAT);
-    for (let i = 0; i < 7; i++) {
-      if (daySchedules[i]) {
+    for (let index = 0; index < 7; index++) {
+      if (daySchedules[index]) {
         continue;
       }
       const mom = mom0.clone();
-      if (i > 0) {
-        mom.add(i, 'days');
+      if (index > 0) {
+        mom.add(index, 'days');
       }
       const dateDim: DateDim = DateDim.fromMoment(mom);
       dateDim.weekno = week.weekno;
       DateDim.setDateLabels(dateDim);
 
-      daySchedules[i] = DaySchedule.emptySchedule(dateDim);
+      daySchedules[index] = DaySchedule.emptySchedule(dateDim);
     }
 
     const timeLessons: Lesson[][] = [];
-    for (let lessonIndex = 0; lessonIndex < 5; lessonIndex++) {
+    for (let index = 0; index < 5; index++) {
       const weekLessons: Lesson[] = [];
       timeLessons.push(weekLessons);
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
         const daySchedule = daySchedules[dayIndex];
-        const sLesson = daySchedule.timeIndexLessons[lessonIndex];
+        const sLesson = daySchedule.timeIndexLessons[index];
         if (sLesson) {
-          if (sLesson.startIndex === lessonIndex) {
+          if (sLesson.startIndex === index) {
             weekLessons.push(sLesson);
           }
         } else {

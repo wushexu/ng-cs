@@ -6,6 +6,7 @@ export class ScheduleGrouping {
   groupByMajor = false;
   groupByClassYear = false;
   groupByClass = false;
+  groupByLesson = false;
   groupByClassroom = false;
   groupByTeacher = false;
   groupByCourse = false;
@@ -21,6 +22,7 @@ export class ScheduleGrouping {
     this.groupByMajor = false;
     this.groupByClassYear = false;
     this.groupByClass = false;
+    this.groupByLesson = false;
     this.groupByClassroom = false;
     this.groupByTeacher = false;
     this.groupByCourse = false;
@@ -51,6 +53,7 @@ export class ScheduleGrouping {
       && !this.groupByMajor
       && !this.groupByClassYear
       && !this.groupByClass
+      && !this.groupByLesson
       && !this.groupByClassroom
       && !this.groupByTeacher
       && !this.groupByCourse
@@ -73,6 +76,9 @@ export class ScheduleGrouping {
     }
     if (this.groupByClass) {
       fields.push('classId');
+    }
+    if (this.groupByLesson) {
+      fields.push('lesson');
     }
     if (this.groupByClassroom) {
       fields.push('siteId');
