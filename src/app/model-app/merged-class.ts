@@ -10,6 +10,7 @@ export class MergedClass extends Class {
     classes: []
   };
 
+/*
   static merge(class1: Class | MergedClass, class2: Class): Class {
 
     let classM: MergedClass;
@@ -31,7 +32,7 @@ export class MergedClass extends Class {
       .join('，');
 
     return classM;
-  }
+  }*/
 
   static mergeClasses(classes: Class[]): Class {
 

@@ -27,6 +27,7 @@ export class ScheduleAggregated {
   //
 
   lesson?: number; // 1-5
+  lessonLabel?: string;
   yearMonth?: string;
   deptId?: number;
   majorId?: number;

@@ -39,6 +39,9 @@ export class Class {
       if (totalSize > 0) {
         tips.push(`人数：${totalSize}（${sizes.join('+')}）`);
       }
+      for (const cla of classes) {
+        tips.push(`班级：${cla.name}`);
+      }
       if (sameYearMajor) {
         const {size, dept, major} = classM;
         if (dept) {
@@ -46,10 +49,6 @@ export class Class {
         }
         if (major) {
           tips.push(`专业：${major.name}`);
-        }
-      } else {
-        for (const cla of classes) {
-          tips.push(`班级：${cla.name}`);
         }
       }
     } else {
@@ -68,5 +67,22 @@ export class Class {
     theClass._tooltip = tips.join('\n');
 
     return theClass._tooltip;
+  }
+
+  static classSizeText(theClass: Class): string {
+    if (!theClass) {
+      return null;
+    }
+
+    if ((theClass as MergedClass)._merging) {
+      // 合班上课
+      const classM = theClass as MergedClass;
+      const {classes} = classM._merging;
+      const sizes = classes.map(c => c.size);
+      const totalSize = sum(sizes);
+      return `${totalSize}（${classes.length}个班）`;
+    } else {
+      return '' + theClass.size;
+    }
   }
 }

@@ -27,18 +27,21 @@ export class Schedule {
   classId?: number;
   courseCode?: string;
   teacherId?: number;
-  classesCount?: number;
-  teachersCount?: number;
+  // classesCount?: number;
+  // teachersCount?: number;
 
   site?: Site;
   course?: Course;
   theClass?: Class | MergedClass;
   teacher?: Teacher | MergedTeacher;
 
-  // classes?: Class[];
-  // teachers?: Teacher[];
+  classes?: Class[];
+  teachers?: Teacher[];
 
   static getLessonLabel(lessonIndex: number/* 1-5 */) {
+    if (!lessonIndex) {
+      return '';
+    }
     const indexZh = ['一', '二', '三', '四', '五'][lessonIndex - 1];
     return `第${indexZh}节`;
   }

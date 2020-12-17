@@ -1,4 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 import {groupBy, sortBy} from 'underscore';
 
@@ -8,9 +9,9 @@ import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 import {ScheduleContext} from '../../model-app/schedule-context';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
 import {Dimension, DimensionsMap, evalDimensions, LessonCountMeasure, prepareData} from '../../model-app/schedule-cube';
-import {BreakpointObserver} from '@angular/cdk/layout';
 import {DEBUG} from '../../config';
 import {errorHandler} from '../../common/util';
+import {Schedule} from '../../model-api/schedule';
 
 
 @Component({
@@ -114,11 +115,15 @@ export class StatisticChartComponent extends GenericChartComponent implements On
 
     const chartDimensions: ChartDimension[] = [];
 
-    chartDimensions.push({
-      name: dimension1Name,
-      displayName: dimension1.displayName,
-      type: 'ordinal'
-    });
+    if (dimension1Name === 'lesson') {
+      for (const row of data) {
+        const lessonIndex = row.lesson;
+        row.lessonLabel = Schedule.getLessonLabel(lessonIndex);
+      }
+      chartDimensions.push({name: 'lessonLabel', displayName: dimension1.displayName, type: 'ordinal'});
+    } else {
+      chartDimensions.push({name: dimension1Name, displayName: dimension1.displayName, type: 'ordinal'});
+    }
 
     if (dimensionsCount === 1) {
       chartDimensions.push({name: measure.name, displayName: measure.displayName, type: 'int'});
@@ -135,7 +140,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
 
       const groups = groupBy(data, dimField1);
       const newData = [];
-      const dim2Values = new Set<string>();
+      const dim2Values = new Map<string, any>();
 
       for (const k in groups) {
         if (!groups.hasOwnProperty(k)) {
@@ -144,24 +149,35 @@ export class StatisticChartComponent extends GenericChartComponent implements On
         const rs = groups[k];
         const newRow = {};
         for (const row of rs) {
-          const dim2Val: string = row[dimField2];
+          const dim2Val: any = row[dimField2];
           if (dim2Val) {
-            dim2Values.add(dim2Val);
-            newRow[dim2Val] = row[meaField];
+            let label = '' + dim2Val;
+            if (dimField2 === 'lesson') {
+              label = Schedule.getLessonLabel(+dim2Val);
+            }
+            dim2Values.set(label, dim2Val);
+            newRow[label] = row[meaField];
           }
         }
         newRow[dimField1] = rs[0][dimField1] || '-';
         newData.push(newRow);
       }
       data = newData;
-      if (dimField1 === 'date') {
-        data = sortBy(data, dimField1);
-      }
 
-      const values = Array.from(dim2Values).sort();
-      for (const dim2Val of values) {
-        chartDimensions.push({name: dim2Val, displayName: dim2Val, type: 'int'});
+      const entries = Array.from(dim2Values.entries())
+        .sort(([label1, value1], [label2, value2]) => {
+          if (typeof value1 === 'string') {
+            return value1.localeCompare(value2);
+          }
+          return value1 - value2;
+        });
+      for (const [label, value] of entries) {
+        chartDimensions.push({name: label, displayName: label, type: 'int'});
       }
+    }
+
+    if (dimension1Name === 'date' || dimension1Name === 'lesson') {
+      data = sortBy(data, dimension1Name);
     }
 
     this.dataset = {source: data, dimensions: chartDimensions};

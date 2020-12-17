@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {groupBy, pairs, uniq} from 'underscore';
+import {groupBy, pairs, uniq, flatten} from 'underscore';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -34,7 +34,7 @@ export class SummaryStatisticService {
         this.summaryStatisticMap.clear();
         this.dailySchedulesForStatisticMap.clear();
       },
-      DATA_CACHE_TIME);
+      DATA_CACHE_TIME / 2);
   }
 
   requestSummary(filter: ScheduleFilter, summaryParams: SummaryStatisticParams): Observable<object> {
@@ -67,10 +67,10 @@ export class SummaryStatisticService {
       return summary;
     }
 
-    summary.classCount = uniq(schedules.map(s => s.classId)).length;
-    summary.studentCount = sum(uniq(schedules.map(s => s.theClass)).map(c => c?.size));
+    summary.classCount = uniq(flatten(schedules.map(s => s.classIds))).length;
+    summary.studentCount = sum(uniq(flatten(schedules.map(s => s.classes))).map(c => c?.size));
     summary.classroomCount = uniq(schedules.map(s => s.siteId)).length;
-    summary.teacherCount = uniq(schedules.map(s => s.teacherId)).length;
+    summary.teacherCount = uniq(flatten(schedules.map(s => s.teacherIds))).length;
     summary.theoryCourseCount = uniq(schedules.filter(s => s.courseType === 'N').map(s => s.courseCode)).length;
     summary.trainingCourseCount = uniq(schedules.filter(s => s.courseType === 'T').map(s => s.courseCode)).length;
 
@@ -151,6 +151,56 @@ export class SummaryStatisticService {
       } else {
         objField = drillType;
       }
+    }
+    if (drillType === 'class') {
+      const schedules: Schedule[] = [];
+      for (const schedule of daySchedules) {
+        const classes = schedule.classes;
+        if (classes.length === 0) {
+          continue;
+        }
+        if (classes.length === 1) {
+          schedule.theClass = classes[0];
+          schedule.classId = schedule.theClass?.id;
+          schedules.push(schedule);
+        } else {
+          for (const cla of classes) {
+            const sch: Schedule = Object.assign(new Schedule(), schedule);
+            sch.theClass = cla;
+            sch.classId = cla.id;
+            sch.classIds = [cla.id];
+            sch.classes = [cla];
+            // sch.classesCount = 1;
+            schedules.push(sch);
+          }
+        }
+      }
+      daySchedules = schedules;
+    }
+    if (drillType === 'teacher') {
+      const schedules: Schedule[] = [];
+      for (const schedule of daySchedules) {
+        const teachers = schedule.teachers;
+        if (teachers.length === 0) {
+          continue;
+        }
+        if (teachers.length === 1) {
+          schedule.teacher = teachers[0];
+          schedule.teacherId = schedule.teacher.id;
+          schedules.push(schedule);
+        } else {
+          for (const tea of teachers) {
+            const sch: Schedule = Object.assign(new Schedule(), schedule);
+            sch.teacher = tea;
+            sch.teacherId = tea.id;
+            sch.teacherIds = [tea.id];
+            sch.teachers = [tea];
+            // sch.teachersCount = 1;
+            schedules.push(sch);
+          }
+        }
+      }
+      daySchedules = schedules;
     }
 
     return pairs(groupBy(daySchedules, idField))

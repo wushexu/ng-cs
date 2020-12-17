@@ -46,6 +46,10 @@ export class FlatTableScheduleComponent implements AfterViewInit, OnInit, OnChan
     return Class.classTooltip(theClass);
   }
 
+  classSizeText(theClass: Class) {
+    return Class.classSizeText(theClass);
+  }
+
   courseTooltip(course: Course): string {
     return Course.courseTooltip(course);
   }

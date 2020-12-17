@@ -110,10 +110,16 @@ export class ScheduleService {
           schedule.theClass = classes[0];
         } else if (classes.length > 1) {
           schedule.theClass = MergedClass.mergeClasses(classes);
+          schedule.classes = classes;
         }
       }
-    } else if (schedule.classId) {
-      schedule.theClass = classesMap.get(schedule.classId);
+    }
+    if (!schedule.classes) {
+      if (schedule.theClass) {
+        schedule.classes = [schedule.theClass];
+      } else {
+        schedule.classes = [];
+      }
     }
   }
 
@@ -129,10 +135,16 @@ export class ScheduleService {
           schedule.teacher = teachers[0];
         } else if (teachers.length > 1) {
           schedule.teacher = MergedTeacher.mergeTeachers(teachers);
+          schedule.teachers = teachers;
         }
       }
-    } else if (schedule.teacherId) {
-      schedule.teacher = teachersMap.get(schedule.teacherId);
+    }
+    if (!schedule.teachers) {
+      if (schedule.teacher) {
+        schedule.teachers = [schedule.teacher];
+      } else {
+        schedule.teachers = [];
+      }
     }
   }
 

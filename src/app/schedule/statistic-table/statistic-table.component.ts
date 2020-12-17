@@ -12,6 +12,7 @@ import {Class} from '../../model-api/class';
 import {ScheduleAggregated} from '../../model-api/schedule-aggregated';
 import {SchedulesStatistic} from '../../model-table-data/schedules-statistic';
 import {ScheduleGrouping} from '../../model-app/schedule-grouping';
+import {Schedule} from '../../model-api/schedule';
 
 @Component({
   selector: 'app-statistic-table',
@@ -42,6 +43,10 @@ export class StatisticTableComponent implements AfterViewInit, OnInit, OnChanges
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+  }
+
+  lessonLabel(lessonIndex: number) {
+    return Schedule.getLessonLabel(lessonIndex);
   }
 
   classTooltip(theClass: Class) {
@@ -117,6 +122,10 @@ export class StatisticTableComponent implements AfterViewInit, OnInit, OnChanges
     if (grouping.groupByCourseType) {
       displayedColumns.push('courseType');
     }
+    if (grouping.groupByLesson) {
+      displayedColumns.push('lesson');
+    }
+
     // displayedColumns.push('recordCount');
     displayedColumns.push('lessonCount');
 
