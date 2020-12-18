@@ -7,7 +7,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 import {Course} from '../../model-api/course';
 import {CourseService} from '../../service/course.service';
-import {errorHandler} from '../util';
+import {errorHandler, shorterFirstZhComparator} from '../util';
 
 @Component({
   selector: 'app-course-select',
@@ -35,13 +35,7 @@ export class CourseSelectComponent implements OnInit {
     this.service.getCourses().subscribe(courses => {
       this.allCourses = courses;
       this.cates = uniq(courses.map(r => r.cate).filter(y => y))
-        .sort((a: string, b: string) => {
-          const lenDiff = a.length - a.length;
-          if (lenDiff !== 0) {
-            return lenDiff;
-          }
-          return a.localeCompare(b);
-        });
+        .sort(shorterFirstZhComparator);
 
       this.filteredCourses = [...courses];
 

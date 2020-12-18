@@ -33,3 +33,19 @@ export function handle404(message: string) {
     errorHandler(error);
   };
 }
+
+/*
+export function zhComparator(a, b) {
+  if (typeof a !== 'string') {
+    return a - b;
+  }
+  return a.localeCompare(b);
+}*/
+
+export function shorterFirstZhComparator(a: string, b: string) {
+  const lenDiff = a.length - b.length;
+  if (lenDiff !== 0) {
+    return lenDiff;
+  }
+  return a.localeCompare(b);
+}

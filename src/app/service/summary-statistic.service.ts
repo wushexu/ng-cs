@@ -133,6 +133,60 @@ export class SummaryStatisticService {
     );
   }
 
+  private joinClasses(daySchedules: Schedule[]): Schedule[] {
+
+    const schedules: Schedule[] = [];
+    for (const schedule of daySchedules) {
+      const classes = schedule.classes;
+      if (classes.length === 0) {
+        continue;
+      }
+      if (classes.length === 1) {
+        schedule.theClass = classes[0];
+        schedule.classId = schedule.theClass?.id;
+        schedules.push(schedule);
+      } else {
+        for (const cla of classes) {
+          const sch: Schedule = Object.assign(new Schedule(), schedule);
+          sch.theClass = cla;
+          sch.classId = cla.id;
+          sch.classIds = [cla.id];
+          sch.classes = [cla];
+          // sch.classesCount = 1;
+          schedules.push(sch);
+        }
+      }
+    }
+    return schedules;
+  }
+
+  private joinTeachers(daySchedules: Schedule[]): Schedule[] {
+
+    const schedules: Schedule[] = [];
+    for (const schedule of daySchedules) {
+      const teachers = schedule.teachers;
+      if (teachers.length === 0) {
+        continue;
+      }
+      if (teachers.length === 1) {
+        schedule.teacher = teachers[0];
+        schedule.teacherId = schedule.teacher.id;
+        schedules.push(schedule);
+      } else {
+        for (const tea of teachers) {
+          const sch: Schedule = Object.assign(new Schedule(), schedule);
+          sch.teacher = tea;
+          sch.teacherId = tea.id;
+          sch.teacherIds = [tea.id];
+          sch.teachers = [tea];
+          // sch.teachersCount = 1;
+          schedules.push(sch);
+        }
+      }
+    }
+    return schedules;
+  }
+
   private sumFromDailySchedules(date: string,
                                 drillType: SummaryDrillType,
                                 daySchedules: Schedule[]): ScheduleAggregated[] {
@@ -153,54 +207,10 @@ export class SummaryStatisticService {
       }
     }
     if (drillType === 'class') {
-      const schedules: Schedule[] = [];
-      for (const schedule of daySchedules) {
-        const classes = schedule.classes;
-        if (classes.length === 0) {
-          continue;
-        }
-        if (classes.length === 1) {
-          schedule.theClass = classes[0];
-          schedule.classId = schedule.theClass?.id;
-          schedules.push(schedule);
-        } else {
-          for (const cla of classes) {
-            const sch: Schedule = Object.assign(new Schedule(), schedule);
-            sch.theClass = cla;
-            sch.classId = cla.id;
-            sch.classIds = [cla.id];
-            sch.classes = [cla];
-            // sch.classesCount = 1;
-            schedules.push(sch);
-          }
-        }
-      }
-      daySchedules = schedules;
+      daySchedules = this.joinClasses(daySchedules);
     }
     if (drillType === 'teacher') {
-      const schedules: Schedule[] = [];
-      for (const schedule of daySchedules) {
-        const teachers = schedule.teachers;
-        if (teachers.length === 0) {
-          continue;
-        }
-        if (teachers.length === 1) {
-          schedule.teacher = teachers[0];
-          schedule.teacherId = schedule.teacher.id;
-          schedules.push(schedule);
-        } else {
-          for (const tea of teachers) {
-            const sch: Schedule = Object.assign(new Schedule(), schedule);
-            sch.teacher = tea;
-            sch.teacherId = tea.id;
-            sch.teacherIds = [tea.id];
-            sch.teachers = [tea];
-            // sch.teachersCount = 1;
-            schedules.push(sch);
-          }
-        }
-      }
-      daySchedules = schedules;
+      daySchedules = this.joinTeachers(daySchedules);
     }
 
     return pairs(groupBy(daySchedules, idField))

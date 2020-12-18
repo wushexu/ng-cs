@@ -8,7 +8,7 @@ import {sortBy, uniq} from 'underscore';
 import {Dept} from '../../model-api/dept';
 import {Classroom} from '../../model-api/site';
 import {ClassroomService} from '../../service/classroom.service';
-import {errorHandler} from '../util';
+import {errorHandler, shorterFirstZhComparator} from '../util';
 
 @Component({
   selector: 'app-classroom-select',
@@ -40,13 +40,7 @@ export class ClassroomSelectComponent implements OnInit {
           this.allClassrooms = rooms;
           this.depts = sortBy(uniq(rooms.map(r => r.dept).filter(d => d)), 'id');
           this.roomTypes = uniq(rooms.map(r => r.roomType).filter(t => t))
-            .sort((a: string, b: string) => {
-              const lenDiff = a.length - b.length;
-              if (lenDiff !== 0) {
-                return lenDiff;
-              }
-              return a.localeCompare(b);
-            });
+            .sort(shorterFirstZhComparator);
 
           this.filteredClassrooms = [...rooms];
 
