@@ -62,13 +62,15 @@ export class TermWeekSelectComponent implements OnInit {
     if (!this.selectedWeek) {
       return;
     }
-    const len = this.weeks.length;
     const index = this.weeks.indexOf(this.selectedWeek);
     if (index === -1) {
       this.selectedWeek = this.weeks[0];
+      this.selected.emit(this.selectedWeek);
       return;
     }
+    const len = this.weeks.length;
     this.selectedWeek = this.weeks[(index + ws + len) % len];
+    this.selected.emit(this.selectedWeek);
   }
 
 }
