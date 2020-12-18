@@ -153,8 +153,7 @@ export class DailySummaryStatisComponent implements OnInit {
     context.filter = filter;
     context.grouping = grouping;
 
-    const schedulesStatis = new SchedulesStatistic();
-    schedulesStatis.context = context;
+    const schedulesStatis = new SchedulesStatistic(context);
 
     schedulesStatis.schedules = schedules;
 

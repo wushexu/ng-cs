@@ -15,8 +15,8 @@ export class DaySchedule extends ScheduleDatasource {
   schedules: Schedule[];
   lessonSpansCount: number;
 
-  constructor(dateDim: DateDim, schedules: Schedule[]) {
-    super();
+  constructor(context: ScheduleContext, dateDim: DateDim, schedules: Schedule[]) {
+    super(context);
 
     // schedules.sort((a, b) => a.timeStart - b.timeStart);
 
@@ -76,8 +76,8 @@ export class DaySchedule extends ScheduleDatasource {
     this.noPlaceholderLessons = this.lessons.filter(l => l);
   }
 
-  static emptySchedule(dateDim: DateDim): DaySchedule {
-    return new DaySchedule(dateDim, []);
+  static emptySchedule(context: ScheduleContext, dateDim: DateDim): DaySchedule {
+    return new DaySchedule(context, dateDim, []);
   }
 
   static lessonsHtml(daySchedule: DaySchedule, context: ScheduleContext): string {

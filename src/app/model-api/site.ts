@@ -35,9 +35,9 @@ export class Site {
     if (room.capacity) {
       tips.push(`座位数：${room.capacity}`);
     }
-    if (room.multimedia) {
-      tips.push(`多媒体：是`);
-    }
+    // if (room.multimedia) {
+    //   tips.push(`多媒体：是`);
+    // }
 
     room._tooltip = tips.join('\n');
     return room._tooltip;

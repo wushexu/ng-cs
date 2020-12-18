@@ -124,7 +124,7 @@ export class CompleteQuery extends BasicQuery {
 
     if (context.filter.lesson) {
       const liCn = Schedule.getLessonLabel(context.filter.lesson);
-      titleParts.push(`第${liCn}节`);
+      titleParts.push(liCn);
     }
   }
 

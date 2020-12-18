@@ -5,14 +5,15 @@ import {WeekSchedule} from './week-schedule';
 import {MonthDim} from '../model-app/month-dim';
 import {DaySchedule} from './day-schedule';
 import {ScheduleDatasource} from './schedule-datasource';
+import {ScheduleContext} from '../model-app/schedule-context';
 
 export class MonthSchedule extends ScheduleDatasource {
 
   monthDim: MonthDim;
   weekSchedules: WeekSchedule[];
 
-  constructor(monthDim: MonthDim, schedules: Schedule[]) {
-    super();
+  constructor(context: ScheduleContext, monthDim: MonthDim, schedules: Schedule[]) {
+    super(context);
 
     this.monthDim = monthDim;
     const weeks = monthDim.weeks;
@@ -22,7 +23,7 @@ export class MonthSchedule extends ScheduleDatasource {
     const weekGroups = groupBy(schedules, 'weekno');
     for (const week of weeks) {
       const schedulesOfWeek: Schedule[] = weekGroups['' + week.weekno] || [];
-      weekSchedules.push(new WeekSchedule(week, schedulesOfWeek));
+      weekSchedules.push(new WeekSchedule(context, week, schedulesOfWeek));
     }
 
     this.weekSchedules = weekSchedules;

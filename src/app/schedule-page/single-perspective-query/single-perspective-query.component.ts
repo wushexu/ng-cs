@@ -207,13 +207,11 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
     switch (this.timeScope) {
       case 'day':
         const dateDim: DateDim = DateDim.fromMoment(this.selectedDate);
-        this.daySchedule = new DaySchedule(dateDim, schedules);
-        this.daySchedule.context = context;
+        this.daySchedule = new DaySchedule(context, dateDim, schedules);
         this.daySchedule.title = title;
         break;
       case 'week':
-        this.weekSchedule = new WeekSchedule(this.selectedWeek, schedules);
-        this.weekSchedule.context = context;
+        this.weekSchedule = new WeekSchedule(context, this.selectedWeek, schedules);
         this.weekSchedule.title = title;
         break;
       case 'month':
@@ -221,16 +219,14 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
         const term1 = await this.termWeekService.findTermByMonth(yearMonth).toPromise();
         const weeks = await this.termWeekService.getMonthWeeks(term1, yearMonth).toPromise();
         const monthDim: MonthDim = new MonthDim(yearMonth, weeks);
-        this.monthSchedule = new MonthSchedule(monthDim, schedules);
-        this.monthSchedule.context = context;
+        this.monthSchedule = new MonthSchedule(context, monthDim, schedules);
         this.monthSchedule.title = title;
         break;
       case 'term':
         const term = this.selectedTerm;
         const termWeeks = await this.termWeekService.getTermWeeks(term).toPromise();
         const termDim: TermDim = {term, weeks: termWeeks};
-        this.termSchedule = new TermSchedule(termDim, schedules);
-        this.termSchedule.context = context;
+        this.termSchedule = new TermSchedule(context, termDim, schedules);
         this.termSchedule.title = title;
         break;
     }
@@ -282,7 +278,7 @@ export class SinglePerspectiveQueryComponent extends BasicQuery implements OnIni
 
     const scopedDaySchedules: ScopedDaySchedule[] = daySchedules
       .map(ds => {
-        const sds = new ScopedDaySchedule();
+        const sds = new ScopedDaySchedule(context);
         const dateDim = ds.dateDim;
         if (!dateDim.weekdayLabel) {
           DateDim.setDateLabels(dateDim);

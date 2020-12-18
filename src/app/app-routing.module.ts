@@ -10,9 +10,9 @@ import {HomeComponent} from './home/home.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'query', component: SinglePerspectiveQueryComponent},
-  {path: 'query-cl/:class-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'class', perspectiveFixed: true}},
-  {path: 'query-tc/:teacher-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'teacher', perspectiveFixed: true}},
-  {path: 'query-cr/:classroom-id', component: SinglePerspectiveQueryComponent, data: {perspective: 'classroom', perspectiveFixed: true}},
+  {path: 'class/:class-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'class', perspectiveFixed: true}},
+  {path: 'teacher/:teacher-idc', component: SinglePerspectiveQueryComponent, data: {perspective: 'teacher', perspectiveFixed: true}},
+  {path: 'classroom/:classroom-id', component: SinglePerspectiveQueryComponent, data: {perspective: 'classroom', perspectiveFixed: true}},
   {path: 'query-g', component: CompleteQueryComponent},
   {path: 'statis-g', component: ScheduleStatisComponent},
   {path: 'statis', component: DailySummaryStatisComponent}

@@ -51,9 +51,8 @@ export class CompleteQueryComponent extends CompleteQuery implements OnInit {
       console.log(context);
     }
 
-    const flatSchedules = new FlatSchedules();
+    const flatSchedules = new FlatSchedules(context);
     flatSchedules.schedules = schedules;
-    flatSchedules.context = context;
 
     const titleParts: string[] = [];
     this.evalTitleNonTimePart(titleParts, context);

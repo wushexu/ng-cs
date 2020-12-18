@@ -9,6 +9,7 @@ import {Week} from '../model-api/week';
 import {DateDim} from '../model-api/date-dim';
 import {Lesson} from '../model-app/lesson';
 import {ScheduleDatasource} from './schedule-datasource';
+import {ScheduleContext} from '../model-app/schedule-context';
 
 export class WeekSchedule extends ScheduleDatasource {
   week: Week;
@@ -16,8 +17,8 @@ export class WeekSchedule extends ScheduleDatasource {
 
   timeLessons: Lesson[][];
 
-  constructor(week: Week, schedules: Schedule[]) {
-    super();
+  constructor(context: ScheduleContext, week: Week, schedules: Schedule[]) {
+    super(context);
 
     this.week = week;
 
@@ -33,7 +34,7 @@ export class WeekSchedule extends ScheduleDatasource {
       const {weekno, dayOfWeek, date} = schedulesOfDay[0];
       const dateDim: DateDim = new DateDim(date, dayOfWeek, weekno);
       DateDim.setDateLabels(dateDim);
-      daySchedules[index] = new DaySchedule(dateDim, schedulesOfDay);
+      daySchedules[index] = new DaySchedule(context, dateDim, schedulesOfDay);
     });
 
     const mom0 = moment(week.firstDay, DATE_FORMAT);
@@ -49,7 +50,7 @@ export class WeekSchedule extends ScheduleDatasource {
       dateDim.weekno = week.weekno;
       DateDim.setDateLabels(dateDim);
 
-      daySchedules[index] = DaySchedule.emptySchedule(dateDim);
+      daySchedules[index] = DaySchedule.emptySchedule(context, dateDim);
     }
 
     const timeLessons: Lesson[][] = [];

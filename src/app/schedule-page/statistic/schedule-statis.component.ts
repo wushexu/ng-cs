@@ -94,9 +94,8 @@ export class ScheduleStatisComponent extends CompleteQuery implements OnInit {
       console.log(context);
     }
 
-    const schedulesStatis = new SchedulesStatistic();
+    const schedulesStatis = new SchedulesStatistic(context);
     schedulesStatis.schedules = schedules;
-    schedulesStatis.context = context;
 
     const titleParts: string[] = [];
 

@@ -24,7 +24,7 @@ export class StatisticChartComponent extends GenericChartComponent implements On
   @Input() schedulesStatis: SchedulesStatistic;
   @Input() showTitle: boolean;
 
-  chartWidth = 1100;
+  chartWidth = 1120;
   chartHeight = 600;
   transparentBackground = false;
 

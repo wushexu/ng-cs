@@ -36,7 +36,7 @@ const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
 const DATA_CACHE_TIME = 6 * HOUR;
 
-const DEBUG = window?.location?.href?.indexOf('_DEGBUG_') > 0 || false;
+const DEBUG = window?.location?.href?.indexOf('_DEBUG_') > 0 || false;
 
 export {
   PaginatorIntl,
